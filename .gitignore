@@ -90,4 +90,10 @@ crashlytics-build.properties
 fabric.properties
 
 /target/
-/node_modules/
+
+######################
+# Node
+######################
+/node/**
+/node_tmp/**
+/node_modules/**
