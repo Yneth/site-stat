@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="static/bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+</head>
+<body ng-app="socialStatApp">
+    <!--[if lt IE 9]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <header ui-view="navbar" ng-cloak></header>
+
+    <div role="main">
+        <div class="" ui-view="content">
+
+        </div>
+    </div>
+
+    <footer class="footer" ng-cloak></footer>
+
+
+    <script src="bower_components/jquery/dist/jquery.min.js"/>
+    <script src="bower_components/angular/angular.min.js"/>
+    <script src="bower_components/angular-route/angular-route.min.js"/>
+    <script src="bower_components/angular-resource/angular-resource.min.js"/>
+    <script src="bower_components/angular-resource/angular-bootstrap.min.js"/>
+
+    <script src="app/app.module.js"/>
+    <script src="app/app.state.js"/>
+    <script src="app/app.constants.js"/>
+    <script src="app/layouts/navbar/navbar.controller.js"/>
+    <script src="app/services/auth/auth.service.js"/>
+</body>
+</html>
