@@ -1,14 +1,22 @@
 (function () {
     'use strict';
+    
     angular.
         module('socialStatApp', [
         'ngStorage',
-        'ngResources'
+        'ngResource',
+        'ui.bootstrap',
+        'ui.router'
     ]).run(run);
-    run.$inject = ['stateHandler', 'translationHandler'];
+    run.$inject = [
+        //'stateHandler',
+        'translationHandler'
+    ];
 
-    function run(stateHandler, translationHandler) {
-        stateHandler.initialize();
+    function run(
+        //stateHandler,
+        translationHandler) {
+        //stateHandler.initialize();
         translationHandler.initialize();
     }
 })();

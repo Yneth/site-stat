@@ -7,10 +7,7 @@
 
     <context:component-scan base-package="ua.social.dao.jpa"/>
 
-    <bean id="dbConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <!--<property name="placeholderPrefix" value="db-"/>-->
-        <property name="location" value="classpath:/db.properties"/>
-    </bean>
+    <context:property-placeholder location="classpath:db.properties" ignore-unresolvable="true"/>
 
     <bean id="emf" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource"/>
