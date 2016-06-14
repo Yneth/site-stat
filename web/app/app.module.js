@@ -4,6 +4,7 @@
     angular.module('socialStatApp', [
         'ngStorage',
         'ngResource',
+        'pascalprecht.translate',
         'ui.bootstrap',
         'ui.router'
     ]).run(run);

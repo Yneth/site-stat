@@ -17,7 +17,7 @@
         function initialize() {
             $rootScope.VERSION = VERSION;
 
-            var stateChangeStart = $rootScope.on('$stateChangeStart',
+            var stateChangeStart = $rootScope.$on('$stateChangeStart',
                 function (event, toState, toParams, fromState) {
                     $rootScope.toState = toState;
                     $rootScope.toStateParams = toStateParams;
@@ -39,7 +39,7 @@
                 }
             );
 
-            var stateChangeSuccess = $rootScope.on('$stateChangeSuccess',
+            var stateChangeSuccess = $rootScope.$on('$stateChangeSuccess',
                 function (event, toState, toParams, fromState) {
                     var titleKey = 'global.title';
 
@@ -51,7 +51,7 @@
                 }
             )
 
-            $rootScope.on('$destroy',
+            $rootScope.$on('$destroy',
                 function () {
                     if (angular.isDefined(stateChangeStart) && stateChangeStart !== null) {
                         stateChangeStart();
