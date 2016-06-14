@@ -5,7 +5,8 @@ import javax.persistence.*;
 @MappedSuperclass
 public abstract class AbstractEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "SEQ")
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "seq")
     protected long id;
 
     public AbstractEntity() {

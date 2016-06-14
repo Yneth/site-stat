@@ -6,11 +6,8 @@ import java.time.LocalTime;
 import java.util.Optional;
 
 @Entity
-@Table(name = "SOCIAL_NETWORK_SESSION")
-@SequenceGenerator(name = "SEQ", sequenceName =
-        "SOCIAL_NETWORK_SESSION_SOCIAL_NETWORK_SESSION_ID_SEQ",
-        allocationSize = 1)
-@AttributeOverride(name ="id", column = @Column(name = "SOCIAL_NETWORK_SESSION_ID"))
+@Table(name = "social_network_session")
+@SequenceGenerator(name = "seq", sequenceName = "social_network_session_id_seq", allocationSize = 1)
 public class SocialNetworkSession extends AbstractEntity {
     @ManyToOne
     private SocialNetwork socialNetwork;

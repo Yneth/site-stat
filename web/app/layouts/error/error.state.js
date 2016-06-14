@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -20,7 +20,7 @@
 
             resolve: {
                 mainTranslatePartialLoader: ['$translate', '$translatePartialLoader',
-                    function($translate, $translatePartialLoader) {
+                    function ($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('error');
                         return $translate.refresh();
                     }
@@ -38,7 +38,7 @@
 
             resolve: {
                 mainTranslatePartialLoader: ['$translate', '$translatePartialLoader',
-                    function($translate, $translatePartialLoader) {
+                    function ($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('error');
                         return $translate.refresh();
                     }

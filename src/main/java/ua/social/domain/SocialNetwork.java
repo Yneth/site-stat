@@ -3,16 +3,14 @@ package ua.social.domain;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "SOCIAL_NETWORK")
-@SequenceGenerator(name = "SEQ", sequenceName = "SOCIAL_NETWORK_SOCIAL_NETWORK_ID_SEQ",
-        allocationSize = 1)
-@AttributeOverride(name = "id", column = @Column(name = "SOCIAL_NETWORK_ID"))
+@Table(name = "social_network")
+@SequenceGenerator(name = "seq", sequenceName = "social_network_id_seq", allocationSize = 1)
 public class SocialNetwork extends AbstractEntity {
     @ManyToOne
     private User user;
-    @Column(name = "NAME", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
-    @Column(name = "URL", nullable = false)
+    @Column(name = "url", nullable = false)
     private String url;
 
     public SocialNetwork() {

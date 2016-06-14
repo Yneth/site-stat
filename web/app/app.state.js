@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -19,7 +19,7 @@
             },
             resolve: {
                 authorize: ['Auth',
-                    function(Auth) {
+                    function (Auth) {
                         return Auth.authorize();
                     }
                 ]

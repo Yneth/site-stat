@@ -13,7 +13,7 @@
         }
 
         var modalInstance = null;
-        var resetModal = function() {
+        var resetModal = function () {
             modalInstance = null;
         }
         return service;
@@ -27,7 +27,7 @@
                 controller: 'LoginController',
                 controllerAs: 'vm',
                 resolve: {
-                    'templatePartialLoader' : ['$translate', '$translatePartialLoader',
+                    'templatePartialLoader': ['$translate', '$translatePartialLoader',
                         function ($translate, $translatePartialLoader) {
                             $translatePartialLoader.addPart('login');
                             return $translate.refresh();

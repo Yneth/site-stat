@@ -3,42 +3,54 @@ package ua.social.domain;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "AUTHORITY")
-@SequenceGenerator(name = "SEQ", sequenceName = "AUTHORITY_AUTHORITY_ID_SEQ",
-        allocationSize = 1)
-@AttributeOverride(name = "id", column = @Column(name = "AUTHORITY_ID"))
-public class Authority extends AbstractEntity implements GrantedAuthority {
+@Table(name = "authority")
+@SequenceGenerator(name = "seq", sequenceName = "authority_id_seq", allocationSize = 1)
+public class Authority extends AbstractEntity {
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "username", nullable = false)
-    private User user;
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Role authority;
+    @NotNull
+    @Size(min = 0, max = 50)
+    @Column(length = 50, nullable = false)
+    private String name;
 
-    public Authority() {
+    public String getName() {
+        return name;
     }
 
-    public Authority(User user, Role authority) {
-        this.user = user;
-        this.authority = authority;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getAuthority() {
-        return authority.toString();
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Authority authority = (Authority) o;
+
+        if (name != null ? !name.equals(authority.name) : authority.name != null) {
+            return false;
+        }
+
+        return true;
     }
 
-    public User getUser() {
-        return user;
+    @Override
+    public int hashCode() {
+        return name != null ? name.hashCode() : 0;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public void setAuthority(String authority) {
-        this.authority = Role.valueOf(authority);
+    @Override
+    public String toString() {
+        return "Authority{" +
+                "name='" + name + '\'' +
+                "}";
     }
 }

@@ -20,6 +20,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         LOG.debug("Authenticating {}", username);
-        return userService.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(username));
+        //
+        // return userService.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(username));
+        return null;
     }
 }

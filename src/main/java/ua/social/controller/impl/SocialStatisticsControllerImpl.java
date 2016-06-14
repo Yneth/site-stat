@@ -26,7 +26,7 @@ public class SocialStatisticsControllerImpl implements SocialStatisticsControlle
     @RequestMapping(path = "/user", method = RequestMethod.GET)
     public ResponseEntity<List<User>> getUsers(@RequestParam("startPosition") int startPosition,
                                               @RequestParam("maxResults") int maxResults) {
-        return new ResponseEntity<List<User>>(
+        return new ResponseEntity<>(
                 service.getPaginatedUsers(startPosition, maxResults), HttpStatus.CREATED
         );
     }
