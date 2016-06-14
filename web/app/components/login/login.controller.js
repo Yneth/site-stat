@@ -3,7 +3,7 @@
 
     angular
         .module('socialStatApp')
-        .controller(LoginController, 'LoginController');
+        .controller('LoginController', LoginController);
 
     LoginController.$inject = ['$rootScope', '$state', '$timeout', 'Auth', '$uibModalInstance'];
 
@@ -17,7 +17,7 @@
         vm.credentials = {};
         vm.username = null;
         vm.password = null;
-        vm.rememberMe = false;
+        vm.rememberMe = true;
         vm.authenticationError = false;
 
         $timeout(function () {
