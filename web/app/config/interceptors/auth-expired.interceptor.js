@@ -1,6 +1,6 @@
 (function () {
     'use strict';
-
+    // TODO: implement
     angular
         .module('socialStatApp')
         .factory('authExpiredInterceptor', authExpiredInterceptor)

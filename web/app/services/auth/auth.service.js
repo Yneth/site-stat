@@ -1,6 +1,6 @@
 (function () {
     'use strict';
-
+    // TODO: implement
     angular.module('socialStatApp').factory('Auth', Auth);
 
     Auth.$inject = ['$rootScope', '$state', '$sessionStorage', '$q', 'Principal'];
