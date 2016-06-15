@@ -9,5 +9,8 @@
 
     function httpConfig($urlRouterProvider, $httpProvider, $urlMatcherFactoryProvider) {
         $urlRouterProvider.otherwise('/');
+
+        $httpProvider.interceptors.push('authInterceptor');
+        $httpProvider.interceptors.push('authExpiredInterceptor');
     }
 })();
