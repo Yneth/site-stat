@@ -18,6 +18,7 @@ public class SocialStatisticsServiceImpl implements SocialStatisticsService {
     }
 
     public List<User> getPaginatedUsers(int startPosition, int maxResults) {
+        // TODO: implement
         return userDAO.list(startPosition, maxResults);
     }
 }

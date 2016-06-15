@@ -11,6 +11,7 @@ public class SocialController {
 
     @RequestMapping(value = "/signUp", method = RequestMethod.GET)
     public RedirectView signUp() {
+        // TODO: implement
         throw new UnsupportedOperationException();
     }
 }
