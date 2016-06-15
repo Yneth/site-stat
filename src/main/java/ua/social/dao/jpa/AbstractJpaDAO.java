@@ -10,20 +10,21 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public abstract class AbstractJpaDAO<Entity> implements DAO<Entity> {
     @PersistenceContext
-    private EntityManager entityManager;
+    protected EntityManager entityManager;
 
-    protected final Class<Entity> clazz;
+    private final Class<Entity> clazz;
 
     public AbstractJpaDAO(Class<Entity> clazz) {
         this.clazz = clazz;
     }
 
-    public Entity getById(long id) {
-        return entityManager.find(clazz, id);
+    public Optional<Entity> getById(long id) {
+        return Optional.ofNullable(entityManager.find(clazz, id));
     }
 
     public Entity update(Entity entity) {

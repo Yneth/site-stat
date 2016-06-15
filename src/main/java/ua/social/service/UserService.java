@@ -6,13 +6,18 @@ import ua.social.web.rest.dto.ManagedUserDTO;
 import java.util.Optional;
 
 public interface UserService {
-    Optional<User> createUserInformation(ManagedUserDTO user);
+    User createUser(ManagedUserDTO user);
+
+    User createUser(String login, String password, String firstName, String lastName, String email,
+                    String langKey);
 
     Optional<User> activateRegistration(String key);
 
-    Optional<User> updateUserInformation(String firstName, String secondName, String email, String langKey);
+    void updateUserInformation(String firstName, String secondName, String email, String langKey);
 
-    Optional<User> deleteUserInformation(String login);
+    void deleteUserInformation(String login);
+
+    Optional<User> getCurrentUser();
 
     Optional<User> getUserByLogin(String login);
 
