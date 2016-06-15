@@ -54,7 +54,9 @@ public class UserServiceImpl implements UserService {
         if (user.getAuthorities() != null) {
             Set<Authority> authorities = new HashSet<>();
             user.getAuthorities().stream().forEach(
-                    authority -> authorities.add(authorityDAO.findOne(authority))
+                    authority -> authorityDAO.findOne(authority).ifPresent(
+                            authority1 -> authorities.add(authority1)
+                    )
             );
             newUser.setAuthorities(authorities);
         }
@@ -78,8 +80,7 @@ public class UserServiceImpl implements UserService {
 
         // TODO: should not be activated
         newUser.setActivated(true);
-
-        authorities.add(authorityDAO.findOne("ROLE_USER"));
+        authorityDAO.findOne("ROLE_USER").ifPresent(authority -> authorities.add(authority));
         newUser.setAuthorities(authorities);
         userDAO.save(newUser);
         log.debug("Created information for User {}", newUser);

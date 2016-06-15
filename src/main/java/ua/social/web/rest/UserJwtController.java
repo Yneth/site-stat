@@ -39,7 +39,6 @@ public class UserJwtController {
             String token = tokenProvider.createToken(authentication, rememberMe);
             return ResponseEntity.ok(new JwtToken(token));
         } catch (AuthenticationException exception) {
-
             return new ResponseEntity<>(Collections.singletonMap(
                     "AuthenticationException", exception.getLocalizedMessage()
             ), HttpStatus.UNAUTHORIZED);

@@ -5,6 +5,7 @@ import ua.social.dao.AuthorityDAO;
 import ua.social.domain.Authority;
 
 import javax.persistence.Query;
+import java.util.Optional;
 
 @Repository
 public class AuthorityJpaDAO extends AbstractJpaDAO<Authority> implements AuthorityDAO {
@@ -13,9 +14,10 @@ public class AuthorityJpaDAO extends AbstractJpaDAO<Authority> implements Author
     }
 
     @Override
-    public Authority findOne(String name) {
+    public Optional<Authority> findOne(String name) {
         Query query = entityManager.createQuery("select a from Authority a where a.name = :name");
         query.setParameter("name", name);
-        return (Authority) query.getSingleResult();
+
+        return query.getResultList().stream().findFirst();
     }
 }

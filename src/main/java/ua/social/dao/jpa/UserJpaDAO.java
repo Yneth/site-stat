@@ -18,7 +18,6 @@ public class UserJpaDAO extends AbstractJpaDAO<User> implements UserDAO {
     public Optional<User> findOneByLogin(String login) {
         Query query = entityManager.createQuery("select u from User u where u.login = :login");
         query.setParameter("login", login);
-        User user = (User) query.getSingleResult();
-        return Optional.ofNullable(user);
+        return query.getResultList().stream().findFirst();
     }
 }
