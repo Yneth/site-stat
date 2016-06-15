@@ -10,6 +10,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import ua.social.security.TokenProvider;
 import ua.social.web.rest.dto.LoginDTO;
@@ -27,7 +28,7 @@ public class UserJwtController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    @RequestMapping(value = "authenticate")
+    @RequestMapping(value = "authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> authenticate(@Valid @RequestBody LoginDTO loginDTO, HttpServletResponse response) {
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword());
