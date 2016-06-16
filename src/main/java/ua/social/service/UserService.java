@@ -8,8 +8,8 @@ import java.util.Optional;
 public interface UserService {
     User createUser(ManagedUserDTO user);
 
-    User createUser(String login, String password, String firstName, String lastName, String email,
-                    String langKey);
+    User createUserInformation(String login, String password, String firstName, String lastName, String email,
+                               String langKey);
 
     Optional<User> activateRegistration(String key);
 

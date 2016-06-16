@@ -13,6 +13,7 @@ import ua.social.domain.Authority;
 import ua.social.domain.User;
 import ua.social.security.SecurityUtils;
 import ua.social.service.UserService;
+import ua.social.service.util.RandomUtil;
 import ua.social.web.rest.dto.ManagedUserDTO;
 
 import java.util.HashSet;
@@ -37,7 +38,6 @@ public class UserServiceImpl implements UserService {
     public User createUser(ManagedUserDTO user) {
         User newUser = new User();
 
-        // TODO: should not be activated by default
         newUser.setActivated(true);
 
         newUser.setEmail(user.getEmail());
@@ -66,8 +66,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User createUser(String login, String password, String firstName, String lastName, String email,
-                           String langKey) {
+    public User createUserInformation(String login, String password, String firstName, String lastName, String email,
+                                      String langKey) {
         User newUser = new User();
         Set<Authority> authorities = new HashSet<>();
         String encodedPassword = passwordEncoder.encode(password);
@@ -78,8 +78,8 @@ public class UserServiceImpl implements UserService {
         newUser.setEmail(email);
         newUser.setLastName(langKey);
 
-        // TODO: should not be activated
-        newUser.setActivated(true);
+        newUser.setActivated(false);
+        newUser.setActivationKey(RandomUtil.generateActivationKey());
         authorityDAO.findOne("ROLE_USER").ifPresent(authority -> authorities.add(authority));
         newUser.setAuthorities(authorities);
         userDAO.save(newUser);
