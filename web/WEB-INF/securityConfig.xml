@@ -13,30 +13,16 @@
     <context:property-placeholder location="classpath:jwt.properties" ignore-unresolvable="true"/>
 
     <security:authentication-manager alias="authenticationManager">
-        <security:authentication-provider>
-            <security:user-service>
-                <security:user name="admin" authorities="ROLE_ADMIN"/>
-            </security:user-service>
+        <security:authentication-provider user-service-ref="userDetailsService">
             <security:password-encoder ref="passwordEncoder"/>
         </security:authentication-provider>
     </security:authentication-manager>
 
     <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 
-    <bean id="authenticationEntryPoint" class="ua.social.security.jwt.JwtAuthenticationEntryPoint">
-        <property name="realmName" value="dsa"/>
-    </bean>
-
-    <bean id="basicAuthenticationFilter"
-          class="org.springframework.security.web.authentication.www.BasicAuthenticationFilter">
-        <constructor-arg name="authenticationEntryPoint" ref="authenticationEntryPoint"/>
-        <constructor-arg name="authenticationManager" ref="authenticationManager"/>
-    </bean>
-
     <security:http auto-config="false" create-session="stateless" authentication-manager-ref="authenticationManager"
                    entry-point-ref="authenticationEntryPoint">
-        <!--<security:intercept-url pattern="/**" access="hasRole('ROLE_ADMIN')"/>-->
-        <security:custom-filter ref="basicAuthenticationFilter" after="BASIC_AUTH_FILTER"/>
+        <security:custom-filter ref="authenticationFilter" before="FORM_LOGIN_FILTER"/>
         <security:csrf disabled="true"/>
     </security:http>
 
