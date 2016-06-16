@@ -7,68 +7,73 @@
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
 </head>
 <body ng-app="socialStatApp">
-<!--[if lt IE 9]>
-<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
-    your browser</a> to improve your experience.</p>
-<![endif]-->
+    <!--[if lt IE 9]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+        your browser</a> to improve your experience.</p>
+    <![endif]-->
 
-<div ui-view="navbar" ng-cloak></div>
+    <div ui-view="navbar" ng-cloak></div>
 
-<div role="main">
-    <div class="" ui-view="content">
+    <div role="main">
+        <div class="" ui-view="content">
 
+        </div>
     </div>
-</div>
 
-<footer class="footer" ng-cloak></footer>
+    <footer class="footer" ng-cloak></footer>
 
 
-<script src="bower_components/jquery/dist/jquery.min.js"></script>
-<script src="bower_components/angular/angular.js"></script>
-<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-<script src="bower_components/ngstorage/ngStorage.js"></script>
-<script src="bower_components/angular-dynamic-locale/src/tmhDynamicLocale.js"></script>
-<script src="bower_components/angular-cookies/angular-cookies.js"></script>
-<script src="bower_components/angular-resource/angular-resource.js"></script>
-<script src="bower_components/angular-translate/angular-translate.js"></script>
-<script src="bower_components/angular-translate-loader-partial/angular-translate-loader-partial.js"></script>
-<script src="bower_components/messageformat/messageformat.js"></script>
-<script src="bower_components/angular-translate-interpolation-messageformat/angular-translate-interpolation-messageformat.js"></script>
-<script src="bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.js"></script>
-<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/ngstorage/ngStorage.js"></script>
+    <script src="bower_components/angular-dynamic-locale/src/tmhDynamicLocale.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-translate/angular-translate.js"></script>
+    <script src="bower_components/angular-translate-loader-partial/angular-translate-loader-partial.js"></script>
+    <script src="bower_components/messageformat/messageformat.js"></script>
+    <script src="bower_components/angular-translate-interpolation-messageformat/angular-translate-interpolation-messageformat.js"></script>
+    <script src="bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 
-<script src="app/app.module.js"></script>
-<script src="app/services/auth/auth.service.js"></script>
-<script src="app/services/auth/account.service.js"></script>
-<script src="app/services/auth/principal.service.js"></script>
-<script src="app/services/auth/register.service.js"></script>
+    <script src="app/app.module.js"></script>
+    <script src="app/services/auth/activate.service.js"></script>
+    <script src="app/services/auth/auth.service.js"></script>
+    <script src="app/services/auth/auth-jwt.service.js"></script>
+    <script src="app/services/auth/account.service.js"></script>
+    <script src="app/services/auth/principal.service.js"></script>
+    <script src="app/services/auth/register.service.js"></script>
+    <script src="app/services/user/user.service.js"></script>
 
-<script src="app/layouts/navbar/navbar.controller.js"></script>
-<script src="app/layouts/error/error.state.js"></script>
+    <script src="app/layouts/navbar/navbar.controller.js"></script>
+    <script src="app/layouts/error/error.state.js"></script>
 
-<script src="app/home/home.state.js"></script>
-<script src="app/home/home.controller.js"></script>
+    <script src="app/home/home.state.js"></script>
+    <script src="app/home/home.controller.js"></script>
 
-<script src="app/components/login/login.controller.js"></script>
-<script src="app/components/login/login.service.js"></script>
+    <script src="app/components/login/login.controller.js"></script>
+    <script src="app/components/login/login.service.js"></script>
 
-<script src="app/components/language/language.constants.js"></script>
-<script src="app/components/language/language.controller.js"></script>
-<script src="app/components/language/language.filter.js"></script>
-<script src="app/components/language/language.service.js"></script>
+    <script src="app/components/language/language.constants.js"></script>
+    <script src="app/components/language/language.controller.js"></script>
+    <script src="app/components/language/language.filter.js"></script>
+    <script src="app/components/language/language.service.js"></script>
 
-<script src="app/config/http.config.js"></script>
-<script src="app/config/compile.config.js"></script>
-<script src="app/config/state-debug.service.js"></script>
-<script src="app/config/translation.config.js"></script>
-<script src="app/config/translation-storage.provider.js"></script>
-<script src="app/config/handlers/state.handler.js"></script>
-<script src="app/config/handlers/state.handler.js"></script>
-<script src="app/config/handlers/translation.handler.js"></script>
+    <script src="app/config/http.config.js"></script>
+    <script src="app/config/compile.config.js"></script>
+    <script src="app/config/state-debug.service.js"></script>
+    <script src="app/config/translation.config.js"></script>
+    <script src="app/config/translation-storage.provider.js"></script>
+    <script src="app/config/handlers/state.handler.js"></script>
+    <script src="app/config/handlers/state.handler.js"></script>
+    <script src="app/config/handlers/translation.handler.js"></script>
+    <script src="app/config/interceptors/auth.interceptor.js"></script>
+    <script src="app/config/interceptors/auth-expired.interceptor.js"></script>
 
-<script src="app/app.state.js"></script>
-<script src="app/app.constants.js"></script>
+    <script src="app/app.state.js"></script>
+    <script src="app/app.constants.js"></script>
 
-<script src="app/account/account.state.js"></script>
+    <script src="app/account/account.state.js"></script>
 </body>
 </html>
