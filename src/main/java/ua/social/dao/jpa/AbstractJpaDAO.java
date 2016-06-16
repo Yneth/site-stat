@@ -5,6 +5,7 @@ import ua.social.dao.DAO;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -17,7 +18,7 @@ public abstract class AbstractJpaDAO<Entity> implements DAO<Entity> {
     @PersistenceContext
     protected EntityManager entityManager;
 
-    private final Class<Entity> clazz;
+    protected final Class<Entity> clazz;
 
     public AbstractJpaDAO(Class<Entity> clazz) {
         this.clazz = clazz;
