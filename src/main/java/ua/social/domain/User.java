@@ -30,7 +30,7 @@ public class User extends AbstractEntity {
     @NotNull
     @Pattern(regexp = Constants.LOGIN_REGEX)
     @Size(min = 1, max = 100)
-    @Column(length = 100, unique = true, nullable = false)
+    @Column(name="login", length = 100, unique = true, nullable = false)
     private String login;
 
     @JsonIgnore
@@ -77,7 +77,7 @@ public class User extends AbstractEntity {
     @JoinTable(
             name = "user_authority",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")})
+            inverseJoinColumns = {@JoinColumn(name = "authority_id", referencedColumnName = "id")})
     private Set<Authority> authorities = new HashSet<>();
 
     public String getLogin() {
