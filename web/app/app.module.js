@@ -16,7 +16,8 @@
         'stateHandler', 'translationHandler', 'StateDebugService'
     ];
 
-    function run(stateHandler, translationHandler) {
+    function run(stateHandler, translationHandler, StateDebugService) {
+        StateDebugService.active = true;
         stateHandler.initialize();
         translationHandler.initialize();
     }
