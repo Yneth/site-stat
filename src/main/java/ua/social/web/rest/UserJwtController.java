@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import ua.social.config.Constants;
 import ua.social.security.TokenProvider;
 import ua.social.web.rest.dto.LoginDTO;
 
@@ -37,6 +38,7 @@ public class UserJwtController {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             boolean rememberMe = (loginDTO.isRememberMe() == null) ? false : loginDTO.isRememberMe();
             String token = tokenProvider.createToken(authentication, rememberMe);
+            response.addHeader(Constants.AUTHORIZATION_HEADER, Constants.BEARER + token);
             return ResponseEntity.ok(new JwtToken(token));
         } catch (AuthenticationException exception) {
             return new ResponseEntity<>(Collections.singletonMap(
