@@ -115,18 +115,22 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = true)
     public Optional<User> getCurrentUser() {
-        Optional<User> user = userDAO.findOneByLogin(SecurityUtils.getCurrentUserLogin());
-        return user.map(u -> {
-            // eagerly load
-            u.getAuthorities().size();
-            return u;
-        });
+        return getUserByLoginWithAuthorities(SecurityUtils.getCurrentUserLogin());
     }
 
     @Override
     @Transactional(readOnly = true)
     public Optional<User> getUserByLogin(String login) {
         return userDAO.findOneByLogin(login);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<User> getUserByLoginWithAuthorities(String login) {
+        return userDAO.findOneByLogin(login).map(u -> {
+            u.getAuthorities().size();
+            return u;
+        });
     }
 
     @Override
