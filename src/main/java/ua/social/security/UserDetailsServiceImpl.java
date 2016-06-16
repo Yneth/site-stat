@@ -27,7 +27,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
         log.debug("Authenticating {}", login);
 
-        return userService.getUserByLogin(login).map(u -> {
+        return userService.getUserByLoginWithAuthorities(login).map(u -> {
             if (!u.getActivated()) {
                 throw new UserNotActivatedException("User " + login + " was not activated");
             }
