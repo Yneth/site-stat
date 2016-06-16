@@ -38,7 +38,7 @@
             return $http.post('api/authenticate', data).success(authenticateSuccess);
 
             function authenticateSuccess(data, status, headers) {
-                var token = headers('Authentication');
+                var token = headers('Authorization');
                 if (angular.isDefined(token) && token.slice(0, 7) === 'Bearer ') {
                     var jwt = token.slice(7, token.length);
                     service.storeAuthenticationToken(jwt);
