@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
         if (user.getAuthorities() != null) {
             Set<Authority> authorities = new HashSet<>();
             user.getAuthorities().stream().forEach(
-                    authority -> authorityDAO.findOne(authority).ifPresent(
+                    authority -> authorityDAO.findOneWithName(authority).ifPresent(
                             authority1 -> authorities.add(authority1)
                     )
             );
@@ -80,7 +80,7 @@ public class UserServiceImpl implements UserService {
 
         newUser.setActivated(false);
         newUser.setActivationKey(RandomUtil.generateActivationKey());
-        authorityDAO.findOne("ROLE_USER").ifPresent(authority -> authorities.add(authority));
+        authorityDAO.findOneWithName("ROLE_USER").ifPresent(authority -> authorities.add(authority));
         newUser.setAuthorities(authorities);
         userDAO.save(newUser);
         log.debug("Created information for User {}", newUser);
@@ -100,7 +100,7 @@ public class UserServiceImpl implements UserService {
             u.setEmail(email);
             u.setLangKey(langKey);
             log.debug("Updated information for User {}", u);
-            userDAO.update(u);
+            userDAO.save(u);
         });
     }
 

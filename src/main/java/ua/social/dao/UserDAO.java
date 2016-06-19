@@ -7,5 +7,4 @@ import java.util.Optional;
 
 public interface UserDAO extends DAO<User> {
     Optional<User> findOneByLogin(String login);
-    Optional<User> findOneByLoginWithAuthorities(String login);
 }

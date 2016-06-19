@@ -1,11 +1,13 @@
 package ua.social.dao.jpa;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import ua.social.dao.DAO;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -15,6 +17,8 @@ import java.util.Optional;
 
 @Repository
 public abstract class AbstractJpaDAO<Entity> implements DAO<Entity> {
+    private static final Long ZERO = 0L;
+
     @PersistenceContext
     protected EntityManager entityManager;
 
@@ -24,30 +28,41 @@ public abstract class AbstractJpaDAO<Entity> implements DAO<Entity> {
         this.clazz = clazz;
     }
 
+    @Override
     public Optional<Entity> getById(long id) {
         return Optional.ofNullable(entityManager.find(clazz, id));
     }
 
-    public Entity update(Entity entity) {
+    @Override
+    public <S extends Entity> S save(S entity) {
         return entityManager.merge(entity);
     }
 
-    public void save(Entity entity) {
-        entityManager.persist(entity);
-    }
-
-    public List<Entity> list(int startPosition, int maxResults) {
+    @Override
+    public Page<Entity> findAll(Pageable pageable) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Entity> query = builder.createQuery(clazz);
         Root<Entity> from = query.from(clazz);
         query.select(from);
         TypedQuery<Entity> typedQuery = entityManager.createQuery(query);
-        return typedQuery.
-                setFirstResult(startPosition).
-                setMaxResults(maxResults).
+
+        List<Entity> totals = typedQuery.
+                setFirstResult(pageable.getOffset()).
+                setMaxResults(pageable.getPageSize()).
                 getResultList();
+
+//        not sure if it is valid way to calculate total
+//        see org.springframework.data.jpa.repository.query.JpaQueryExecution.doExecute implementation
+        Long total = (long) totals.size();
+
+        if (ZERO.equals(total)) {
+            return new PageImpl<>(totals, pageable, total);
+        }
+
+        return new PageImpl<>(totals, pageable, total);
     }
 
+    @Override
     public void delete(Entity entity) {
         entityManager.remove(entity);
     }

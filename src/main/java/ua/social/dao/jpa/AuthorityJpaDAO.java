@@ -14,7 +14,7 @@ public class AuthorityJpaDAO extends AbstractJpaDAO<Authority> implements Author
     }
 
     @Override
-    public Optional<Authority> findOne(String name) {
+    public Optional<Authority> findOneWithName(String name) {
         Query query = entityManager.createQuery("select a from Authority a where a.name = :name");
         query.setParameter("name", name);
 
