@@ -1,8 +1,9 @@
 package ua.social.domain;
 
-import org.springframework.security.core.GrantedAuthority;
-
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -24,33 +25,23 @@ public class Authority extends AbstractEntity {
         this.name = name;
     }
 
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (!(o instanceof Authority)) return false;
 
-        Authority authority = (Authority) o;
+        Authority that = (Authority) o;
 
-        if (name != null ? !name.equals(authority.name) : authority.name != null) {
-            return false;
-        }
-
+        if (getId() != that.getId()) return false;
+        if (getName() != null ? getName().equals(that.getName()) : that.getName() == null) return false;
         return true;
     }
 
     @Override
     public int hashCode() {
-        return name != null ? name.hashCode() : 0;
-    }
-
-    @Override
-    public String toString() {
-        return "Authority{" +
-                "name='" + name + '\'' +
-                "}";
+        int result = getName() != null ? getName().hashCode() : 0;
+        result = 31 * result + Long.hashCode(getId());
+        return result;
     }
 }

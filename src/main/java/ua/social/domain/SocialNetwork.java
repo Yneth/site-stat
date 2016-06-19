@@ -16,17 +16,6 @@ public class SocialNetwork extends AbstractEntity {
     public SocialNetwork() {
     }
 
-    public SocialNetwork(long id, User user, String name, String url) {
-        this(user, name, url);
-        this.id = id;
-    }
-
-    public SocialNetwork(User user, String name, String url) {
-        this.user = user;
-        this.name = name;
-        this.url = url;
-    }
-
     public String getName() {
         return name;
     }
@@ -49,5 +38,28 @@ public class SocialNetwork extends AbstractEntity {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof SocialNetwork)) return false;
+
+        SocialNetwork that = (SocialNetwork) o;
+
+        if (getId() != that.getId()) return false;
+        if (getUser() != null ? !getUser().equals(that.getUser()) : that.getUser() != null) return false;
+        if (getName() != null ? !getName().equals(that.getName()) : that.getName() != null) return false;
+        return getUrl() != null ? getUrl().equals(that.getUrl()) : that.getUrl() == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getUser() != null ? getUser().hashCode() : 0;
+        result = 31 * result + Long.hashCode(getId());
+        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
+        result = 31 * result + (getUrl() != null ? getUrl().hashCode() : 0);
+        return result;
     }
 }
