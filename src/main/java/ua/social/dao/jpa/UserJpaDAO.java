@@ -30,4 +30,14 @@ public class UserJpaDAO extends AbstractJpaDAO<User> implements UserDAO {
         // http://sysout.be/2011/03/09/why-you-should-never-use-getsingleresult-in-jpa/
         return query.getResultList().stream().findFirst();
     }
+
+    @Override
+    public Optional<User> findOneByLoginWithAuthorities(String login) {
+        Query query = entityManager.createQuery("select u from User u join fetch u.authorities where u.login = :login");
+        query.setParameter("login", login);
+
+        // link that describes choice of getResultList over getSingleResult
+        // http://sysout.be/2011/03/09/why-you-should-never-use-getsingleresult-in-jpa/
+        return query.getResultList().stream().findFirst();
+    }
 }

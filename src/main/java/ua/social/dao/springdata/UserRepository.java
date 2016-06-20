@@ -8,5 +8,7 @@ import ua.social.domain.User;
 import java.util.Optional;
 
 public interface UserRepository extends UserDAO, JpaRepository<User, Long> {
-    Optional<User> findOneByLogin(String login);
+    @Override
+    @Query("select u from User u join fetch u.authorities where u.login IN ?1")
+    Optional<User> findOneByLoginWithAuthorities(String login);
 }
