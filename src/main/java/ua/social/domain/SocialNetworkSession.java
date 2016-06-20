@@ -1,5 +1,7 @@
 package ua.social.domain;
 
+import ua.social.security.acl.SecuredDomain;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.Duration;
@@ -9,7 +11,7 @@ import java.util.Optional;
 @Entity
 @Table(name = "social_network_session")
 @SequenceGenerator(name = "seq", sequenceName = "social_network_session_id_seq", allocationSize = 1)
-public class SocialNetworkSession extends AbstractEntity {
+public class SocialNetworkSession extends AbstractEntity implements SecuredDomain {
     @ManyToOne
     private SocialNetwork socialNetwork;
 
@@ -92,5 +94,10 @@ public class SocialNetworkSession extends AbstractEntity {
         result = 31 * result + (getEnd() != null ? getEnd().hashCode() : 0);
         result = 31 * result + (getDuration() != null ? getDuration().hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public Long getOwnerId() {
+        return socialNetwork.getOwnerId();
     }
 }

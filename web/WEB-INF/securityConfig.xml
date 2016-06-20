@@ -28,4 +28,9 @@
 
     <security:global-method-security secured-annotations="enabled" pre-post-annotations="enabled"
                                      authentication-manager-ref="authenticationManager"/>
+
+    <bean class="ua.social.security.acl.impl.SimpleSecuredDomainService">
+        <constructor-arg name="domainPackage" value="ua.social.domain"/>
+    </bean>
+    <bean class="ua.social.security.acl.impl.PermissionEvaluatorImpl"/>
 </beans>
