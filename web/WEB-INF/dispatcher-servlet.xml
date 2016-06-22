@@ -17,7 +17,7 @@
         <security:protect-pointcut expression="execution(* ua.social.service.impl.SocialNetworkServiceImpl.*(..))" access="hasRole('ROLE_USER') AND hasPermission(returnObject, 'read')"/>
     </security:global-method-security>
 
-    <import resource="securityConfig.xml"/>
-    <import resource="dbContext.xml"/>
-    <import resource="mvcContext.xml"/>
+    <import resource="security-context.xml"/>
+    <import resource="db-context.xml"/>
+    <import resource="mvc-context.xml"/>
 </beans>
