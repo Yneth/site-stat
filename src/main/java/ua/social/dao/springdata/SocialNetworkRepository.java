@@ -12,11 +12,11 @@ import java.util.Optional;
 public interface SocialNetworkRepository extends SocialNetworkDAO, JpaRepository<SocialNetwork, Long> {
     @Override
     @Query("select sn from SocialNetwork sn where sn.user.id = ?1")
-    Page<SocialNetwork> findForUserId(Long id, Pageable pageable);
+    Page<SocialNetwork> findByUserId(Long id, Pageable pageable);
 
     @Override
     @Query("select sn from SocialNetwork sn where sn.user.login IN ?1")
-    Page<SocialNetwork> findForUserLogin(String login, Pageable pageable);
+    Page<SocialNetwork> findByUserLogin(String login, Pageable pageable);
 
     @Override
     @Query("select sn from SocialNetwork sn join fetch sn.socialNetworkSessions")
