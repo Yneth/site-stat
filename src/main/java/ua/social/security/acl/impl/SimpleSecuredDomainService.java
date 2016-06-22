@@ -19,7 +19,7 @@ public class SimpleSecuredDomainService implements SecuredDomainService {
 
     private final Map<String, Class<?>> securedDomains;
 
-    public SimpleSecuredDomainService(String domainPackage) {
+    public SimpleSecuredDomainService(String domainPackage) throws ClassNotFoundException {
         this.domainPackage = domainPackage;
         this.securedDomains = initSecuredDomains();
     }
@@ -36,7 +36,7 @@ public class SimpleSecuredDomainService implements SecuredDomainService {
         return securedDomains.containsKey(name);
     }
 
-    private Map<String, Class<?>> initSecuredDomains() {
+    private Map<String, Class<?>> initSecuredDomains() throws ClassNotFoundException {
         Map<String, Class<?>> securedDomains = Collections.EMPTY_MAP;
         if (!StringUtils.hasText(domainPackage)) {
             // TODO: throw exception and add log
@@ -45,10 +45,11 @@ public class SimpleSecuredDomainService implements SecuredDomainService {
         try {
             securedDomains = getClassesFromPackage(domainPackage)
                     .stream()
-                    .filter(aClass -> aClass.isAssignableFrom(SecuredDomain.class))
+                    .filter(aClass -> SecuredDomain.class.isAssignableFrom(aClass))
                     .collect(Collectors.toMap(Class::getSimpleName, Function.identity()));
         } catch (ClassNotFoundException e) {
             log.error("No such class found.", e);
+            throw e;
         }
         return securedDomains;
     }
@@ -61,7 +62,7 @@ public class SimpleSecuredDomainService implements SecuredDomainService {
         }));
         List<Class<?>> classes = new ArrayList<>();
         for (File file : files) {
-            String className = file.getName().replace(".class$", "");
+            String className = file.getName().replace(".class", "");
             classes.add(Class.forName(packageName + "." + className));
         }
         return classes;
