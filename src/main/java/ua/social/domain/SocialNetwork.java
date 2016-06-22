@@ -15,7 +15,7 @@ public class SocialNetwork extends AbstractEntity implements SecuredDomain {
     private String name;
     @Column(name = "url", nullable = false)
     private String url;
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "id", fetch = FetchType.EAGER)
     private List<SocialNetworkSession> socialNetworkSessions;
 
     public SocialNetwork() {
