@@ -1,5 +1,8 @@
 package ua.social.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PostAuthorize;
 import ua.social.domain.SocialNetwork;
 import ua.social.domain.User;
 
@@ -13,6 +16,5 @@ public interface SocialNetworkService {
     void deleteNetwork(SocialNetwork network);
 
     Optional<SocialNetwork> getById(Long id);
-    Optional<SocialNetwork> getByUserId(Long id);
-    Optional<SocialNetwork> getByUser(User user);
+    Page<SocialNetwork> getByUserId(Long id, Pageable pageable);
 }
