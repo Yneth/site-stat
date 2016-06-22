@@ -5,6 +5,8 @@ import ua.social.security.acl.SecuredDomain;
 import javax.persistence.*;
 import java.util.List;
 
+
+// TODO: rename to Site
 @Entity
 @Table(name = "social_network")
 @SequenceGenerator(name = "seq", sequenceName = "social_network_id_seq", allocationSize = 1)
