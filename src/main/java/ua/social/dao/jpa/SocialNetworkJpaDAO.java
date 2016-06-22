@@ -18,12 +18,12 @@ public class SocialNetworkJpaDAO
     }
 
     @Override
-    public Page<SocialNetwork> findForUserLogin(String login, Pageable pageable) {
+    public Page<SocialNetwork> findByUserLogin(String login, Pageable pageable) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Page<SocialNetwork> findForUserId(Long id, Pageable pageable) {
+    public Page<SocialNetwork> findByUserId(Long id, Pageable pageable) {
         throw new UnsupportedOperationException();
     }
 
