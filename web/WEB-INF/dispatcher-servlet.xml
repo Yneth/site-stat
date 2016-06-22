@@ -2,14 +2,22 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
             http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:annotation-config/>
     <context:component-scan base-package="ua.social.config"/>
     <context:component-scan base-package="ua.social.security"/>
 
+    <security:global-method-security pre-post-annotations="enabled">
+        <security:expression-handler ref="expressionHandler"/>
+        <security:protect-pointcut expression="execution(* ua.social.service.impl.SocialNetworkServiceImpl.*(..))" access="hasRole('ROLE_USER') AND hasPermission(returnObject, 'read')"/>
+    </security:global-method-security>
+
+    <import resource="securityConfig.xml"/>
     <import resource="dbContext.xml"/>
     <import resource="mvcContext.xml"/>
-    <import resource="securityConfig.xml"/>
 </beans>
