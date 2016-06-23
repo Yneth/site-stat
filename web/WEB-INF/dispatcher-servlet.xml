@@ -14,7 +14,7 @@
 
     <security:global-method-security pre-post-annotations="enabled">
         <security:expression-handler ref="expressionHandler"/>
-        <security:protect-pointcut expression="execution(* ua.social.service.impl.SocialNetworkServiceImpl.*(..))" access="hasRole('ROLE_USER') AND hasPermission(returnObject, 'read')"/>
+        <security:protect-pointcut expression="execution(* ua.abond.social.service.impl.SocialNetworkServiceImpl.*(..))" access="hasRole('ROLE_USER') AND hasPermission(returnObject, 'read')"/>
     </security:global-method-security>
 
     <import resource="security-context.xml"/>
