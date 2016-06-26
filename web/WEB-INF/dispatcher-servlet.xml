@@ -9,12 +9,11 @@
             http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:annotation-config/>
-    <context:component-scan base-package="ua.social.config"/>
-    <context:component-scan base-package="ua.social.security"/>
+    <context:component-scan base-package="ua.abond.social.config"/>
+    <context:component-scan base-package="ua.abond.social.security"/>
 
     <security:global-method-security pre-post-annotations="enabled">
         <security:expression-handler ref="expressionHandler"/>
-        <security:protect-pointcut expression="execution(* ua.abond.social.service.impl.SocialNetworkServiceImpl.*(..))" access="hasRole('ROLE_USER') AND hasPermission(returnObject, 'read')"/>
     </security:global-method-security>
 
     <import resource="security-context.xml"/>
