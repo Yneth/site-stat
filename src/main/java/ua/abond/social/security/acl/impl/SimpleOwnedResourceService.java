@@ -3,8 +3,8 @@ package ua.abond.social.security.acl.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
-import ua.abond.social.security.acl.SecuredDomain;
-import ua.abond.social.security.acl.SecuredDomainService;
+import ua.abond.social.security.acl.OwnedResource;
+import ua.abond.social.security.acl.OwnedResourceService;
 
 import java.io.File;
 import java.net.URL;
@@ -12,23 +12,23 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class SimpleSecuredDomainService implements SecuredDomainService {
-    private final Logger log = LoggerFactory.getLogger(SimpleSecuredDomainService.class);
+public class SimpleOwnedResourceService implements OwnedResourceService {
+    private final Logger log = LoggerFactory.getLogger(SimpleOwnedResourceService.class);
 
     private final String domainPackage;
 
     private final Map<String, Class<?>> securedDomains;
 
-    public SimpleSecuredDomainService(String domainPackage) throws ClassNotFoundException {
+    public SimpleOwnedResourceService(String domainPackage) throws ClassNotFoundException {
         this.domainPackage = domainPackage;
         this.securedDomains = initSecuredDomains();
     }
 
     @Override
-    public SecuredDomain loadDomain(String name, Object domain) {
+    public OwnedResource loadDomain(String name, Object domain) {
         if (!contains(name)) return null;
-        SecuredDomain securedDomain = SecuredDomain.class.cast(domain);
-        return securedDomain;
+        OwnedResource ownedResource = OwnedResource.class.cast(domain);
+        return ownedResource;
     }
 
     @Override
@@ -45,7 +45,7 @@ public class SimpleSecuredDomainService implements SecuredDomainService {
         try {
             securedDomains = getClassesFromPackage(domainPackage)
                     .stream()
-                    .filter(aClass -> SecuredDomain.class.isAssignableFrom(aClass))
+                    .filter(aClass -> OwnedResource.class.isAssignableFrom(aClass))
                     .collect(Collectors.toMap(Class::getSimpleName, Function.identity()));
         } catch (ClassNotFoundException e) {
             log.error("No such class found.", e);

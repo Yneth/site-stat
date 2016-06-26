@@ -1,6 +1,7 @@
 package ua.abond.social.security.acl.impl;
 
 import org.springframework.security.core.GrantedAuthority;
+import ua.abond.social.security.acl.Owner;
 
 import java.util.Collection;
 
@@ -25,7 +26,7 @@ public class User
     }
 
     @Override
-    public Long getId() {
+    public Long getOwnerId() {
         return id;
     }
 

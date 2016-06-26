@@ -3,11 +3,9 @@ package ua.abond.social.web.rest.dto;
 import org.hibernate.validator.constraints.URL;
 import ua.abond.social.domain.SocialNetwork;
 import ua.abond.social.domain.User;
-import ua.abond.social.security.acl.annotation.DTO;
 
 import javax.validation.constraints.NotNull;
 
-@DTO
 public class SocialNetworkDTO {
 
     @NotNull

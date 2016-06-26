@@ -1,6 +1,6 @@
 package ua.abond.social.domain;
 
-import ua.abond.social.security.acl.SecuredDomain;
+import ua.abond.social.security.acl.OwnedResource;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -11,7 +11,7 @@ import java.util.Optional;
 @Entity
 @Table(name = "social_network_session")
 @SequenceGenerator(name = "seq", sequenceName = "social_network_session_id_seq", allocationSize = 1)
-public class SocialNetworkSession extends AbstractEntity implements SecuredDomain {
+public class SocialNetworkSession extends AbstractEntity implements OwnedResource {
     @ManyToOne
     private SocialNetwork socialNetwork;
 

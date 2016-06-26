@@ -6,8 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
-import ua.abond.social.security.acl.SecuredDomain;
-import ua.abond.social.security.acl.SecuredDomainService;
+import ua.abond.social.security.acl.OwnedResource;
+import ua.abond.social.security.acl.OwnedResourceService;
+import ua.abond.social.security.acl.Owner;
 
 import java.io.Serializable;
 import java.util.Optional;
@@ -16,11 +17,11 @@ import java.util.Optional;
 public class PermissionEvaluatorImpl implements PermissionEvaluator {
     private final Logger log = LoggerFactory.getLogger(PermissionEvaluatorImpl.class);
 
-    private final SecuredDomainService securedDomainService;
+    private final OwnedResourceService ownedResourceService;
 
     @Autowired
-    public PermissionEvaluatorImpl(SecuredDomainService securedDomainService) {
-        this.securedDomainService = securedDomainService;
+    public PermissionEvaluatorImpl(OwnedResourceService ownedResourceService) {
+        this.ownedResourceService = ownedResourceService;
     }
 
     @Override
@@ -41,9 +42,9 @@ public class PermissionEvaluatorImpl implements PermissionEvaluator {
 //            securedDomainName = securedDomainName.replace("DTO", "");
 //        }
 
-        SecuredDomain domain = securedDomainService.loadDomain(securedDomainName, targetDomainObject);
+        OwnedResource domain = ownedResourceService.loadDomain(securedDomainName, targetDomainObject);
         if (domain == null) {
-            log.debug("Domain is not registered as SecuredDomain Object {}", targetDomainObject);
+            log.debug("Domain is not registered as OwnedResource Object {}", targetDomainObject);
             return false;
         }
 
@@ -55,8 +56,8 @@ public class PermissionEvaluatorImpl implements PermissionEvaluator {
 
         Owner owner = (Owner) principal;
 
-        if (!owner.getId().equals(domain.getOwnerId())) {
-            log.debug("Owner {} does not own a SecuredDomain {}", owner, domain);
+        if (!owner.getOwnerId().equals(domain.getOwnerId())) {
+            log.debug("Owner {} does not own a OwnedResource {}", owner, domain);
             return false;
         }
 

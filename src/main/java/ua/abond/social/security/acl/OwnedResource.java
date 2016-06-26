@@ -1,5 +1,5 @@
 package ua.abond.social.security.acl;
 
-public interface SecuredDomain {
+public interface OwnedResource {
     Long getOwnerId();
 }
