@@ -40,12 +40,16 @@ public class SocialNetworkServiceImpl implements SocialNetworkService {
         socialNetworkDAO.delete(network);
     }
 
-    @PostAuthorize("hasRole('ROLE_USER') AND hasPermission(returnObject, 'read')")
+    @PostAuthorize("hasPermission(returnObject, 'read')")
     @Transactional(readOnly = true)
     @Override
-    public Optional<SocialNetwork> getById(Long id) {
-//        log.debug("Request to read all SocialNetwork {} for requested id", id);
-        return socialNetworkDAO.findByIdFullyFetched(id);
+    public Optional<SocialNetwork> getByIdWithSessions(Long id) {
+        log.debug("Request to read social network", id);
+        Optional<SocialNetwork> byId = socialNetworkDAO.getById(id).map(sn -> {
+            sn.getSocialNetworkSessions().size();
+            return sn;
+        });
+        return byId;
     }
 
     @Override

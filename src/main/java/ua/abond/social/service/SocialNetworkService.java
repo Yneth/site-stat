@@ -13,6 +13,6 @@ public interface SocialNetworkService {
 
     void deleteNetwork(SocialNetwork network);
 
-    Optional<SocialNetwork> getById(Long id);
+    Optional<SocialNetwork> getByIdWithSessions(Long id);
     Page<SocialNetwork> getByUserId(Long id, Pageable pageable);
 }
