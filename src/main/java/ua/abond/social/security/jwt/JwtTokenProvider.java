@@ -11,9 +11,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 import ua.abond.social.security.TokenProvider;
+import ua.abond.social.security.acl.impl.User;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -25,6 +25,7 @@ public class JwtTokenProvider implements TokenProvider {
     private final Logger log = LoggerFactory.getLogger(JwtTokenProvider.class);
 
     private static final String AUTHORITIES_KEY = "auth";
+    private static final String IDENTITY_KEY = "id";
 
     @Value("${jwt.secret}")
     private String secretKey;
@@ -36,7 +37,7 @@ public class JwtTokenProvider implements TokenProvider {
     private long tokenValidityInSecondsForRememberMe;
 
     @Override
-    public String createToken(Authentication authentication, boolean rememberMe) {
+    public String createToken(Authentication authentication, Long id,  boolean rememberMe) {
         String authorities = authentication.getAuthorities().stream()
                 .map(authority -> authority.getAuthority())
                 .collect(Collectors.joining(","));
@@ -52,6 +53,7 @@ public class JwtTokenProvider implements TokenProvider {
         return Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim(AUTHORITIES_KEY, authorities)
+                .claim(IDENTITY_KEY, id)
                 .signWith(SignatureAlgorithm.HS512, secretKey)
                 .setExpiration(validity)
                 .compact();
@@ -69,7 +71,9 @@ public class JwtTokenProvider implements TokenProvider {
                         .map(authority -> new SimpleGrantedAuthority(authority))
                         .collect(Collectors.toList());
 
-        User principal = new User(claims.getSubject(), "",
+        Long id = Long.valueOf(claims.get(IDENTITY_KEY).toString());
+
+        User principal = new User(id, claims.getSubject(), "",
                 authorities);
 
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);

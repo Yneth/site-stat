@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import ua.abond.social.config.Constants;
 import ua.abond.social.security.TokenProvider;
-import ua.abond.social.web.rest.dto.LoginDTO;
+import ua.abond.social.security.acl.impl.User;
 import ua.abond.social.web.rest.dto.JwtToken;
+import ua.abond.social.web.rest.dto.LoginDTO;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -40,7 +41,7 @@ public class UserJwtController {
 
             boolean rememberMe = (loginDTO.isRememberMe() == null) ? false : loginDTO.isRememberMe();
 
-            String token = tokenProvider.createToken(authentication, rememberMe);
+            String token = tokenProvider.createToken(authentication, ((User) authentication.getPrincipal()).getOwnerId(), rememberMe);
             response.addHeader(Constants.AUTHORIZATION_HEADER, Constants.BEARER + token);
 
             return ResponseEntity.ok(new JwtToken(token));

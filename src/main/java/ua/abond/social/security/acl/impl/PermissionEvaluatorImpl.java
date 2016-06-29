@@ -30,19 +30,23 @@ public class PermissionEvaluatorImpl implements PermissionEvaluator {
             log.debug("Unauthorized access or wrong permission type.");
             return false;
         }
-
+        Object target = targetDomainObject;
 //         Todo: change it with interceptors
         if (targetDomainObject instanceof Optional) {
-            targetDomainObject = ((Optional) targetDomainObject).get();
+            target = ((Optional) targetDomainObject).orElse(null);
+            if (target == null) {
+                log.debug("Target domain object is null");
+                return false;
+            }
         }
 
 //         Todo: change to ObjectMapper and also add interceptors
-        String securedDomainName = targetDomainObject.getClass().getSimpleName();
+        String securedDomainName = target.getClass().getSimpleName();
 //        if (targetDomainObject.getClass().isAnnotationPresent(DTO.class)) {
 //            securedDomainName = securedDomainName.replace("DTO", "");
 //        }
 
-        OwnedResource domain = ownedResourceService.loadDomain(securedDomainName, targetDomainObject);
+        OwnedResource domain = ownedResourceService.loadDomain(securedDomainName, target);
         if (domain == null) {
             log.debug("Domain is not registered as OwnedResource Object {}", targetDomainObject);
             return false;
