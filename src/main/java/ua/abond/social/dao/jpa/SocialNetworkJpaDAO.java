@@ -27,13 +27,18 @@ public class SocialNetworkJpaDAO
         throw new UnsupportedOperationException();
     }
 
-    @Override
-    public Optional<SocialNetwork> findByIdWithSessions(Long id) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Optional<SocialNetwork> findByIdFullyFetched(Long id) {
-        throw new UnsupportedOperationException();
-    }
+//    @Override
+//    public Optional<SocialNetwork> getByIdWithSessions(Long id) {
+//        throw new UnsupportedOperationException();
+//    }
+//
+//    @Override
+//    public Optional<SocialNetwork> findByIdWithSessions(Long id) {
+//        throw new UnsupportedOperationException();
+//    }
+//
+//    @Override
+//    public Optional<SocialNetwork> findByIdFullyFetched(Long id) {
+//        throw new UnsupportedOperationException();
+//    }
 }

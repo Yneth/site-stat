@@ -9,6 +9,7 @@ import java.util.Optional;
 public interface SocialNetworkDAO extends DAO<SocialNetwork> {
     Page<SocialNetwork> findByUserLogin(String login, Pageable pageable);
     Page<SocialNetwork> findByUserId(Long id, Pageable pageable);
-    Optional<SocialNetwork> findByIdWithSessions(Long id);
-    Optional<SocialNetwork> findByIdFullyFetched(Long id);
+//    Optional<SocialNetwork> findByIdWithSessions(Long id);
+//    Optional<SocialNetwork> getByIdWithSessions(Long id);
+//    Optional<SocialNetwork> findByIdFullyFetched(Long id);
 }
