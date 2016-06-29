@@ -6,8 +6,8 @@ import javax.persistence.*;
 public abstract class AbstractEntity {
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "seq")
-    protected long id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
+    protected Long id;
 
     public AbstractEntity() {
     }
@@ -16,11 +16,11 @@ public abstract class AbstractEntity {
         this.id = id;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 }

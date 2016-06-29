@@ -11,7 +11,7 @@ import java.util.Optional;
 @Entity
 @Table(name = "social_network_session")
 @SequenceGenerator(name = "seq", sequenceName = "social_network_session_id_seq", allocationSize = 1)
-public class SocialNetworkSession extends AbstractEntity implements OwnedResource {
+public class SocialNetworkSession extends AbstractEntity implements OwnedResource<Long> {
     @ManyToOne
     private SocialNetwork socialNetwork;
 
@@ -94,6 +94,16 @@ public class SocialNetworkSession extends AbstractEntity implements OwnedResourc
         result = 31 * result + (getEnd() != null ? getEnd().hashCode() : 0);
         result = 31 * result + (getDuration() != null ? getDuration().hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "SocialNetworkSession{" +
+                "socialNetwork=" + socialNetwork +
+                ", start=" + start +
+                ", end=" + end +
+                ", duration=" + duration +
+                '}';
     }
 
     @Override

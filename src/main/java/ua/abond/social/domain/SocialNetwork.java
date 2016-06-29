@@ -3,6 +3,7 @@ package ua.abond.social.domain;
 import ua.abond.social.security.acl.OwnedResource;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -10,15 +11,15 @@ import java.util.List;
 @Entity
 @Table(name = "social_network")
 @SequenceGenerator(name = "seq", sequenceName = "social_network_id_seq", allocationSize = 1)
-public class SocialNetwork extends AbstractEntity implements OwnedResource {
+public class SocialNetwork extends AbstractEntity implements OwnedResource<Long> {
     @ManyToOne
     private User user;
     @Column(name = "name", nullable = false)
     private String name;
     @Column(name = "url", nullable = false)
     private String url;
-    @OneToMany(mappedBy = "id", fetch = FetchType.EAGER)
-    private List<SocialNetworkSession> socialNetworkSessions;
+    @OneToMany(mappedBy = "id")
+    private List<SocialNetworkSession> socialNetworkSessions = new ArrayList<>();
 
     public SocialNetwork() {
     }
