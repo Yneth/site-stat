@@ -11,4 +11,8 @@ public interface UserRepository extends UserDAO, JpaRepository<User, Long> {
     @Override
     @Query("select u from User u join fetch u.authorities where u.login IN ?1")
     Optional<User> findOneByLoginWithAuthorities(String login);
+
+    @Override
+    @Query("select u from User u where u.email = ?1")
+    Optional<User> findOneByEmail(String email);
 }
