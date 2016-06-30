@@ -10,6 +10,7 @@
     function httpConfig($urlRouterProvider, $httpProvider) {
         $urlRouterProvider.otherwise('/');
 
+        $httpProvider.interceptors.push('errorHandlerInterceptor');
         $httpProvider.interceptors.push('authExpiredInterceptor');
         $httpProvider.interceptors.push('authInterceptor');
     }
