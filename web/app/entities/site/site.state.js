@@ -12,8 +12,8 @@
             parent: 'entity',
             url: '/site?page&sort',
             data: {
-                authorities: ['ROLE_USER'],
-                pageTitle: 'socialStatApp.site.home.title'
+                authorities: ['ROLE_USER', 'ROLE_ADMIN'],
+                pageTitle: 'site.home.title'
             },
             views: {
                 'content@': {
@@ -39,6 +39,12 @@
                             predicate: PaginationUtil.parsePredicate($stateParams.sort),
                             ascending: PaginationUtil.parseAscending($stateParams.sort)
                         };
+                    }
+                ],
+                mainTranslatePartialLoader: ['$translate', '$translatePartialLoader',
+                    function ($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('site');
+                        return $translate.refresh();
                     }
                 ]
             }
