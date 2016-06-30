@@ -6,11 +6,11 @@
     Auth.$inject = [
         '$rootScope', '$state', '$sessionStorage', '$translate',
         '$q', 'Principal', 'AuthServerProvider',
-        'Activate', 'Account', 'Register', 'LoginService'];
+        'Activate', 'Account', 'Register'];
 
     function Auth($rootScope, $state, $sessionStorage, $translate,
                   $q, Principal, AuthServerProvider,
-                  Activate, Account, Register, LoginService) {
+                  Activate, Account, Register) {
         var service = {
             createAccount: createAccount,
             activateAccount: activateAccount,
@@ -84,8 +84,14 @@
                 var isAuthenticated = Principal.isAuthenticated();
 
                 // an authenticated user can't access to login and register pages
-                if (isAuthenticated && $rootScope.toState.parent === 'account' && ($rootScope.toState.name === 'login' || $rootScope.toState.name === 'register' || $rootScope.toState.name === 'social-auth')) {
-                    $state.go('home');
+                if (isAuthenticated
+                        && ($rootScope.toState.parent === 'account' || $rootScope.toState.parent === 'app')
+                        && ($rootScope.toState.name === 'home'
+                        || $rootScope.toState.name === 'login'
+                        || $rootScope.toState.name === 'register'
+                        || $rootScope.toState.name === 'social-auth')) {
+
+                    $state.go('site');
                 }
 
                 // recover and clear previousState after external login redirect (e.g. oauth2)
@@ -109,9 +115,7 @@
                         storePreviousState($rootScope.toState.name, $rootScope.toStateParams);
 
                         // now, send them to the signin state so they can log in
-                        $state.go('accessdenied').then(function () {
-                            LoginService.open();
-                        });
+                        $state.go('accessdenied');
                     }
                 }
             }
