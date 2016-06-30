@@ -21,6 +21,8 @@ public interface UserService {
 
     Optional<User> getUserByLogin(String login);
 
+    Optional<User> getUserByEmail(String email);
+
     Optional<User> getUserByLoginWithAuthorities(String login);
 
     Optional<User> getUserById(Long id);
