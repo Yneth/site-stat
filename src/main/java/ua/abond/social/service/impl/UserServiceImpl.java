@@ -6,13 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ua.abond.social.domain.User;
-import ua.abond.social.service.UserService;
 import ua.abond.social.config.Constants;
 import ua.abond.social.dao.AuthorityDAO;
 import ua.abond.social.dao.UserDAO;
 import ua.abond.social.domain.Authority;
+import ua.abond.social.domain.User;
 import ua.abond.social.security.SecurityUtils;
+import ua.abond.social.service.UserService;
 import ua.abond.social.service.util.RandomUtil;
 import ua.abond.social.web.rest.dto.ManagedUserDTO;
 
@@ -51,15 +51,9 @@ public class UserServiceImpl implements UserService {
         } else {
             newUser.setLangKey(user.getLangKey());
         }
-        if (user.getAuthorities() != null) {
-            Set<Authority> authorities = new HashSet<>();
-            user.getAuthorities().stream().forEach(
-                    authority -> authorityDAO.findOneWithName(authority).ifPresent(
-                            authority1 -> authorities.add(authority1)
-                    )
-            );
-            newUser.setAuthorities(authorities);
-        }
+        Set<Authority> authorities = new HashSet<>();
+        authorityDAO.findOneWithName("ROLE_USER").ifPresent(r -> authorities.add(r));
+        newUser.setAuthorities(authorities);
         userDAO.save(newUser);
         log.debug("Created information for User {}", newUser);
         return newUser;
@@ -122,6 +116,11 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public Optional<User> getUserByLogin(String login) {
         return userDAO.findOneByLogin(login);
+    }
+
+    @Override
+    public Optional<User> getUserByEmail(String email) {
+        return userDAO.findOneByEmail(email);
     }
 
     @Override
