@@ -3,12 +3,12 @@
 
     angular
         .module('socialStatApp')
-        .factory('SiteService', SiteService);
+        .factory('Site', Site);
 
-    SiteService.$inject = ['$resource'];
+    Site.$inject = ['$resource'];
 
-    function SiteService($resource) {
-        return $resource.get('api/user/network/:id', {}, {
+    function Site($resource) {
+        return $resource('api/user/network/:id', {}, {
             'query': {method: 'GET', isArray: true },
             'get': {method:'GET', isArray: false }
             // 'update': {method: 'PUT'},
