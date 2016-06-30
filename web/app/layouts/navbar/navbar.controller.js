@@ -1,28 +1,22 @@
-(function() {
+(function () {
     'use strict';
 
     angular
         .module('socialStatApp')
         .controller('NavbarController', NavbarController);
 
-    NavbarController.$inject = ['$state', 'Auth', 'Principal', 'LoginService'];
+    NavbarController.$inject = ['$state', 'Auth', 'Principal'];
 
-    function NavbarController ($state, Auth, Principal, LoginService) {
+    function NavbarController($state, Auth, Principal) {
         var vm = this;
 
         vm.isCollapsed = true;
         vm.isAuthenticated = Principal.isAuthenticated;
 
-        vm.login = login;
         vm.logout = logout;
         vm.toggle = toggle;
         vm.collapse = collapse;
         vm.$state = $state;
-
-        function login() {
-            collapse();
-            LoginService.open();
-        }
 
         function logout() {
             collapse();
