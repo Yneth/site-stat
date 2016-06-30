@@ -31,7 +31,7 @@
 -- );
 --
 INSERT INTO USR VALUES (
-  1,
+  NEXTVAL('user_id_seq'),
   true,
   null,
   'admin@localhost',
@@ -45,7 +45,7 @@ INSERT INTO USR VALUES (
 );
 
 INSERT INTO USR VALUES (
-  2,
+  NEXTVAL('user_id_seq'),
   true,
   null,
   'user@localhost',
@@ -59,12 +59,12 @@ INSERT INTO USR VALUES (
 );
 
 INSERT INTO authority VALUES (
-  1,
+  NEXTVAL('authority_id_seq'),
   'ROLE_ADMIN'
 );
 
 INSERT INTO authority VALUES (
-  2,
+  NEXTVAL('authority_id_seq'),
   'ROLE_USER'
 );
 
@@ -80,8 +80,8 @@ INSERT INTO user_authority VALUES (
 -- INSERT INTO USR VALUES (NEXTVAL('USR_USER_ID_SEQ'), 'Valya');
 -- INSERT INTO USR VALUES (NEXTVAL('USR_USER_ID_SEQ'), 'Denis');
 -- INSERT INTO USR VALUES (NEXTVAL('USR_USER_ID_SEQ'), 'Mike');
-INSERT INTO SOCIAL_NETWORK VALUES (0, 'vk', 'vk.com', 1);
-INSERT INTO SOCIAL_NETWORK VALUES (1, 'fb', 'facebook.com', 1);
+INSERT INTO SOCIAL_NETWORK VALUES (NEXTVAL('SOCIAL_NETWORK_ID_SEQ'), 'vk', 'vk.com', 1);
+INSERT INTO SOCIAL_NETWORK VALUES (NEXTVAL('SOCIAL_NETWORK_ID_SEQ'), 'fb', 'facebook.com', 1);
 -- INSERT INTO SOCIAL_NETWORK VALUES (NEXTVAL('SOCIAL_NETWORK_ID_SEQ'), 'vk', 'vk.com', 1);
 -- INSERT INTO SOCIAL_NETWORK VALUES (NEXTVAL('SOCIAL_NETWORK_ID_SEQ'), 'vk', 'vk.com', 2);
 -- INSERT INTO SOCIAL_NETWORK VALUES (NEXTVAL('SOCIAL_NETWORK_ID_SEQ'), 'vk', 'vk.com', 3);
