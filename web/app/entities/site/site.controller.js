@@ -3,7 +3,7 @@
 
     angular
         .module('socialStatApp')
-        .factory('SiteController', SiteController);
+        .controller('SiteController', SiteController);
 
     SiteController.$inject = ['$scope', '$state', 'Site', 'ParseLinks', 'pagingParams', 'paginationConstants'];
 
