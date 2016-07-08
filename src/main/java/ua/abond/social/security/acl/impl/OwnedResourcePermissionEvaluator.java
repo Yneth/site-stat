@@ -14,13 +14,13 @@ import java.io.Serializable;
 import java.util.Optional;
 
 @Component("permissionEvaluator")
-public class PermissionEvaluatorImpl implements PermissionEvaluator {
-    private final Logger log = LoggerFactory.getLogger(PermissionEvaluatorImpl.class);
+public class OwnedResourcePermissionEvaluator implements PermissionEvaluator {
+    private final Logger log = LoggerFactory.getLogger(OwnedResourcePermissionEvaluator.class);
 
     private final OwnedResourceService ownedResourceService;
 
     @Autowired
-    public PermissionEvaluatorImpl(OwnedResourceService ownedResourceService) {
+    public OwnedResourcePermissionEvaluator(OwnedResourceService ownedResourceService) {
         this.ownedResourceService = ownedResourceService;
     }
 
@@ -31,7 +31,7 @@ public class PermissionEvaluatorImpl implements PermissionEvaluator {
             return false;
         }
         Object target = targetDomainObject;
-//         Todo: change it with interceptors
+
         if (targetDomainObject instanceof Optional) {
             target = ((Optional) targetDomainObject).orElse(null);
             if (target == null) {
@@ -40,11 +40,7 @@ public class PermissionEvaluatorImpl implements PermissionEvaluator {
             }
         }
 
-//         Todo: change to ObjectMapper and also add interceptors
         String securedDomainName = target.getClass().getSimpleName();
-//        if (targetDomainObject.getClass().isAnnotationPresent(DTO.class)) {
-//            securedDomainName = securedDomainName.replace("DTO", "");
-//        }
 
         OwnedResource domain = ownedResourceService.loadDomain(securedDomainName, target);
         if (domain == null) {
@@ -60,7 +56,7 @@ public class PermissionEvaluatorImpl implements PermissionEvaluator {
 
         Owner owner = (Owner) principal;
 
-        if (!owner.getOwnerId().equals(domain.getOwnerId())) {
+        if (!owner.getId().equals(domain.getOwnerId())) {
             log.debug("Owner {} does not own a OwnedResource {}", owner, domain);
             return false;
         }
