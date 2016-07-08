@@ -26,7 +26,7 @@
         <security:csrf disabled="true"/>
     </security:http>
 
-    <bean id="ownedResourceService" class="ua.abond.social.security.acl.impl.SimpleOwnedResourceService">
+    <bean id="ownedResourceService" class="ua.abond.social.security.acl.impl.OwnedResourceServiceImpl">
         <constructor-arg name="domainPackage" value="ua.abond.social.domain"/>
     </bean>
 
