@@ -41,7 +41,7 @@ public class UserJwtController {
 
             boolean rememberMe = (loginDTO.isRememberMe() == null) ? false : loginDTO.isRememberMe();
 
-            String token = tokenProvider.createToken(authentication, ((User) authentication.getPrincipal()).getOwnerId(), rememberMe);
+            String token = tokenProvider.createToken(authentication, ((User) authentication.getPrincipal()).getId(), rememberMe);
             response.addHeader(Constants.AUTHORIZATION_HEADER, Constants.BEARER + token);
 
             return ResponseEntity.ok(new JwtToken(token));
