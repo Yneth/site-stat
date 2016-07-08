@@ -12,14 +12,14 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class SimpleOwnedResourceService implements OwnedResourceService {
-    private final Logger log = LoggerFactory.getLogger(SimpleOwnedResourceService.class);
+public class OwnedResourceServiceImpl implements OwnedResourceService {
+    private final Logger log = LoggerFactory.getLogger(OwnedResourceServiceImpl.class);
 
     private final String domainPackage;
 
     private final Map<String, Class<?>> securedDomains;
 
-    public SimpleOwnedResourceService(String domainPackage) throws ClassNotFoundException {
+    public OwnedResourceServiceImpl(String domainPackage) throws ClassNotFoundException {
         this.domainPackage = domainPackage;
         this.securedDomains = initSecuredDomains();
     }
@@ -27,8 +27,8 @@ public class SimpleOwnedResourceService implements OwnedResourceService {
     @Override
     public OwnedResource loadDomain(String name, Object domain) {
         if (!contains(name)) return null;
-        OwnedResource ownedResource = OwnedResource.class.cast(domain);
-        return ownedResource;
+
+        return OwnedResource.class.cast(domain);
     }
 
     @Override
@@ -37,11 +37,13 @@ public class SimpleOwnedResourceService implements OwnedResourceService {
     }
 
     private Map<String, Class<?>> initSecuredDomains() throws ClassNotFoundException {
-        Map<String, Class<?>> securedDomains = Collections.EMPTY_MAP;
+
         if (!StringUtils.hasText(domainPackage)) {
-            // TODO: throw exception and add log
-            return securedDomains;
+            String message = "Could not find domainPackage with path " + domainPackage;
+            log.debug(message);
+            throw new MissingDomainPackageException(message);
         }
+        Map<String, Class<?>> securedDomains;
         try {
             securedDomains = getClassesFromPackage(domainPackage)
                     .stream()
@@ -57,6 +59,7 @@ public class SimpleOwnedResourceService implements OwnedResourceService {
 
     private List<Class<?>> getClassesFromPackage(String packageName) throws ClassNotFoundException {
         URL root = Thread.currentThread().getContextClassLoader().getResource(packageName.replace(".", "/"));
+
         List<File> files = Arrays.asList(new File(root.getFile()).listFiles((dir, name) -> {
             return name.endsWith(".class");
         }));
