@@ -26,7 +26,7 @@ public class User
     }
 
     @Override
-    public Long getOwnerId() {
+    public Long getId() {
         return id;
     }
 
