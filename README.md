@@ -10,8 +10,5 @@ Web service to track your site usage.
 * * slf4j
 * Front end:
 * * AngularJs
-* * Bootstrap
-* * Gulp
-* * Bower
 * Database:
 * * postgres
