@@ -26,19 +26,4 @@ public class SocialNetworkJpaDAO
     public Page<SocialNetwork> findByUserId(Long id, Pageable pageable) {
         throw new UnsupportedOperationException();
     }
-
-//    @Override
-//    public Optional<SocialNetwork> getByIdWithSessions(Long id) {
-//        throw new UnsupportedOperationException();
-//    }
-//
-//    @Override
-//    public Optional<SocialNetwork> findByIdWithSessions(Long id) {
-//        throw new UnsupportedOperationException();
-//    }
-//
-//    @Override
-//    public Optional<SocialNetwork> findByIdFullyFetched(Long id) {
-//        throw new UnsupportedOperationException();
-//    }
 }

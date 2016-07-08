@@ -76,9 +76,8 @@ public class User extends AbstractEntity {
         return login;
     }
 
-    //Lowercase the login before saving it in database
     public void setLogin(String login) {
-        this.login = login.toLowerCase(Locale.ENGLISH);
+        this.login = login;
     }
 
     public String getPassword() {
