@@ -9,8 +9,8 @@ import java.time.ZonedDateTime;
 import java.util.Optional;
 
 @Entity
-@Table(name = "social_network_session")
-@SequenceGenerator(name = "seq", sequenceName = "social_network_session_id_seq", allocationSize = 1)
+@Table(name = "site_session")
+@SequenceGenerator(name = "seq", sequenceName = "site_session_id_seq", allocationSize = 1)
 public class SiteSession extends AbstractEntity implements OwnedResource<Long> {
     // In minutes
     @Column(name = "duration")
