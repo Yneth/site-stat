@@ -17,8 +17,6 @@ import java.util.Set;
 @Table(name = "usr")
 @SequenceGenerator(name = "seq", sequenceName = "user_id_seq", allocationSize = 1)
 public class User extends AbstractEntity {
-    private static final long serialVersionUID = 1L;
-
     @NotNull
     @Pattern(regexp = Constants.LOGIN_REGEX)
     @Size(min = 1, max = 100)
@@ -71,6 +69,9 @@ public class User extends AbstractEntity {
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "authority_id", referencedColumnName = "id")})
     private Set<Authority> authorities = new HashSet<>();
+
+    public User() {
+    }
 
     public String getLogin() {
         return login;
@@ -192,7 +193,6 @@ public class User extends AbstractEntity {
                 ", email='" + email + '\'' +
                 ", activated='" + activated + '\'' +
                 ", langKey='" + langKey + '\'' +
-                ", activationKey='" + activationKey + '\'' +
                 "}";
     }
 }
