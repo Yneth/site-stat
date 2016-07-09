@@ -63,7 +63,7 @@ public class SiteControllerTest {
     @PostConstruct
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        SocialNetworkController resource = new SocialNetworkController();
+        SiteController resource = new SiteController();
         ReflectionTestUtils.setField(resource, "siteService", siteService);
         this.restSocialNetworkMock = MockMvcBuilders.standaloneSetup(resource)
 //                .setCustomArgumentResolvers(pageableArgumentResolver)
