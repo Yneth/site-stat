@@ -12,18 +12,17 @@ import java.util.Optional;
 @Table(name = "social_network_session")
 @SequenceGenerator(name = "seq", sequenceName = "social_network_session_id_seq", allocationSize = 1)
 public class SiteSession extends AbstractEntity implements OwnedResource<Long> {
-    @ManyToOne
-    private Site site;
-
+    // In minutes
+    @Column(name = "duration")
+    private Long duration;
     @NotNull
     @Column(name = "time_start", nullable = false)
     private ZonedDateTime start;
     @NotNull
     @Column(name = "time_end", nullable = false)
     private ZonedDateTime end;
-    // In minutes
-    @Column(name = "duration")
-    private Long duration;
+    @ManyToOne
+    private Site site;
 
     public SiteSession() {
     }
@@ -34,6 +33,11 @@ public class SiteSession extends AbstractEntity implements OwnedResource<Long> {
                 return Duration.between(start, end).toMinutes();
             });
         }).orElse(0L);
+    }
+
+    @Override
+    public Long getOwnerId() {
+        return site.getOwnerId();
     }
 
     public Site getSite() {
@@ -99,15 +103,11 @@ public class SiteSession extends AbstractEntity implements OwnedResource<Long> {
     @Override
     public String toString() {
         return "SiteSession{" +
+                "id=" + getId() +
                 "site=" + site +
                 ", start=" + start +
                 ", end=" + end +
                 ", duration=" + duration +
                 '}';
-    }
-
-    @Override
-    public Long getOwnerId() {
-        return site.getOwnerId();
     }
 }

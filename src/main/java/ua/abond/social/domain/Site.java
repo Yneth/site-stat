@@ -12,6 +12,7 @@ import java.util.List;
 @Table(name = "social_network")
 @SequenceGenerator(name = "seq", sequenceName = "social_network_id_seq", allocationSize = 1)
 public class Site extends AbstractEntity implements OwnedResource<Long> {
+
     @ManyToOne
     private User user;
     @Column(name = "name", nullable = false)
@@ -22,6 +23,11 @@ public class Site extends AbstractEntity implements OwnedResource<Long> {
     private List<SiteSession> siteSessions = new ArrayList<>();
 
     public Site() {
+    }
+
+    @Override
+    public Long getOwnerId() {
+        return user.getId();
     }
 
     public String getName() {
@@ -79,7 +85,13 @@ public class Site extends AbstractEntity implements OwnedResource<Long> {
     }
 
     @Override
-    public Long getOwnerId() {
-        return user.getId();
+    public String toString() {
+        return "Site{" +
+                "id=" + getId() +
+                "user=" + user +
+                ", name='" + name + '\'' +
+                ", url='" + url + '\'' +
+                ", siteSessions=" + siteSessions +
+                '}';
     }
 }
