@@ -11,9 +11,9 @@ import java.util.Optional;
 @Entity
 @Table(name = "social_network_session")
 @SequenceGenerator(name = "seq", sequenceName = "social_network_session_id_seq", allocationSize = 1)
-public class SocialNetworkSession extends AbstractEntity implements OwnedResource<Long> {
+public class SiteSession extends AbstractEntity implements OwnedResource<Long> {
     @ManyToOne
-    private SocialNetwork socialNetwork;
+    private Site site;
 
     @NotNull
     @Column(name = "time_start", nullable = false)
@@ -25,7 +25,7 @@ public class SocialNetworkSession extends AbstractEntity implements OwnedResourc
     @Column(name = "duration")
     private Long duration;
 
-    public SocialNetworkSession() {
+    public SiteSession() {
     }
 
     private Long calculateDuration() {
@@ -36,12 +36,12 @@ public class SocialNetworkSession extends AbstractEntity implements OwnedResourc
         }).orElse(0L);
     }
 
-    public SocialNetwork getSocialNetwork() {
-        return socialNetwork;
+    public Site getSite() {
+        return site;
     }
 
-    public void setSocialNetwork(SocialNetwork socialNetwork) {
-        this.socialNetwork = socialNetwork;
+    public void setSite(Site site) {
+        this.site = site;
     }
 
     public ZonedDateTime getStart() {
@@ -73,12 +73,12 @@ public class SocialNetworkSession extends AbstractEntity implements OwnedResourc
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof SocialNetworkSession)) return false;
+        if (!(o instanceof SiteSession)) return false;
 
-        SocialNetworkSession that = (SocialNetworkSession) o;
+        SiteSession that = (SiteSession) o;
 
         if (getId() != that.getId()) return false;
-        if (getSocialNetwork() != null ? !getSocialNetwork().equals(that.getSocialNetwork()) : that.getSocialNetwork() != null)
+        if (getSite() != null ? !getSite().equals(that.getSite()) : that.getSite() != null)
             return false;
         if (getStart() != null ? !getStart().equals(that.getStart()) : that.getStart() != null) return false;
         if (getEnd() != null ? !getEnd().equals(that.getEnd()) : that.getEnd() != null) return false;
@@ -88,7 +88,7 @@ public class SocialNetworkSession extends AbstractEntity implements OwnedResourc
 
     @Override
     public int hashCode() {
-        int result = getSocialNetwork() != null ? getSocialNetwork().hashCode() : 0;
+        int result = getSite() != null ? getSite().hashCode() : 0;
         result = 31 * result + Long.hashCode(getId());
         result = 31 * result + (getStart() != null ? getStart().hashCode() : 0);
         result = 31 * result + (getEnd() != null ? getEnd().hashCode() : 0);
@@ -98,8 +98,8 @@ public class SocialNetworkSession extends AbstractEntity implements OwnedResourc
 
     @Override
     public String toString() {
-        return "SocialNetworkSession{" +
-                "socialNetwork=" + socialNetwork +
+        return "SiteSession{" +
+                "site=" + site +
                 ", start=" + start +
                 ", end=" + end +
                 ", duration=" + duration +
@@ -108,6 +108,6 @@ public class SocialNetworkSession extends AbstractEntity implements OwnedResourc
 
     @Override
     public Long getOwnerId() {
-        return socialNetwork.getOwnerId();
+        return site.getOwnerId();
     }
 }
