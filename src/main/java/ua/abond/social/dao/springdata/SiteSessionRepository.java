@@ -10,6 +10,6 @@ import ua.abond.social.domain.SiteSession;
 public interface SiteSessionRepository
         extends SiteSessionDAO, JpaRepository<SiteSession, Long> {
     @Override
-    @Query("select sns from SiteSession sns where sns.socialNetwork.id = ?1")
+    @Query("select ss from SiteSession ss where ss.site.id = ?1")
     Page<SiteSession> getBySocialNetworkId(Long id, Pageable pageable);
 }
