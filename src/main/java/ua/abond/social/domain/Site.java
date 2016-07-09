@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 @Table(name = "social_network")
 @SequenceGenerator(name = "seq", sequenceName = "social_network_id_seq", allocationSize = 1)
-public class SocialNetwork extends AbstractEntity implements OwnedResource<Long> {
+public class Site extends AbstractEntity implements OwnedResource<Long> {
     @ManyToOne
     private User user;
     @Column(name = "name", nullable = false)
@@ -19,9 +19,9 @@ public class SocialNetwork extends AbstractEntity implements OwnedResource<Long>
     @Column(name = "url", nullable = false)
     private String url;
     @OneToMany(mappedBy = "id")
-    private List<SocialNetworkSession> socialNetworkSessions = new ArrayList<>();
+    private List<SiteSession> siteSessions = new ArrayList<>();
 
-    public SocialNetwork() {
+    public Site() {
     }
 
     public String getName() {
@@ -48,20 +48,20 @@ public class SocialNetwork extends AbstractEntity implements OwnedResource<Long>
         this.url = url;
     }
 
-    public List<SocialNetworkSession> getSocialNetworkSessions() {
-        return socialNetworkSessions;
+    public List<SiteSession> getSiteSessions() {
+        return siteSessions;
     }
 
-    public void setSocialNetworkSessions(List<SocialNetworkSession> socialNetworkSessions) {
-        this.socialNetworkSessions = socialNetworkSessions;
+    public void setSiteSessions(List<SiteSession> siteSessions) {
+        this.siteSessions = siteSessions;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof SocialNetwork)) return false;
+        if (!(o instanceof Site)) return false;
 
-        SocialNetwork that = (SocialNetwork) o;
+        Site that = (Site) o;
 
         if (getId() != that.getId()) return false;
         if (getUser() != null ? !getUser().equals(that.getUser()) : that.getUser() != null) return false;
