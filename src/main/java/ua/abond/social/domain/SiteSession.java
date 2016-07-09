@@ -5,6 +5,8 @@ import ua.abond.social.security.acl.OwnedResource;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.OffsetTime;
 import java.time.ZonedDateTime;
 import java.util.Optional;
 
@@ -15,12 +17,15 @@ public class SiteSession extends AbstractEntity implements OwnedResource<Long> {
     // In minutes
     @Column(name = "duration")
     private Long duration;
+
     @NotNull
     @Column(name = "time_start", nullable = false)
     private ZonedDateTime start;
+
     @NotNull
     @Column(name = "time_end", nullable = false)
     private ZonedDateTime end;
+
     @ManyToOne
     private Site site;
 
