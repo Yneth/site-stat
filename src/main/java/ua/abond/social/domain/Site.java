@@ -9,8 +9,8 @@ import java.util.List;
 
 // TODO: rename to Site
 @Entity
-@Table(name = "social_network")
-@SequenceGenerator(name = "seq", sequenceName = "social_network_id_seq", allocationSize = 1)
+@Table(name = "site")
+@SequenceGenerator(name = "seq", sequenceName = "site_id_seq", allocationSize = 1)
 public class Site extends AbstractEntity implements OwnedResource<Long> {
 
     @ManyToOne
