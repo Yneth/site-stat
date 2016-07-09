@@ -19,7 +19,7 @@ public class Site extends AbstractEntity implements OwnedResource<Long> {
     private String name;
     @Column(name = "url", nullable = false)
     private String url;
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "site")
     private List<SiteSession> siteSessions = new ArrayList<>();
 
     public Site() {
