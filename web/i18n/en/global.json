@@ -15,18 +15,6 @@
                 "logout": "Sign out",
                 "register": "Register"
             },
-            "admin": {
-                "main": "Administration",
-                "userManagement": "User management",
-                "tracker": "User tracker",
-                "metrics": "Metrics",
-                "health": "Health",
-                "configuration": "Configuration",
-                "logs": "Logs",
-                "audits": "Audits",
-                "apidocs": "API",
-                "database": "Database"
-            },
             "language": "Language"
         },
         "form": {

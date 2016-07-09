@@ -15,18 +15,6 @@
                 "logout": "Выйти",
                 "register": "Зарегистрироваться"
             },
-            "admin": {
-                "main": "Администрирование",
-                "userManagement": "Управление пользователями",
-                "tracker": "Трекер польз.",
-                "metrics": "Метрики",
-                "health": "Состояние",
-                "configuration": "Настройки",
-                "logs": "Логи",
-                "audits": "Аудит",
-                "apidocs": "API",
-                "database": "База данных"
-            },
             "language": "Язык"
         },
         "form": {
