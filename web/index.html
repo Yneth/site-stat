@@ -4,13 +4,19 @@
     <meta charset="UTF-8">
     <title>Title</title>
 
+    <link rel="icon" href="../content/images/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../content/images/favicon.ico" type="image/x-icon">
+
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="bower_components/bootflat/css/bootflat.css"/>
+    <link rel="stylesheet" href="content/css/styles.css"/>
+
 </head>
-<body ng-app="socialStatApp">
+<body class="light-mid-gray" ng-app="socialStatApp">
     <div ui-view="navbar" ng-cloak></div>
 
-    <div role="main">
-        <div class="" ui-view="content">
+    <div class="container" role="main">
+        <div class="jumbotron light-mid-gray" ui-view="content">
 
         </div>
     </div>
