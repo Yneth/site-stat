@@ -16,9 +16,6 @@ public class Authority extends AbstractEntity {
     @Column(length = 50, nullable = false)
     private String name;
 
-    @OneToMany
-    private List<Permission> permissions = new ArrayList<>();
-
     public Authority() {
     }
 
@@ -30,14 +27,6 @@ public class Authority extends AbstractEntity {
         this.name = name;
     }
 
-    public List<Permission> getPermissions() {
-        return permissions;
-    }
-
-    public void setPermissions(List<Permission> permissions) {
-        this.permissions = permissions;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -47,7 +36,6 @@ public class Authority extends AbstractEntity {
 
         if (getId() != that.getId()) return false;
         if (getName() != null ? getName().equals(that.getName()) : that.getName() == null) return false;
-        if (getPermissions() != null ? getPermissions().equals(that.getPermissions()): that.getPermissions() == null) return false;
         return true;
     }
 
@@ -55,7 +43,6 @@ public class Authority extends AbstractEntity {
     public int hashCode() {
         int result = getName() != null ? getName().hashCode() : 0;
         result = 31 * result + Long.hashCode(getId());
-        result = 31 * result + permissions.hashCode();
         return result;
     }
 
@@ -63,7 +50,6 @@ public class Authority extends AbstractEntity {
     public String toString() {
         return "Authority{" +
                 "name='" + name + '\'' +
-                ", permissions=" + permissions +
                 '}';
     }
 }
