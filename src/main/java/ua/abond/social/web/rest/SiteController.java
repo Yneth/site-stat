@@ -24,28 +24,26 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api")
 public class SiteController {
-
     @Autowired
     private SiteService siteService;
 
-    @RequestMapping(value = "/network/{id}",
+    @RequestMapping(value = "/user/site/{siteId}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SiteDTO> getNetworkById(@PathVariable("id") Long id) {
-
+    public ResponseEntity<SiteDTO> getSiteById(@PathVariable("siteId") Long id) {
         return siteService.getByIdWithSessions(id)
                 .map(sc -> new ResponseEntity<>(new SiteDTO(sc), HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @RequestMapping(value = "/user/network",
+    @RequestMapping(value = "/user/site",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<SiteDTO>> getSocialNetworksForAuthUser(Pageable pageable)
+    public ResponseEntity<List<SiteDTO>> getSitesForAuthUser(Pageable pageable)
             throws URISyntaxException {
         Page<Site> page = siteService.getByUserId(SecurityUtils.getCurrentUserId(), pageable);
 
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/user/network");
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/user/site");
 
         return new ResponseEntity<>(
                 page.getContent().stream()
