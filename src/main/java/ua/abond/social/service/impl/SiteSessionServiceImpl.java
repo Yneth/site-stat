@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.abond.social.dao.SiteSessionDAO;
@@ -21,24 +22,28 @@ public class SiteSessionServiceImpl implements SiteSessionService {
     @Autowired
     private SiteSessionDAO siteSessionDAO;
 
+    @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
     @Override
     public SiteSession createSite(SiteSession session) {
         log.debug("Request to save SiteSession {}", session);
         return siteSessionDAO.save(session);
     }
 
+    @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
     @Override
     public void updateSite(SiteSession session) {
         log.debug("Request to update SiteSession {}", session);
         siteSessionDAO.save(session);
     }
 
+    @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
     @Override
     public void deleteSite(SiteSession session) {
         log.debug("Request to delete SiteSession {}", session);
         siteSessionDAO.delete(session);
     }
 
+    @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
     @Override
     @Transactional(readOnly = true)
     public Optional<SiteSession> getById(Long id) {
@@ -46,10 +51,11 @@ public class SiteSessionServiceImpl implements SiteSessionService {
         return siteSessionDAO.getById(id);
     }
 
+    @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
     @Override
     @Transactional(readOnly = true)
     public Page<SiteSession> getBySiteId(Long id, Pageable pageable) {
         log.debug("Request to get pageable SiteSession {}", id);
-        return siteSessionDAO.getBySocialNetworkId(id, pageable);
+        return siteSessionDAO.getBySiteId(id, pageable);
     }
 }
