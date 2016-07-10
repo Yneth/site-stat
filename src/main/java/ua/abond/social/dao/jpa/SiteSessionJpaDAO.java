@@ -15,7 +15,7 @@ public class SiteSessionJpaDAO
     }
 
     @Override
-    public Page<SiteSession> getBySocialNetworkId(Long id, Pageable pageable) {
+    public Page<SiteSession> getBySiteId(Long id, Pageable pageable) {
         throw new UnsupportedOperationException();
     }
 }
