@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.abond.social.domain.Site;
@@ -22,25 +23,28 @@ public class SiteServiceImpl implements SiteService {
     @Autowired
     private SiteDAO siteDAO;
 
+    @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
     @Override
     public Site createSite(Site network) {
         log.debug("Request to save Site {}", network);
         return siteDAO.save(network);
     }
 
+    @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
     @Override
     public void updateSite(Site network) {
         log.debug("Request to update Site {}", network);
         siteDAO.save(network);
     }
 
+    @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
     @Override
     public void deleteSite(Site network) {
         log.debug("Request to delete Site {}", network);
         siteDAO.delete(network);
     }
 
-    @PostAuthorize("hasPermission(returnObject, 'read')")
+    @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
     @Transactional(readOnly = true)
     @Override
     public Optional<Site> getByIdWithSessions(Long id) {
@@ -52,6 +56,7 @@ public class SiteServiceImpl implements SiteService {
         return byId;
     }
 
+    @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
     @Override
     @Transactional(readOnly = true)
     public Page<Site> getByUserId(Long id, Pageable pageable) {
