@@ -1,3 +1,29 @@
+CREATE TABLE IF NOT EXISTS acl_access (
+  id int4 PRIMARY KEY,
+  name varchar not null
+);
+
+CREATE TABLE IF NOT EXISTS acl_class (
+  id int4 PRIMARY KEY,
+  name varchar not null
+);
+
+CREATE TABLE IF NOT EXISTS acl_entry (
+  id int4 PRIMARY KEY,
+  role_id int4,
+  permission_id int4,
+  access_id int4,
+  class_id int4,
+
+  FOREIGN KEY (role_id) REFERENCES authority (id),
+  FOREIGN KEY (permission_id) REFERENCES permission (id),
+  FOREIGN KEY (access_id) REFERENCES acl_access (id),
+  FOREIGN KEY (class_id) REFERENCES acl_class (id)
+);
+
+
+
+
 INSERT INTO USR VALUES (
   NEXTVAL('user_id_seq'),
   true,
@@ -46,11 +72,11 @@ INSERT INTO user_authority VALUES (
   2
 );
 -- create table permission (id int8 not null, permission varchar(50) not null, primary key (id))
+-- INSERT INTO PERMISSION (id, permission) VALUES (NEXTVAL('PERMISSION_ID_SEQ'), 'read');
+-- INSERT INTO PERMISSION (id, permission) VALUES (NEXTVAL('PERMISSION_ID_SEQ'), 'write');
 
 INSERT INTO SITE VALUES (NEXTVAL('SITE_ID_SEQ'), 'vk', 'vk.com', 1);
 INSERT INTO SITE VALUES (NEXTVAL('SITE_ID_SEQ'), 'fb', 'facebook.com', 1);
-
---create table site_session (id int8 not null, duration int8, time_end bytea not null, time_start bytea not null, site_id int8, primary key (id))
 
 INSERT INTO SITE_SESSION (id, duration, time_start, time_end, site_id)
 VALUES (
@@ -131,3 +157,62 @@ VALUES (
 --   ON UPDATE CASCADE ON DELETE CASCADE
 -- );
 --
+
+-- DROP TABLE IF EXISTS acl_entry;
+-- DROP TABLE IF EXISTS acl_access;
+-- DROP TABLE IF EXISTS acl_class;
+-- DROP TABLE IF EXISTS acl_permission;
+--
+-- CREATE TABLE IF NOT EXISTS acl_access (
+--   id serial PRIMARY KEY,
+--   name varchar not null
+-- );
+--
+-- CREATE TABLE IF NOT EXISTS acl_class (
+--   id serial PRIMARY KEY,
+--   name varchar not null
+-- );
+--
+-- CREATE TABLE IF NOT EXISTS acl_entry (
+--   id serial PRIMARY KEY,
+--   role_id int4,
+--   permission_id int4,
+--   access_id int4,
+--   class_id int4,
+--
+--   FOREIGN KEY (role_id) REFERENCES authority (id),
+--   FOREIGN KEY (permission_id) REFERENCES permission (id),
+--   FOREIGN KEY (access_id) REFERENCES acl_access (id),
+--   FOREIGN KEY (class_id) REFERENCES acl_class (id)
+-- );
+--
+-- CREATE TABLE IF NOT EXISTS acl_permission (
+--   id serial PRIMARY KEY,
+--   name varchar NOT NULL
+-- );
+--
+--
+-- INSERT INTO acl_class VALUES (DEFAULT, 'Site');
+-- INSERT INTO acl_class VALUES (DEFAULT, 'SiteSession');
+--
+-- INSERT INTO acl_access VALUES (DEFAULT, 'public');
+-- INSERT INTO acl_access VALUES (DEFAULT, 'private');
+--
+-- INSERT INTO acl_permission VALUES (DEFAULT, 'read');
+-- INSERT INTO acl_permission VALUES (DEFAULT, 'write');
+--
+--
+-- INSERT INTO acl_entry VALUES (DEFAULT, 2, 1, 1, 1);
+-- INSERT INTO acl_entry VALUES (DEFAULT, 2, 1, 1, 2);
+--
+-- INSERT INTO acl_entry VALUES (DEFAULT, 1, 1, 1, 1);
+-- INSERT INTO acl_entry VALUES (DEFAULT, 1, 1, 1, 2);
+--
+-- INSERT INTO acl_entry VALUES (DEFAULT, 1, 2, 1, 1);
+-- INSERT INTO acl_entry VALUES (DEFAULT, 1, 2, 1, 2);
+--
+-- INSERT INTO acl_entry VALUES (DEFAULT, 1, 1, 2, 1);
+-- INSERT INTO acl_entry VALUES (DEFAULT, 1, 1, 2, 2);
+--
+-- INSERT INTO acl_entry VALUES (DEFAULT, 1, 2, 2, 1);
+-- INSERT INTO acl_entry VALUES (DEFAULT, 1, 2, 2, 2);
