@@ -53,21 +53,21 @@ public class SiteSession extends AbstractEntity implements OwnedResource<Long> {
         this.site = site;
     }
 
-    public ZonedDateTime getStart() {
+    public ZonedDateTime getStartDateTime() {
         return start;
     }
 
-    public void setStart(ZonedDateTime start) {
-        this.start = start;
+    public void setStartDateTime(ZonedDateTime startDateTime) {
+        this.start = startDateTime;
         this.duration = calculateDuration();
     }
 
-    public ZonedDateTime getEnd() {
+    public ZonedDateTime getEndDateTime() {
         return end;
     }
 
-    public void setEnd(ZonedDateTime end) {
-        this.end = end;
+    public void setEndDateTime(ZonedDateTime endDateTime) {
+        this.end = endDateTime;
         this.duration = calculateDuration();
     }
 
@@ -89,8 +89,10 @@ public class SiteSession extends AbstractEntity implements OwnedResource<Long> {
         if (getId() != that.getId()) return false;
         if (getSite() != null ? !getSite().equals(that.getSite()) : that.getSite() != null)
             return false;
-        if (getStart() != null ? !getStart().equals(that.getStart()) : that.getStart() != null) return false;
-        if (getEnd() != null ? !getEnd().equals(that.getEnd()) : that.getEnd() != null) return false;
+        if (getStartDateTime() != null ? !getStartDateTime().equals(that.getStartDateTime()) : that.getStartDateTime() != null)
+            return false;
+        if (getEndDateTime() != null ? !getEndDateTime().equals(that.getEndDateTime()) : that.getEndDateTime() != null)
+            return false;
         return getDuration() != null ? getDuration().equals(that.getDuration()) : that.getDuration() == null;
 
     }
@@ -99,8 +101,8 @@ public class SiteSession extends AbstractEntity implements OwnedResource<Long> {
     public int hashCode() {
         int result = getSite() != null ? getSite().hashCode() : 0;
         result = 31 * result + Long.hashCode(getId());
-        result = 31 * result + (getStart() != null ? getStart().hashCode() : 0);
-        result = 31 * result + (getEnd() != null ? getEnd().hashCode() : 0);
+        result = 31 * result + (getStartDateTime() != null ? getStartDateTime().hashCode() : 0);
+        result = 31 * result + (getEndDateTime() != null ? getEndDateTime().hashCode() : 0);
         result = 31 * result + (getDuration() != null ? getDuration().hashCode() : 0);
         return result;
     }
