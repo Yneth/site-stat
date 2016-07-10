@@ -11,5 +11,5 @@ public interface SiteSessionRepository
         extends SiteSessionDAO, JpaRepository<SiteSession, Long> {
     @Override
     @Query("select ss from SiteSession ss where ss.site.id = ?1")
-    Page<SiteSession> getBySocialNetworkId(Long id, Pageable pageable);
+    Page<SiteSession> getBySiteId(Long id, Pageable pageable);
 }
