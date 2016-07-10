@@ -1,12 +1,12 @@
 <div>
-    <h2 translate="site.home.title">Sites</h2>
+    <h2 translate="site-view.home.title">Sites</h2>
     <alert></alert>
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-4 no-padding-left">
                 <button class="btn btn-primary" ui-sref="site.new" >
                     <span class="glyphicon glyphicon-plus"></span>
-                    <span  translate="site.home.createLabel">
+                    <span  translate="site-view.home.createLabel">
                         Create new Site
                     </span>
                 </button>
@@ -19,9 +19,8 @@
             <thead>
             <tr sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
                 <th sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
-                <th sort-by="name"><span translate="site.name">Name</span> <span class="glyphicon glyphicon-sort"></span></th>
-                <th sort-by="url"><span translate="site.url">Url</span> <span class="glyphicon glyphicon-sort"></span></th>
-                <th sort-by="user.login"><span translate="site.user">User</span> <span class="glyphicon glyphicon-sort"></span></th>
+                <th sort-by="name"><span translate="site-view.name">Name</span> <span class="glyphicon glyphicon-sort"></span></th>
+                <th sort-by="url"><span translate="site-view.url">Url</span> <span class="glyphicon glyphicon-sort"></span></th>
                 <th></th>
             </tr>
             </thead>
@@ -30,9 +29,6 @@
                 <td><a ui-sref="site-detail({id:site.id})">{{site.id}}</a></td>
                 <td>{{site.name}}</td>
                 <td>{{site.url}}</td>
-                <td>
-                    {{site.user.login}}
-                </td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"
