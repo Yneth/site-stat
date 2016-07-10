@@ -5,5 +5,5 @@ import org.springframework.data.domain.Pageable;
 import ua.abond.social.domain.SiteSession;
 
 public interface SiteSessionDAO extends DAO<SiteSession> {
-    Page<SiteSession> getBySocialNetworkId(Long id, Pageable pageable);
+    Page<SiteSession> getBySiteId(Long id, Pageable pageable);
 }
