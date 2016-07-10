@@ -1,0 +1,10 @@
+{
+  "site-view" : {
+    "home": {
+      "title": "Сайты",
+      "createLabel": "Добавить"
+    },
+    "name": "Название",
+    "url": "URL"
+  }
+}
