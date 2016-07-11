@@ -29,7 +29,7 @@ public abstract class AbstractJpaDAO<Entity> implements DAO<Entity> {
     }
 
     @Override
-    public Optional<Entity> getById(long id) {
+    public Optional<Entity> getById(Long id) {
         return Optional.ofNullable(entityManager.find(clazz, id));
     }
 
@@ -65,6 +65,11 @@ public abstract class AbstractJpaDAO<Entity> implements DAO<Entity> {
     @Override
     public void delete(Entity entity) {
         entityManager.remove(entity);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        throw new UnsupportedOperationException();
     }
 
     public EntityManager getEntityManager() {
