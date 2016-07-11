@@ -7,8 +7,9 @@ import ua.abond.social.domain.SiteSession;
 import java.time.ZonedDateTime;
 import java.time.temporal.TemporalAdjusters;
 
+// TODO: remove
 public class SiteSessionSpecifications {
-    public static Specification<SiteSession> yesterdaysSessions() {
+    public static Specification<SiteSession> yesterdaySessions() {
         ZonedDateTime yesterday = ZonedDateTime.now().minusDays(1);
         return sessionsOfDay(yesterday);
     }
