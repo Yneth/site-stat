@@ -13,7 +13,9 @@
     <mvc:annotation-driven>
         <mvc:message-converters>
             <bean id="jsonConverter"
-                  class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+                  class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="objectMapper" ref="objectMapper"/>
+            </bean>
         </mvc:message-converters>
         <mvc:argument-resolvers>
             <bean class="org.springframework.data.web.PageableHandlerMethodArgumentResolver"/>
@@ -21,6 +23,10 @@
     </mvc:annotation-driven>
 
     <mvc:default-servlet-handler/>
+
+    <mvc:cors>
+        <mvc:mapping path="/api/*" allowed-methods="POST,PUT,GET,DELETE"/>
+    </mvc:cors>
 
     <context:component-scan base-package="ua.abond.social.service.impl"/>
     <context:component-scan base-package="ua.abond.social.web.rest"/>
