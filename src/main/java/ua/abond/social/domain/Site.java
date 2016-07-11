@@ -6,8 +6,6 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
-// TODO: rename to Site
 @Entity
 @Table(name = "site")
 @SequenceGenerator(name = "seq", sequenceName = "site_id_seq", allocationSize = 1)
