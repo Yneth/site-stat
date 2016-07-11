@@ -1,0 +1,33 @@
+<div class="row">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-1">
+                <a ui-sref="^">Go back</a>
+            </div>
+            <div class="col-xs-4 no-padding-left">
+                <h1>{{ vm.site.name }}</h1>
+                Your sessions of {{ vm.site.url }}
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th><span>DateTime started</span><span class="glyphicon glyphicon-sort"></span></th>
+                <th><span>DateTime ended</span><span class="glyphicon glyphicon-sort"></span></th>
+                <th><span>Duration</span><span class="glyphicon glyphicon-sort"></span></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tr ng-repeat="session in vm.site.sessions track by session.id">
+                <td>{{ session.startTime }}</td>
+                <td>{{ session.endTime }}</td>
+                <td>{{ session.duration }}</td>
+            </tr>
+        </table>
+    </div>
+    <uib-pager total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pager>
+</div>
