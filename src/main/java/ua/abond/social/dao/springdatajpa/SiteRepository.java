@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import ua.abond.social.dao.SiteDAO;
 import ua.abond.social.domain.Site;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 public interface SiteRepository extends SiteDAO, JpaRepository<Site, Long> {
@@ -22,7 +23,4 @@ public interface SiteRepository extends SiteDAO, JpaRepository<Site, Long> {
     @Override
     @Query("select s from Site s where s.id = ?1")
     Optional<Site> getById(Long id);
-
-    @Override
-    void deleteById(Long id);
 }
