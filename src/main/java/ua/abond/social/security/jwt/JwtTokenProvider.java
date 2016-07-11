@@ -20,6 +20,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
 
+// TODO: rename seconds to milis
 @Component
 public class JwtTokenProvider implements TokenProvider {
     private final Logger log = LoggerFactory.getLogger(JwtTokenProvider.class);
@@ -31,10 +32,10 @@ public class JwtTokenProvider implements TokenProvider {
     private String secretKey;
 
     @Value("${jwt.expiration}")
-    private long tokenValidityInSeconds;
+    private long tokenValidityInMillis;
 
     @Value("${jwt.rememberMeExpiration}")
-    private long tokenValidityInSecondsForRememberMe;
+    private long tokenValidityInMillisForRememberMe;
 
     @Override
     public String createToken(Authentication authentication, Long id,  boolean rememberMe) {
@@ -45,9 +46,9 @@ public class JwtTokenProvider implements TokenProvider {
         long now = (new Date()).getTime();
         Date validity;
         if (rememberMe) {
-            validity = new Date(now + this.tokenValidityInSecondsForRememberMe);
+            validity = new Date(now + this.tokenValidityInMillisForRememberMe);
         } else {
-            validity = new Date(now + this.tokenValidityInSeconds);
+            validity = new Date(now + this.tokenValidityInMillis);
         }
 
         return Jwts.builder()
