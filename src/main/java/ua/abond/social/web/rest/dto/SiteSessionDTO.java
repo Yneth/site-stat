@@ -1,12 +1,16 @@
 package ua.abond.social.web.rest.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import ua.abond.social.config.Constants;
 import ua.abond.social.domain.SiteSession;
 
 import java.time.ZonedDateTime;
 
 public class SiteSessionDTO {
     private Long id;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constants.DATETIME_FORMAT)
     private ZonedDateTime startTime;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constants.DATETIME_FORMAT)
     private ZonedDateTime endTime;
     private long duration;
 
