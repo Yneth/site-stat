@@ -3,15 +3,28 @@
 
     angular
         .module('socialStatApp')
-        .controller('SiteCreateDialogController', SiteCreateUpdateController);
+        .controller('SiteCreateUpdateController', SiteCreateUpdateController);
 
-    SiteCreateUpdateController.$inject = ['$uibModalInstance', 'entity', 'Site'];
+    SiteCreateUpdateController.$inject = ['$state', 'entity', 'Site'];
 
-    function SiteCreateUpdateController($uibModalInstance, entity, Site) {
+    function SiteCreateUpdateController($state, entity, Site) {
         var vm = this;
         vm.site = entity;
+
         vm.save = function () {
-            Site.save(entity);
+            if (vm.site.id !== null) {
+                Site.update(vm.site, onSaveSuccess, onSaveError);
+            } else {
+                Site.save(vm.site, onSaveSuccess, onSaveError);
+            }
+        }
+
+        function onSaveError() {
+            $state.go('^');
+        }
+
+        function onSaveSuccess() {
+            $state.go('site', null, {reload: true});
         }
     }
 })();
