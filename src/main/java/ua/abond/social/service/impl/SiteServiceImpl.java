@@ -5,13 +5,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.abond.social.domain.Site;
+import ua.abond.social.domain.User;
+import ua.abond.social.security.SecurityUtils;
 import ua.abond.social.service.SiteService;
 import ua.abond.social.dao.SiteDAO;
+import ua.abond.social.web.rest.dto.SiteDTO;
 
 import java.util.Optional;
 
@@ -25,16 +27,29 @@ public class SiteServiceImpl implements SiteService {
 
     @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
     @Override
-    public Site createSite(Site network) {
-        log.debug("Request to save Site {}", network);
-        return siteDAO.save(network);
+    public Site createSite(SiteDTO siteDTO) {
+        log.debug("Request to save Site {}", siteDTO);
+        Site site = new Site();
+        site.setUrl(siteDTO.getUrl());
+        site.setName(siteDTO.getName());
+        User owner = new User();
+        owner.setId(SecurityUtils.getCurrentUserId());
+        site.setUser(owner);
+        return siteDAO.save(site);
     }
 
     @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
     @Override
-    public void updateSite(Site network) {
-        log.debug("Request to update Site {}", network);
-        siteDAO.save(network);
+    public Site updateSite(SiteDTO siteDTO) {
+        log.debug("Request to update SiteDTO {}", siteDTO);
+        Site site = new Site();
+        site.setId(siteDTO.getId());
+        site.setUrl(siteDTO.getUrl());
+        site.setName(siteDTO.getName());
+        User owner = new User();
+        owner.setId(SecurityUtils.getCurrentUserId());
+        site.setUser(owner);
+        return siteDAO.save(site);
     }
 
     @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
@@ -45,10 +60,17 @@ public class SiteServiceImpl implements SiteService {
     }
 
     @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
+    @Override
+    public void deleteById(Long id) {
+        log.debug("Request to delete Site with id Long {}", id);
+        siteDAO.deleteById(id);
+    }
+
+    @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
     @Transactional(readOnly = true)
     @Override
     public Optional<Site> getByIdWithSessions(Long id) {
-        log.debug("Request to read social network", id);
+        log.debug("Request to read social network with id Long {}", id);
         Optional<Site> byId = siteDAO.getById(id).map(sn -> {
             sn.getSiteSessions().size();
             return sn;
