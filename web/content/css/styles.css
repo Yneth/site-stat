@@ -10,6 +10,23 @@
     background-color: #E6E9ED;
 }
 
+.navbar-default .nav .active-parent a,
+.navbar-default .nav .active-parent a:hover,
+.navbar-default .nav .active-parent a:focus {
+    color: #fff;
+    background-color: #2986b9;
+}
+
+.navbar-default .nav .active-parent .dropdown-menu a {
+    color: #fff;
+    background-color: #292929;
+}
+
+.navbar-default .nav .active-parent .dropdown-menu .active a {
+    color: #fff;
+    background-color: #2986b9;
+}
+
 .logo-img {
     width: 50px;
     height: 50px;
