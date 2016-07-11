@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ua.abond.social.domain.SiteSession;
 import ua.abond.social.service.SiteSessionService;
@@ -15,6 +16,7 @@ import ua.abond.social.web.rest.dto.SiteSessionDTO;
 import ua.abond.social.web.rest.util.PaginationUtil;
 
 import java.net.URISyntaxException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -37,10 +39,12 @@ public class SiteSessionController {
     @RequestMapping("/user/site/{siteId}/session")
     public ResponseEntity<List<SiteSessionDTO>> getAllSessionsForSiteWithId(
             @PathVariable("siteId")Long siteId,
+            @RequestParam("from") LocalDateTime from,
+            @RequestParam("to") LocalDateTime to,
             Pageable pageable) throws URISyntaxException {
         Page<SiteSession> page = siteSessionService.getBySiteId(siteId, pageable);
 
-        // TODO: it is ugly change later
+        // TODO: remove hardcoded uri
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/user/site/" + siteId + "/session");
 
         return new ResponseEntity<>(page.getContent()
