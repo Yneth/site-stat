@@ -50,15 +50,36 @@
                     ]
                 }
             })
-            .state('site.new', {
-                parent: 'entity',
-                url: '/new',
+            .state('site.details', {
+                parent: 'site',
+                url: '/site/{id}/details',
                 data: {
                     authorities: ['ROLE_USER', 'ROLE_ADMIN']
                 },
                 views: {
                     'content@': {
-                        templateUrl: 'app/entities/site/site-create.html',
+                        templateUrl: 'app/entities/site/site-details.html',
+                        controller: 'SiteCreateUpdateController',
+                        controllerAs: 'vm'
+                    }
+                },
+                resolve: {
+                    entity: ['Site', '$stateParams',
+                        function (Site, $stateParams) {
+                            return Site.get({id: $stateParams.id});
+                        }
+                    ]
+                }
+            })
+            .state('site.new', {
+                parent: 'site',
+                url: '/site/new',
+                data: {
+                    authorities: ['ROLE_USER', 'ROLE_ADMIN']
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'app/entities/site/site-create-update.html',
                         controller: 'SiteCreateUpdateController',
                         controllerAs: 'vm'
                     }
@@ -75,18 +96,20 @@
                 }
             })
             .state('site.edit', {
-                parent: 'entity',
-                url: '/{id}/edit',
+                parent: 'site',
+                url: '/site/{id}/edit',
                 data: {
                     authorities: ['ROLE_USER', 'ROLE_ADMIN']
                 },
                 views: {
-                    templateUrl: 'app/entities/site/site-edit.html',
-                    controller: 'SiteCreateUpdateController',
-                    controllerAs: 'vm'
+                    'content@': {
+                        templateUrl: 'app/entities/site/site-create-update.html',
+                        controller: 'SiteCreateUpdateController',
+                        controllerAs: 'vm'
+                    }
                 },
                 resolve: {
-                    entity: ['Site',
+                    entity: ['Site', '$stateParams',
                         function (Site, $stateParams) {
                             return Site.get({id: $stateParams.id});
                         }
@@ -94,8 +117,8 @@
                 }
             })
             .state('site.delete', {
-                parent: 'entity',
-                url: '/{id}/delete',
+                parent: 'site',
+                url: '/site/{id}/delete',
                 data: {
                     authorities: ['ROLE_USER', 'ROLE_ADMIN']
                 },
@@ -114,10 +137,10 @@
                             }
                         }).result.then(
                             function () {
-                                state.go('site-view', null, {reload: true});
+                                $state.go('site', null, {reload: true});
                             },
                             function () {
-                                state.go('^');
+                                $state.go('^');
                             }
                         );
                     }
