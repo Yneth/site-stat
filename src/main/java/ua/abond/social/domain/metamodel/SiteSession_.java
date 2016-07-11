@@ -7,6 +7,7 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 import java.time.ZonedDateTime;
 
+// TODO: remove
 @StaticMetamodel(SiteSession.class)
 public class SiteSession_ {
     public static volatile SingularAttribute<SiteSession, Long> id;
