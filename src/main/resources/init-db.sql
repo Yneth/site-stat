@@ -1,25 +1,25 @@
-CREATE TABLE IF NOT EXISTS acl_access (
-  id int4 PRIMARY KEY,
-  name varchar not null
-);
-
-CREATE TABLE IF NOT EXISTS acl_class (
-  id int4 PRIMARY KEY,
-  name varchar not null
-);
-
-CREATE TABLE IF NOT EXISTS acl_entry (
-  id int4 PRIMARY KEY,
-  role_id int4,
-  permission_id int4,
-  access_id int4,
-  class_id int4,
-
-  FOREIGN KEY (role_id) REFERENCES authority (id),
-  FOREIGN KEY (permission_id) REFERENCES permission (id),
-  FOREIGN KEY (access_id) REFERENCES acl_access (id),
-  FOREIGN KEY (class_id) REFERENCES acl_class (id)
-);
+-- CREATE TABLE IF NOT EXISTS acl_access (
+--   id int4 PRIMARY KEY,
+--   name varchar not null
+-- );
+--
+-- CREATE TABLE IF NOT EXISTS acl_class (
+--   id int4 PRIMARY KEY,
+--   name varchar not null
+-- );
+--
+-- CREATE TABLE IF NOT EXISTS acl_entry (
+--   id int4 PRIMARY KEY,
+--   role_id int4,
+--   permission_id int4,
+--   access_id int4,
+--   class_id int4,
+--
+--   FOREIGN KEY (role_id) REFERENCES authority (id),
+--   FOREIGN KEY (permission_id) REFERENCES permission (id),
+--   FOREIGN KEY (access_id) REFERENCES acl_access (id),
+--   FOREIGN KEY (class_id) REFERENCES acl_class (id)
+-- );
 
 
 
