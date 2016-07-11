@@ -7,20 +7,20 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ua.abond.social.domain.Site;
 import ua.abond.social.security.SecurityUtils;
 import ua.abond.social.service.SiteService;
 import ua.abond.social.web.rest.dto.SiteDTO;
 import ua.abond.social.web.rest.util.PaginationUtil;
 
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
+// TODO: implement httpheaders builder
 @RestController
 @RequestMapping("/api")
 public class SiteController {
@@ -32,8 +32,36 @@ public class SiteController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<SiteDTO> getSiteById(@PathVariable("siteId") Long id) {
         return siteService.getByIdWithSessions(id)
-                .map(sc -> new ResponseEntity<>(new SiteDTO(sc), HttpStatus.OK))
+                .map(sc -> new ResponseEntity<>(SiteDTO.from(sc).exceptUser(), HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @RequestMapping(value = "/user/site/{siteId}",
+            method = RequestMethod.PUT,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<SiteDTO> updateSite(@RequestBody SiteDTO siteDTO) {
+        Site site = siteService.updateSite(siteDTO);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("X-socialStatApp-alert", "updated site");
+        headers.add("X-socialStatApp-params", site.getId().toString());
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(new SiteDTO(site));
+    }
+
+    @RequestMapping(value = "/user/site",
+            method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<SiteDTO> createSiteForUser(@RequestBody SiteDTO siteDTO)
+            throws URISyntaxException {
+        Site site = siteService.createSite(siteDTO);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("X-socialStatApp-alert", "created site");
+        headers.add("X-socialStatApp-params", site.getId().toString());
+        return ResponseEntity.created(new URI("api/user/site" + site.getId()))
+                .headers(headers)
+                .body(new SiteDTO(site));
     }
 
     @RequestMapping(value = "/user/site",
@@ -56,6 +84,20 @@ public class SiteController {
                         })
                         .collect(Collectors.toList()),
                 headers,
-                HttpStatus.OK);
+                HttpStatus.OK
+        );
+    }
+
+    @RequestMapping(value = "/user/site/{siteId}",
+            method = RequestMethod.DELETE)
+    public
+    @ResponseBody
+    ResponseEntity<Void> deleteSiteById(@PathVariable("siteId") Long siteId) {
+        siteService.deleteById(siteId);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("X-socialStatApp-alert", "deleted site");
+        headers.add("X-socialStatApp-params", siteId.toString());
+        return ResponseEntity.ok().headers(headers).build();
     }
 }
