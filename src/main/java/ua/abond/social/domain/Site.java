@@ -19,7 +19,7 @@ public class Site extends AbstractEntity implements OwnedResource<Long> {
     private String name;
     @Column(name = "url", nullable = false)
     private String url;
-    @OneToMany(mappedBy = "site")
+    @OneToMany(mappedBy = "site", cascade = CascadeType.REMOVE)
     private List<SiteSession> siteSessions = new ArrayList<>();
 
     public Site() {
@@ -82,16 +82,5 @@ public class Site extends AbstractEntity implements OwnedResource<Long> {
         result = 31 * result + (getName() != null ? getName().hashCode() : 0);
         result = 31 * result + (getUrl() != null ? getUrl().hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Site{" +
-                "id=" + getId() +
-                "user=" + user +
-                ", name='" + name + '\'' +
-                ", url='" + url + '\'' +
-                ", siteSessions=" + siteSessions +
-                '}';
     }
 }

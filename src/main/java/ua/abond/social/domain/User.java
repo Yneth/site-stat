@@ -183,16 +183,4 @@ public class User extends AbstractEntity {
     public int hashCode() {
         return login.hashCode();
     }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "login='" + login + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", activated='" + activated + '\'' +
-                ", langKey='" + langKey + '\'' +
-                "}";
-    }
 }

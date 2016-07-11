@@ -106,15 +106,4 @@ public class SiteSession extends AbstractEntity implements OwnedResource<Long> {
         result = 31 * result + (getDuration() != null ? getDuration().hashCode() : 0);
         return result;
     }
-
-    @Override
-    public String toString() {
-        return "SiteSession{" +
-                "id=" + getId() +
-                "site=" + site +
-                ", start=" + start +
-                ", end=" + end +
-                ", duration=" + duration +
-                '}';
-    }
 }

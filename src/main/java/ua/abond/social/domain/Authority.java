@@ -45,11 +45,4 @@ public class Authority extends AbstractEntity {
         result = 31 * result + Long.hashCode(getId());
         return result;
     }
-
-    @Override
-    public String toString() {
-        return "Authority{" +
-                "name='" + name + '\'' +
-                '}';
-    }
 }
