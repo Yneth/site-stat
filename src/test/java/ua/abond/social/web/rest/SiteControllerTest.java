@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.IntegrationTest;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -94,7 +95,7 @@ public class SiteControllerTest {
                 .perform(post("/api/authenticate", loginDTO));
 
         restSocialNetworkMock
-                .perform(get("/api/network/{id}", site.getId()))
+                .perform(get("/api/user/site/{siteId}", site.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
