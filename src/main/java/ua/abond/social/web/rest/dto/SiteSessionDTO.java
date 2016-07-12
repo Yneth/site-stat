@@ -4,14 +4,15 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import ua.abond.social.config.Constants;
 import ua.abond.social.domain.SiteSession;
 
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 public class SiteSessionDTO {
     private Long id;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constants.DATETIME_FORMAT)
-    private ZonedDateTime startTime;
+    private LocalDateTime startTime;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constants.DATETIME_FORMAT)
-    private ZonedDateTime endTime;
+    private LocalDateTime endTime;
     private long duration;
 
     public SiteSessionDTO(SiteSession session) {
@@ -29,19 +30,19 @@ public class SiteSessionDTO {
         this.id = id;
     }
 
-    public ZonedDateTime getStartTime() {
+    public LocalDateTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(ZonedDateTime startTime) {
+    public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
 
-    public ZonedDateTime getEndTime() {
+    public LocalDateTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(ZonedDateTime endTime) {
+    public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
 

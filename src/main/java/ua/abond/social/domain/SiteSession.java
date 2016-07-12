@@ -1,5 +1,6 @@
 package ua.abond.social.domain;
 
+import ua.abond.social.domain.converter.LocalDateTimeAttributeConverter;
 import ua.abond.social.security.acl.OwnedResource;
 
 import javax.persistence.*;
@@ -20,16 +21,23 @@ public class SiteSession extends AbstractEntity implements OwnedResource<Long> {
 
     @NotNull
     @Column(name = "time_start", nullable = false)
-    private ZonedDateTime start;
+    private LocalDateTime start;
 
     @NotNull
     @Column(name = "time_end", nullable = false)
-    private ZonedDateTime end;
+    private LocalDateTime end;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Site site;
 
     public SiteSession() {
+    }
+
+    public SiteSession(Long id, LocalDateTime start, LocalDateTime end, Long duration) {
+        setId(id);
+        setStartDateTime(start);
+        setEndDateTime(end);
+        setDuration(duration);
     }
 
     private Long calculateDuration() {
@@ -53,22 +61,20 @@ public class SiteSession extends AbstractEntity implements OwnedResource<Long> {
         this.site = site;
     }
 
-    public ZonedDateTime getStartDateTime() {
+    public LocalDateTime getStartDateTime() {
         return start;
     }
 
-    public void setStartDateTime(ZonedDateTime startDateTime) {
+    public void setStartDateTime(LocalDateTime startDateTime) {
         this.start = startDateTime;
-        this.duration = calculateDuration();
     }
 
-    public ZonedDateTime getEndDateTime() {
+    public LocalDateTime getEndDateTime() {
         return end;
     }
 
-    public void setEndDateTime(ZonedDateTime endDateTime) {
+    public void setEndDateTime(LocalDateTime endDateTime) {
         this.end = endDateTime;
-        this.duration = calculateDuration();
     }
 
     public Long getDuration() {

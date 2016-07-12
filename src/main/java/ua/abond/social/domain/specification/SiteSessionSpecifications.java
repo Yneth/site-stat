@@ -4,13 +4,14 @@ import org.springframework.data.jpa.domain.Specification;
 import ua.abond.social.domain.Site;
 import ua.abond.social.domain.SiteSession;
 
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.temporal.TemporalAdjusters;
 
 // TODO: remove
 public class SiteSessionSpecifications {
     public static Specification<SiteSession> yesterdaySessions() {
-        ZonedDateTime yesterday = ZonedDateTime.now().minusDays(1);
+        LocalDateTime yesterday = LocalDateTime.now().minusDays(1);
         return sessionsOfDay(yesterday);
     }
 
@@ -24,19 +25,19 @@ public class SiteSessionSpecifications {
     }
 
     public static Specification<SiteSession> sessionsThisMonth() {
-        ZonedDateTime startOfTheCurrentMonth = ZonedDateTime.now()
+        LocalDateTime startOfTheCurrentMonth = LocalDateTime.now()
                 .with(TemporalAdjusters.firstDayOfMonth())
                 .withHour(0).withSecond(0);
-        ZonedDateTime startOfTheNextMonth = ZonedDateTime.now()
+        LocalDateTime startOfTheNextMonth = LocalDateTime.now()
                 .with(TemporalAdjusters.firstDayOfNextMonth())
                 .withHour(0).withSecond(0);
 
         return betweenDates(startOfTheCurrentMonth, startOfTheNextMonth);
     }
 
-    public static Specification<SiteSession> sessionsOfDay(ZonedDateTime day) {
-        ZonedDateTime thisDay = day.withHour(0).withSecond(0);
-        ZonedDateTime nextDay = thisDay.plusDays(1);
+    public static Specification<SiteSession> sessionsOfDay(LocalDateTime day) {
+        LocalDateTime thisDay = day.withHour(0).withSecond(0);
+        LocalDateTime nextDay = thisDay.plusDays(1);
         return betweenDates(thisDay, nextDay);
     }
 
@@ -47,18 +48,18 @@ public class SiteSessionSpecifications {
     }
 
     public static Specification<SiteSession> sessionsLastMonth() {
-        ZonedDateTime startOfThePrevMonth = ZonedDateTime.now()
+        LocalDateTime startOfThePrevMonth = LocalDateTime.now()
                 .minusMonths(1)
                 .with(TemporalAdjusters.firstDayOfMonth())
                 .withHour(0).withSecond(0);
-        ZonedDateTime startOfThisMonth = ZonedDateTime.now()
+        LocalDateTime startOfThisMonth = LocalDateTime.now()
                 .with(TemporalAdjusters.firstDayOfMonth())
                 .withHour(0).withSecond(0);
 
         return betweenDates(startOfThePrevMonth, startOfThisMonth);
     }
 
-    public static Specification<SiteSession> betweenDates(ZonedDateTime start, ZonedDateTime end) {
+    public static Specification<SiteSession> betweenDates(LocalDateTime start, LocalDateTime end) {
         return (root, query, cb) -> {
             return cb.and(
                     cb.greaterThanOrEqualTo(root.get("start"), start),

@@ -12,11 +12,11 @@ import java.time.LocalDateTime;
 public interface SiteSessionRepository
         extends SiteSessionDAO, JpaRepository<SiteSession, Long> {
     @Override
-    @Query("select ss.id, ss.start, ss.end, ss. duration from SiteSession ss where ss.site.id = ?1")
+    @Query("select new SiteSession(ss.id, ss.start, ss.end, ss. duration) from SiteSession ss where ss.site.id = ?1")
     Page<SiteSession> getBySiteId(Long id, Pageable pageable);
 
     @Override
-    @Query("select ss.id, ss.start, ss.end, ss.duration from SiteSession ss " +
+    @Query("select new SiteSession(ss.id, ss.start, ss.end, ss.duration) from SiteSession ss " +
             "where " +
             "ss.id = ?1 " +
             "and " +
