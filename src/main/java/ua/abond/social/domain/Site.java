@@ -17,10 +17,16 @@ public class Site extends AbstractEntity implements OwnedResource<Long> {
     private String name;
     @Column(name = "url", nullable = false)
     private String url;
-    @OneToMany(mappedBy = "site", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "site", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<SiteSession> siteSessions = new ArrayList<>();
 
     public Site() {
+    }
+
+    public Site(Long id, String name, String url) {
+        setId(id);
+        setName(name);
+        setUrl(url);
     }
 
     @Override
