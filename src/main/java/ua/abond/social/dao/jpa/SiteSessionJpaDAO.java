@@ -7,8 +7,7 @@ import org.springframework.stereotype.Repository;
 import ua.abond.social.dao.SiteSessionDAO;
 import ua.abond.social.domain.SiteSession;
 
-import java.time.ZonedDateTime;
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Repository
 public class SiteSessionJpaDAO
@@ -29,7 +28,7 @@ public class SiteSessionJpaDAO
     }
 
     @Override
-    public Page<SiteSession> getBySiteIdBetweenDates(Long siteId, ZonedDateTime start, ZonedDateTime end, Pageable pageable) {
+    public Page<SiteSession> getBySiteIdBetweenDates(Long siteId, LocalDateTime start, LocalDateTime end, Pageable pageable) {
         throw new UnsupportedOperationException();
     }
 }
