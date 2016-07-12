@@ -9,6 +9,6 @@ Web service to track your site usage.
 * * jUnit, Mockito
 * * slf4j
 * Front end:
-* * AngularJs
+* * AngularJs, bootstrap
 * Database:
 * * postgres
