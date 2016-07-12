@@ -24,6 +24,11 @@ public class UserJpaDAO extends AbstractJpaDAO<User> implements UserDAO {
     }
 
     @Override
+    public Optional<User> findOneByIdWithAuthorities(Long id) {
+        return null;
+    }
+
+    @Override
     public Optional<User> findOneByLoginWithAuthorities(String login) {
         Query query = entityManager.createQuery("select u from User u join fetch u.authorities where u.login = :login");
         query.setParameter("login", login);
