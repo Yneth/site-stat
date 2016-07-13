@@ -21,6 +21,9 @@ public interface SiteSessionService {
     void deleteSite(SiteSession session);
 
     @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
+    void deleteById(Long id);
+
+    @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
     @Transactional(readOnly = true)
     Optional<SiteSession> getById(Long id);
 
