@@ -8,11 +8,11 @@
     Site.$inject = ['$resource'];
 
     function Site($resource) {
-        return $resource('api/user/site/:id', {}, {
+        return $resource('/api/user/site/:siteId', {}, {
             'query': {method: 'GET', isArray: true},
-            'get': {method: 'GET', isArray: false, params: {id: '@id'}},
-            'update': {method: 'PUT', isArray: false, params: {id: '@id'}},
-            'delete': {method: 'DELETE', isArray: false, params: {id: '@id'}}
+            'get': {method: 'GET', isArray: false, params: {siteId: '@siteId'}},
+            'update': {method: 'PUT', isArray: false, params: {siteId: '@siteId'}},
+            'delete': {method: 'DELETE', isArray: false, params: {siteId: '@siteId'}}
         });
     }
 })();
