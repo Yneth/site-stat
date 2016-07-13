@@ -2,13 +2,13 @@ Web service to track your site usage.
 
 # Technologies used: #
 * Back end:
-* * Spring (MVC, AOP, Security, SpringData, test)
+* * Spring (MVC, AOP, Security, SpringDataJpa, test)
 * * jsonwebtoken
 * * jackson
-* * JPA
+* * JPA (hibernate)
 * * jUnit, Mockito
 * * slf4j
 * Front end:
-* * AngularJs
+* * AngularJs, bootstrap
 * Database:
 * * postgres
