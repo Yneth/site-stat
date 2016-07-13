@@ -31,8 +31,8 @@ public class SiteController {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<SiteDTO> getSiteById(@PathVariable("siteId") Long id) {
-        return siteService.getByIdWithSessions(id)
-                .map(sc -> new ResponseEntity<>(SiteDTO.from(sc).exceptUser(), HttpStatus.OK))
+        return siteService.getById(id)
+                .map(sc -> new ResponseEntity<>(SiteDTO.from(sc).exceptUserAndSessions(), HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
@@ -90,9 +90,7 @@ public class SiteController {
 
     @RequestMapping(value = "/user/site/{siteId}",
             method = RequestMethod.DELETE)
-    public
-    @ResponseBody
-    ResponseEntity<Void> deleteSiteById(@PathVariable("siteId") Long siteId) {
+    public ResponseEntity<Void> deleteSiteById(@PathVariable("siteId") Long siteId) {
         siteService.deleteById(siteId);
 
         HttpHeaders headers = new HttpHeaders();
