@@ -52,28 +52,39 @@
             })
             .state('site.details', {
                 parent: 'site',
-                url: '/site/{id}/details',
+                url: '/{id}/details',
                 data: {
                     authorities: ['ROLE_USER', 'ROLE_ADMIN']
                 },
                 views: {
                     'content@': {
                         templateUrl: 'app/entities/site/site-details.html',
-                        controller: 'SiteCreateUpdateController',
+                        controller: 'SiteDetailsController',
                         controllerAs: 'vm'
                     }
                 },
                 resolve: {
+                    pagingParams: ['$stateParams', 'PaginationUtil',
+                        function ($stateParams, PaginationUtil) {
+                            return {
+                                page: PaginationUtil.parsePage($stateParams.page),
+                                sort: $stateParams.sort,
+                                predicate: PaginationUtil.parsePredicate($stateParams.sort),
+                                ascending: PaginationUtil.parseAscending($stateParams.sort)
+                            };
+                        }
+                    ],
                     entity: ['Site', '$stateParams',
                         function (Site, $stateParams) {
-                            return Site.get({id: $stateParams.id});
+                            // TODO: resolve with selected site, not queried one
+                            return Site.get({siteId: $stateParams.id}).$promise;
                         }
                     ]
                 }
             })
             .state('site.new', {
                 parent: 'site',
-                url: '/site/new',
+                url: '/new',
                 data: {
                     authorities: ['ROLE_USER', 'ROLE_ADMIN']
                 },
@@ -111,14 +122,15 @@
                 resolve: {
                     entity: ['Site', '$stateParams',
                         function (Site, $stateParams) {
-                            return Site.get({id: $stateParams.id});
+                            // TODO: resolve with selected site, not queried one
+                            return Site.get({siteId: $stateParams.id});
                         }
                     ]
                 }
             })
             .state('site.delete', {
                 parent: 'site',
-                url: '/site/{id}/delete',
+                url: '/{id}/delete',
                 data: {
                     authorities: ['ROLE_USER', 'ROLE_ADMIN']
                 },
@@ -131,7 +143,8 @@
                             resolve: {
                                 entity: ['Site',
                                     function (Site) {
-                                        return Site.get({id: $stateParams.id});
+                                        // TODO: resolve with selected site, not queried one
+                                        return Site.get({siteId: $stateParams.id});
                                     }
                                 ]
                             }
