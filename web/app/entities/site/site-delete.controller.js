@@ -16,7 +16,7 @@
             $uibModalInstance.dismiss('cancel');
         }
         vm.confirmDelete = function (id) {
-            Site.delete({id: id},
+            Site.delete({siteId: id},
                 function () {
                     $uibModalInstance.close(true);
                 }
