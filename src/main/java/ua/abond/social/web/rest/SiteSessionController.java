@@ -5,11 +5,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ua.abond.social.domain.SiteSession;
 import ua.abond.social.service.SiteSessionService;
 import ua.abond.social.web.rest.dto.SiteSessionDTO;
@@ -27,7 +25,9 @@ public class SiteSessionController {
     @Autowired
     private SiteSessionService siteSessionService;
 
-    @RequestMapping("/user/site/{siteId}/session/{sessionId}")
+    @RequestMapping(value = "/user/site/{siteId}/session/{sessionId}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<SiteSessionDTO> getById(@PathVariable("sessionId") Long sessionId) {
         Optional<SiteSession> session = siteSessionService.getById(sessionId);
 
@@ -36,13 +36,39 @@ public class SiteSessionController {
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @RequestMapping("/user/site/{siteId}/session")
+    @RequestMapping(value = "/user/site/{siteId}/session/{sessionId}",
+            method = RequestMethod.DELETE)
+    public ResponseEntity<Void> deleteById(@PathVariable("sessionId") Long sessionId) {
+        siteSessionService.deleteById(sessionId);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("X-socialStatApp-alert", "deleted site session");
+        headers.add("X-socialStatApp-params", sessionId.toString());
+        return ResponseEntity.ok().headers(headers).build();
+    }
+
+    @RequestMapping(value = "/user/site/{siteId}/session",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<SiteSessionDTO>> getAllSessionsForSiteWithId(
-            @PathVariable("siteId")Long siteId,
-            @RequestParam("from") LocalDateTime from,
-            @RequestParam("to") LocalDateTime to,
+            @PathVariable("siteId") Long siteId,
+            @RequestParam(value = "from", required = false) LocalDateTime from,
+            @RequestParam(value = "to", required = false) LocalDateTime to,
             Pageable pageable) throws URISyntaxException {
-        Page<SiteSession> page = siteSessionService.getBySiteId(siteId, pageable);
+        Page<SiteSession> page = null;
+        if (from == null || to == null) {
+            page = siteSessionService.getBySiteId(siteId, pageable);
+        } else if (from != null && to != null) {
+            LocalDateTime before = from;
+            LocalDateTime after = to;
+
+            if (before.isAfter(after)) {
+                LocalDateTime temp = before;
+                before = after;
+                after = temp;
+            }
+            page = siteSessionService.getBySiteIdBetweenDates(siteId, before, after, pageable);
+        }
 
         // TODO: remove hardcoded uri
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/user/site/" + siteId + "/session");
@@ -52,4 +78,6 @@ public class SiteSessionController {
                 .map(SiteSessionDTO::new)
                 .collect(Collectors.toList()), headers, HttpStatus.OK);
     }
+
+
 }
