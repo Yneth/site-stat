@@ -21,7 +21,6 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
-@Transactional
 public class UserServiceImpl implements UserService {
     private final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
@@ -107,13 +106,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Optional<User> getCurrentUser() {
+        if (SecurityUtils.getCurrentUserId() != null) {
+            getUserByIdWithAuthorities(SecurityUtils.getCurrentUserId());
+        }
         return getUserByLoginWithAuthorities(SecurityUtils.getCurrentUserLogin());
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Optional<User> getUserByLogin(String login) {
         return userDAO.findOneByLogin(login);
     }
@@ -124,16 +124,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Optional<User> getUserByLoginWithAuthorities(String login) {
-        return userDAO.findOneByLogin(login).map(u -> {
-            u.getAuthorities().size();
-            return u;
-        });
+        return userDAO.findOneByLoginWithAuthorities(login);
     }
 
     @Override
-    @Transactional(readOnly = true)
+    public Optional<User> getUserByIdWithAuthorities(Long id) {
+        return userDAO.findOneByIdWithAuthorities(id);
+    }
+
+    @Override
     public Optional<User> getUserById(Long id) {
         return userDAO.getById(id);
     }
