@@ -11,7 +11,6 @@
         var vm = this;
 
         vm.loadAll = loadAll;
-        vm.loadAll = loadAll;
         vm.loadPage = loadPage;
         vm.predicate = pagingParams.predicate;
         vm.reverse = pagingParams.ascending;
