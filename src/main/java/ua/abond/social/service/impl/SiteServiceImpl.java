@@ -62,13 +62,15 @@ public class SiteServiceImpl implements SiteService {
     }
 
     @Override
+    public Optional<Site> getById(Long id) {
+        log.debug("Request to read Site with id Long {}", id);
+        return siteDAO.getById(id);
+    }
+
+    @Override
     public Optional<Site> getByIdWithSessions(Long id) {
-        log.debug("Request to read social Site with id Long {}", id);
-        Optional<Site> byId = siteDAO.getById(id).map(sn -> {
-            sn.getSiteSessions().size();
-            return sn;
-        });
-        return byId;
+        log.debug("Request to read Site with id Long {}", id);
+        return siteDAO.getByUserIdWithSessions(id);
     }
 
 

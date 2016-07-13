@@ -6,6 +6,8 @@ import org.springframework.stereotype.Repository;
 import ua.abond.social.domain.Site;
 import ua.abond.social.dao.SiteDAO;
 
+import java.util.Optional;
+
 @Repository
 public class SiteJpaDAO
         extends AbstractJpaDAO<Site>
@@ -22,6 +24,11 @@ public class SiteJpaDAO
 
     @Override
     public Page<Site> findByUserId(Long id, Pageable pageable) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Optional<Site> getByUserIdWithSessions(Long id) {
         throw new UnsupportedOperationException();
     }
 }

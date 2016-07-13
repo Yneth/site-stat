@@ -24,4 +24,8 @@ public interface SiteRepository extends SiteDAO, JpaRepository<Site, Long> {
     @Override
     @Query("select s from Site s where s.id = ?1")
     Optional<Site> getById(Long id);
+
+    @Override
+    @Query("select s from Site s join fetch s.siteSessions where s.id = ?1")
+    Optional<Site> getByUserIdWithSessions(Long id);
 }
