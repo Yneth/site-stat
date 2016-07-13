@@ -39,6 +39,12 @@ public class SiteSessionServiceImpl implements SiteSessionService {
     }
 
     @Override
+    public void deleteById(Long id) {
+        log.debug("Request to delete SiteSession with id Long {}", id);
+        siteSessionDAO.deleteById(id);
+    }
+
+    @Override
     public Optional<SiteSession> getById(Long id) {
         log.debug("Request to get SiteSession {}", id);
         return siteSessionDAO.getById(id);
