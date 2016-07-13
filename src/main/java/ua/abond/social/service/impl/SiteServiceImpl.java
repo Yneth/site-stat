@@ -18,14 +18,12 @@ import ua.abond.social.web.rest.dto.SiteDTO;
 import java.util.Optional;
 
 @Service
-@Transactional
 public class SiteServiceImpl implements SiteService {
     private final Logger log = LoggerFactory.getLogger(SiteServiceImpl.class);
 
     @Autowired
     private SiteDAO siteDAO;
 
-    @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
     @Override
     public Site createSite(SiteDTO siteDTO) {
         log.debug("Request to save Site {}", siteDTO);
@@ -38,7 +36,6 @@ public class SiteServiceImpl implements SiteService {
         return siteDAO.save(site);
     }
 
-    @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
     @Override
     public Site updateSite(SiteDTO siteDTO) {
         log.debug("Request to update SiteDTO {}", siteDTO);
@@ -52,25 +49,21 @@ public class SiteServiceImpl implements SiteService {
         return siteDAO.save(site);
     }
 
-    @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
     @Override
-    public void deleteSite(Site network) {
-        log.debug("Request to delete Site {}", network);
-        siteDAO.delete(network);
+    public void deleteSite(Site Site) {
+        log.debug("Request to delete Site {}", Site);
+        siteDAO.delete(Site);
     }
 
-    @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
     @Override
     public void deleteById(Long id) {
         log.debug("Request to delete Site with id Long {}", id);
         siteDAO.deleteById(id);
     }
 
-    @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
-    @Transactional(readOnly = true)
     @Override
     public Optional<Site> getByIdWithSessions(Long id) {
-        log.debug("Request to read social network with id Long {}", id);
+        log.debug("Request to read social Site with id Long {}", id);
         Optional<Site> byId = siteDAO.getById(id).map(sn -> {
             sn.getSiteSessions().size();
             return sn;
@@ -78,9 +71,8 @@ public class SiteServiceImpl implements SiteService {
         return byId;
     }
 
-    @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
+
     @Override
-    @Transactional(readOnly = true)
     public Page<Site> getByUserId(Long id, Pageable pageable) {
         log.debug("Request to read all Site {} for requested User id", id);
         return siteDAO.findByUserId(id, pageable);
