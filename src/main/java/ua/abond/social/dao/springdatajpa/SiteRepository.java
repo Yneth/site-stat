@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import ua.abond.social.dao.SiteDAO;
 import ua.abond.social.domain.Site;
+import ua.abond.social.domain.SiteStatistic;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -28,4 +29,12 @@ public interface SiteRepository extends SiteDAO, JpaRepository<Site, Long> {
     @Override
     @Query("select s from Site s join fetch s.siteSessions where s.id = ?1")
     Optional<Site> getByUserIdWithSessions(Long id);
+
+    @Override
+    @Query("select new ua.abond.social.domain.SiteStatistic(s, sum(ss.duration)) " +
+            "from Site s " +
+            "inner join SiteSession ss on s.id = ss.site.id " +
+            "where s.user.id = ?1 " +
+            "group by s.id, s.name, s.url")
+    Page<SiteStatistic> getStatisticsByUserId(Long userId, Pageable pageable);
 }

@@ -10,8 +10,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 import ua.abond.social.dao.util.TestPageable;
 import ua.abond.social.domain.Site;
+import ua.abond.social.domain.SiteSession;
+import ua.abond.social.domain.SiteStatistic;
 import ua.abond.social.domain.User;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -30,6 +33,8 @@ public class SiteDAOTest {
     private SiteDAO siteDAO;
     @Autowired
     private UserDAO userDAO;
+    @Autowired
+    private SiteSessionDAO siteSessionDAO;
 
     @Before
     public void setUp() throws Exception {
@@ -73,4 +78,36 @@ public class SiteDAOTest {
         assertEquals(testSite.getUrl(), actual.getUrl());
     }
 
+    @Test
+    @Transactional()
+    public void getStatisticsByUserId() throws Exception {
+        SiteSession s = new SiteSession();
+        s.setDuration(10l);
+        s.setStartDateTime(LocalDateTime.now());
+        s.setEndDateTime(LocalDateTime.now().plusMinutes(10));
+        s.setSite(testSite);
+        siteSessionDAO.save(s);
+
+        Page<SiteStatistic> siteStat =
+                siteDAO.getStatisticsByUserId(adminUser.getId(), new TestPageable(0, 10, 0, null));
+
+        assertNotNull(siteStat);
+        List<SiteStatistic> content = siteStat.getContent();
+        assertNotNull(content);
+        assertEquals(1, content.size());
+
+        SiteStatistic actual = content.get(0);
+
+        actual.getSite().getSiteSessions().size();
+
+        assertEquals(testSite.getId(), actual.getSite().getId());
+        assertEquals(testSite.getName(), actual.getSite().getName());
+        assertEquals(testSite.getUrl(), actual.getSite().getUrl());
+        assertEquals(s.getDuration(), actual.getUsageDuration());
+
+
+        System.out.println(actual.getSite().getId());
+        System.out.println(actual.getSite().getName());
+        System.out.println(actual.getSite().getUrl());
+    }
 }

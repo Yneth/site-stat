@@ -9,6 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.abond.social.domain.Site;
+import ua.abond.social.domain.SiteStatistic;
 import ua.abond.social.domain.User;
 import ua.abond.social.security.SecurityUtils;
 import ua.abond.social.service.SiteService;
@@ -78,5 +79,11 @@ public class SiteServiceImpl implements SiteService {
     public Page<Site> getByUserId(Long id, Pageable pageable) {
         log.debug("Request to read all Site {} for requested User id", id);
         return siteDAO.findByUserId(id, pageable);
+    }
+
+    @Override
+    public Page<SiteStatistic> getStatisticsByUserId(Long userId, Pageable pageable) {
+        log.debug("Request to read all SiteStatistic {} for requested User id", userId);
+        return siteDAO.getStatisticsByUserId(userId, pageable);
     }
 }

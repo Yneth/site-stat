@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import ua.abond.social.domain.Site;
 import ua.abond.social.dao.SiteDAO;
+import ua.abond.social.domain.SiteStatistic;
 
 import java.util.Optional;
 
@@ -24,6 +25,11 @@ public class SiteJpaDAO
 
     @Override
     public Page<Site> findByUserId(Long id, Pageable pageable) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Page<SiteStatistic> getStatisticsByUserId(Long userId, Pageable pageable) {
         throw new UnsupportedOperationException();
     }
 

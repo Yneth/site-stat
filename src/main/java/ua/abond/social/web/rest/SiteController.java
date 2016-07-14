@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.abond.social.domain.Site;
+import ua.abond.social.domain.SiteStatistic;
 import ua.abond.social.security.SecurityUtils;
 import ua.abond.social.service.SiteService;
 import ua.abond.social.web.rest.dto.SiteDTO;
@@ -64,25 +65,41 @@ public class SiteController {
                 .body(new SiteDTO(site));
     }
 
+//    @RequestMapping(value = "/user/site",
+//            method = RequestMethod.GET,
+//            produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<List<SiteDTO>> getSitesForAuthUser(Pageable pageable)
+//            throws URISyntaxException {
+//        Page<Site> page = siteService.getByUserId(SecurityUtils.getCurrentUserId(), pageable);
+//
+//        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/user/site");
+//
+//        return new ResponseEntity<>(
+//                page.getContent().stream()
+//                        .map(s -> {
+//                            SiteDTO siteDTO = new SiteDTO();
+//                            siteDTO.setId(s.getId());
+//                            siteDTO.setUrl(s.getUrl());
+//                            siteDTO.setName(s.getName());
+//                            return siteDTO;
+//                        })
+//                        .collect(Collectors.toList()),
+//                headers,
+//                HttpStatus.OK
+//        );
+//    }
+
     @RequestMapping(value = "/user/site",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<SiteDTO>> getSitesForAuthUser(Pageable pageable)
+    public ResponseEntity<List<SiteStatistic>> getSitesForAuthUser(Pageable pageable)
             throws URISyntaxException {
-        Page<Site> page = siteService.getByUserId(SecurityUtils.getCurrentUserId(), pageable);
+        Page<SiteStatistic> page = siteService.getStatisticsByUserId(SecurityUtils.getCurrentUserId(), pageable);
 
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/user/site");
 
         return new ResponseEntity<>(
-                page.getContent().stream()
-                        .map(s -> {
-                            SiteDTO siteDTO = new SiteDTO();
-                            siteDTO.setId(s.getId());
-                            siteDTO.setUrl(s.getUrl());
-                            siteDTO.setName(s.getName());
-                            return siteDTO;
-                        })
-                        .collect(Collectors.toList()),
+                page.getContent(),
                 headers,
                 HttpStatus.OK
         );
