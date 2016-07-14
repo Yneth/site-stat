@@ -63,8 +63,10 @@
         function storeAuthenticationToken(jwt, rememberMe) {
             if (rememberMe) {
                 $localStorage.authenticationToken = jwt;
+                console.log($localStorage);
             } else {
                 $sessionStorage.authenticationToken = jwt;
+                console.log($localStorage);
             }
         }
 
