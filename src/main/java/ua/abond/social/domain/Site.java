@@ -10,7 +10,7 @@ import java.util.List;
 @Table(name = "site")
 @SequenceGenerator(name = "seq", sequenceName = "site_id_seq", allocationSize = 1)
 public class Site extends AbstractEntity implements OwnedResource<Long> {
-
+    
     @ManyToOne
     private User user;
     @Column(name = "name", nullable = false)
