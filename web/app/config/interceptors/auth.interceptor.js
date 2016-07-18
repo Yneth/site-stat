@@ -17,9 +17,6 @@
             config.headers = config.headers || {};
 
             var token = $localStorage.authenticationToken || $sessionStorage.authenticationToken;
-
-            console.log($localStorage);
-            console.log($sessionStorage);
             
             if (token) {
                 config.headers.Authorization = 'Bearer ' + token;
