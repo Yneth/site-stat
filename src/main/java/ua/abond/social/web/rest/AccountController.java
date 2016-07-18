@@ -45,13 +45,15 @@ public class AccountController {
         return userService.getUserByLogin(userDTO.getLogin())
                 .map(u -> new ResponseEntity<>("login already in use", textPlainHeaders, HttpStatus.BAD_REQUEST))
                 .orElseGet(() -> userService.getUserByEmail(userDTO.getEmail())
-                        .map(u -> new ResponseEntity<>("e-mail address already in use", textPlainHeaders, HttpStatus.BAD_REQUEST))
+                        .map(u -> new ResponseEntity<>(
+                                "e-mail address already in use",
+                                textPlainHeaders,
+                                HttpStatus.BAD_REQUEST)
+                        )
                         .orElseGet(() -> {
                             userService.createUser(userDTO);
                             return new ResponseEntity<>(HttpStatus.CREATED);
                         })
                 );
-
-
     }
 }

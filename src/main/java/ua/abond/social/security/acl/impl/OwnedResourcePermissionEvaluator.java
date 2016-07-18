@@ -65,7 +65,10 @@ public class OwnedResourcePermissionEvaluator implements PermissionEvaluator {
     }
 
     @Override
-    public boolean hasPermission(Authentication authentication, Serializable targetId, String targetType, Object permission) {
+    public boolean hasPermission(Authentication authentication,
+                                 Serializable targetId,
+                                 String targetType,
+                                 Object permission) {
         throw new UnsupportedOperationException();
     }
 }
