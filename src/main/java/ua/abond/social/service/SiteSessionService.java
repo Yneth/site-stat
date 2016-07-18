@@ -9,6 +9,7 @@ import ua.abond.social.domain.SiteSession;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+// TODO: make it accessible only to user
 @Transactional
 public interface SiteSessionService {
     @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")

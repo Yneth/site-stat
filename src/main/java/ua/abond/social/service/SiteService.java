@@ -10,6 +10,8 @@ import ua.abond.social.web.rest.dto.SiteDTO;
 
 import java.util.Optional;
 
+
+// TODO: make it accessible only to user
 @Transactional
 public interface SiteService {
     @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
