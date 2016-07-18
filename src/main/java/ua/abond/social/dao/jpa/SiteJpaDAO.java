@@ -32,9 +32,4 @@ public class SiteJpaDAO
     public Page<SiteStatistic> getStatisticsByUserId(Long userId, Pageable pageable) {
         throw new UnsupportedOperationException();
     }
-
-    @Override
-    public Optional<Site> getByUserIdWithSessions(Long id) {
-        throw new UnsupportedOperationException();
-    }
 }

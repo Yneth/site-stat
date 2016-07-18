@@ -68,12 +68,6 @@ public class SiteServiceImpl implements SiteService {
         return siteDAO.getById(id);
     }
 
-    @Override
-    public Optional<Site> getByIdWithSessions(Long id) {
-        log.debug("Request to read Site with id Long {}", id);
-        return siteDAO.getByUserIdWithSessions(id);
-    }
-
 
     @Override
     public Page<Site> getByUserId(Long id, Pageable pageable) {

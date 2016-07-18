@@ -21,8 +21,6 @@ public class SiteDTO {
 
     private UserDTO user;
 
-    private List<SiteSessionDTO> sessions = new ArrayList<>();
-
     public SiteDTO(Long id, String name, String url, User user) {
         setId(id);
         setName(name);
@@ -31,12 +29,11 @@ public class SiteDTO {
                 user.getEmail(), false, user.getLangKey(), null);
     }
 
-    public SiteDTO(Long id, String name, String url, UserDTO user, List<SiteSessionDTO> sessions) {
+    public SiteDTO(Long id, String name, String url, UserDTO user) {
         setId(id);
         setName(name);
         setUrl(url);
-        setUser(user);
-        setSessions(sessions);
+        this.user = user;
     }
 
     public SiteDTO() {
@@ -70,14 +67,6 @@ public class SiteDTO {
         this.user = user;
     }
 
-    public List<SiteSessionDTO> getSessions() {
-        return sessions;
-    }
-
-    public void setSessions(List<SiteSessionDTO> sessions) {
-        this.sessions = sessions;
-    }
-
     public Long getId() {
         return id;
     }
@@ -95,19 +84,10 @@ public class SiteDTO {
         private String name;
         private String url;
         private UserDTO user;
-        private List<SiteSessionDTO> sessions = new ArrayList<>();
 
         private Site site;
 
         private SiteDTOBuilder(Site site) { this.site = site;}
-
-        public SiteDTOBuilder withSessions() {
-//            this.sessions = site.getSiteSessions()
-//                    .stream()
-//                    .map(SiteSessionDTO::new)
-//                    .collect(Collectors.toList());
-            return this;
-        }
 
         public SiteDTOBuilder withId() {
             this.id = site.getId();
@@ -130,7 +110,7 @@ public class SiteDTO {
         }
 
         public SiteDTO exceptUser() {
-            return withId().withSessions().withUrl().withName().build();
+            return withId().withUrl().withName().build();
         }
 
         public SiteDTO exceptUserAndSessions() {
@@ -138,7 +118,7 @@ public class SiteDTO {
         }
 
         public SiteDTO build() {
-            return new SiteDTO(id, name, url, user, sessions);
+            return new SiteDTO(id, name, url, user);
         }
     }
 }

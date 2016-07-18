@@ -27,10 +27,6 @@ public interface SiteRepository extends SiteDAO, JpaRepository<Site, Long> {
     Optional<Site> getById(Long id);
 
     @Override
-    @Query("select s from Site s join fetch s.siteSessions where s.id = ?1")
-    Optional<Site> getByUserIdWithSessions(Long id);
-
-    @Override
     @Query("select new ua.abond.social.domain.SiteStatistic(s, sum(ss.duration)) " +
             "from Site s " +
             "inner join SiteSession ss on s.id = ss.site.id " +

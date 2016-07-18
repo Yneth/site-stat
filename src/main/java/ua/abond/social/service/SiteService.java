@@ -30,10 +30,6 @@ public interface SiteService {
 
     @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
     @Transactional(readOnly = true)
-    Optional<Site> getByIdWithSessions(Long id);
-
-    @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
-    @Transactional(readOnly = true)
     Page<Site> getByUserId(Long id, Pageable pageable);
 
     @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")

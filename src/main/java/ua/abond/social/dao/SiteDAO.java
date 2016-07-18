@@ -13,5 +13,4 @@ public interface SiteDAO extends DAO<Site> {
     Page<Site> findByUserLogin(String login, Pageable pageable);
     Page<Site> findByUserId(Long id, Pageable pageable);
     Page<SiteStatistic> getStatisticsByUserId(Long userId, Pageable pageable);
-//    Optional<Site> getByUserIdWithSessions(Long id);
 }
