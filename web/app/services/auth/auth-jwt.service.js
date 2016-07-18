@@ -60,19 +60,12 @@
             return deferred.promise();
         }
 
-        function storeAuthenticationToken(jwt, rememberMe) {
-            if (rememberMe) {
-                $localStorage.authenticationToken = jwt;
-                console.log($localStorage);
-            } else {
-                $sessionStorage.authenticationToken = jwt;
-                console.log($localStorage);
-            }
+        function storeAuthenticationToken(jwt) {
+            $localStorage.authenticationToken = jwt;
         }
 
         function logout() {
             delete $localStorage.authenticationToken;
-            delete $sessionStorage.authenticationToken;
         }
     }
 })();
