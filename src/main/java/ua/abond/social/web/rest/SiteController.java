@@ -65,30 +65,6 @@ public class SiteController {
                 .body(new SiteDTO(site));
     }
 
-//    @RequestMapping(value = "/user/site",
-//            method = RequestMethod.GET,
-//            produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<List<SiteDTO>> getSitesForAuthUser(Pageable pageable)
-//            throws URISyntaxException {
-//        Page<Site> page = siteService.getByUserId(SecurityUtils.getCurrentUserId(), pageable);
-//
-//        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/user/site");
-//
-//        return new ResponseEntity<>(
-//                page.getContent().stream()
-//                        .map(s -> {
-//                            SiteDTO siteDTO = new SiteDTO();
-//                            siteDTO.setId(s.getId());
-//                            siteDTO.setUrl(s.getUrl());
-//                            siteDTO.setName(s.getName());
-//                            return siteDTO;
-//                        })
-//                        .collect(Collectors.toList()),
-//                headers,
-//                HttpStatus.OK
-//        );
-//    }
-
     @RequestMapping(value = "/user/site",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
