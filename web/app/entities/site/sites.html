@@ -27,7 +27,7 @@
             </thead>
             <tbody>
             <tr ng-repeat="stat in vm.stats track by stat.site.id">
-                <td><a ui-sref="site.details({id:stat.site.id})">{{site.id}}</a></td>
+                <td><a ui-sref="site.details({id:stat.site.id})">{{stat.site.id}}</a></td>
                 <td>{{stat.site.name}}</td>
                 <td>{{stat.site.url}}</td>
                 <td>{{stat.usageDuration}}</td>
