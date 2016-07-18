@@ -102,10 +102,10 @@ public class SiteDTO {
         private SiteDTOBuilder(Site site) { this.site = site;}
 
         public SiteDTOBuilder withSessions() {
-            this.sessions = site.getSiteSessions()
-                    .stream()
-                    .map(SiteSessionDTO::new)
-                    .collect(Collectors.toList());
+//            this.sessions = site.getSiteSessions()
+//                    .stream()
+//                    .map(SiteSessionDTO::new)
+//                    .collect(Collectors.toList());
             return this;
         }
 

@@ -52,7 +52,7 @@ public class SiteSessionDAOTest {
             sessions.add(siteSession);
             sessionRepository.save(siteSession);
         }
-        parent.setSiteSessions(sessions);
+//        parent.setSiteSessions(sessions);
 
         lastMonthSessions = new ArrayList<>();
         for (int i = 0; i < COUNT_OF_TEST_SESSIONS; i++) {

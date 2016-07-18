@@ -98,8 +98,6 @@ public class SiteDAOTest {
 
         SiteStatistic actual = content.get(0);
 
-        actual.getSite().getSiteSessions().size();
-
         assertEquals(testSite.getId(), actual.getSite().getId());
         assertEquals(testSite.getName(), actual.getSite().getName());
         assertEquals(testSite.getUrl(), actual.getSite().getUrl());

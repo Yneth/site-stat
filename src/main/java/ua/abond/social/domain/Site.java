@@ -1,5 +1,6 @@
 package ua.abond.social.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import ua.abond.social.security.acl.OwnedResource;
 
 import javax.persistence.*;
@@ -10,13 +11,16 @@ import java.util.List;
 @Table(name = "site")
 @SequenceGenerator(name = "seq", sequenceName = "site_id_seq", allocationSize = 1)
 public class Site extends AbstractEntity implements OwnedResource<Long> {
-    
+
     @ManyToOne
     private User user;
     @Column(name = "name", nullable = false)
     private String name;
     @Column(name = "url", nullable = false)
     private String url;
+
+    // TODO: move cascade remove to db script and remove siteSessions from Site domain
+    @JsonIgnore
     @OneToMany(mappedBy = "site", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<SiteSession> siteSessions = new ArrayList<>();
 
@@ -56,14 +60,6 @@ public class Site extends AbstractEntity implements OwnedResource<Long> {
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public List<SiteSession> getSiteSessions() {
-        return siteSessions;
-    }
-
-    public void setSiteSessions(List<SiteSession> siteSessions) {
-        this.siteSessions = siteSessions;
     }
 
     @Override
