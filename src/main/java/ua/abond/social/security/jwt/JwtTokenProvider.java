@@ -20,7 +20,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
 
-// TODO: rename seconds to milis
 @Component
 public class JwtTokenProvider implements TokenProvider {
     private final Logger log = LoggerFactory.getLogger(JwtTokenProvider.class);
