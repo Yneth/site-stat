@@ -1,7 +1,7 @@
 {
   "version": "0.0.0",
   "name": "social-stat",
-  "appPath": "web/",
+  "appPath": "src/main/webapp/",
   "testPath": "src/test/javascript/spec",
   "ignore": [
     "**/.*",
@@ -26,6 +26,7 @@
     "angular-cookies": "^1.5.6",
     "angular-translate-interpolation-messageformat": "^2.11.0",
     "angular-translate-storage-cookie": "^2.11.0",
+    "bootstrap-ui-datetime-picker": "2.3.1",
     "messageformat": "^0.3.1",
     "bootflat": "*"
   }

@@ -9,6 +9,7 @@
             'tmh.dynamicLocale',
             'ngCookies',
             'ui.bootstrap',
+            'ui.bootstrap.datetimepicker',
             'ui.router'
         ]).run(run);
 

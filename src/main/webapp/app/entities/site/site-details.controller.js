@@ -10,8 +10,19 @@
     function SiteDetailsController($state, entity, SiteSession, pagingParams, paginationConstants, ParseLinks) {
         var vm = this;
 
+        vm.from = {
+            date: new Date(new Date(new Date(new Date(new Date().setSeconds(0)).setMinutes(0)).setHours(0)).setDate(0)),
+            datetimepickerOptions: {
+                dateFormat: 'yyyy-MM-dd HH:mm'
+            }
+        };
+        vm.to = {
+            date: new Date()
+        };
+
         vm.site = entity;
 
+        vm.openCalendar = openCalendar;
         vm.loadAll = loadAll;
         vm.loadPage = loadPage;
         vm.predicate = pagingParams.predicate;
@@ -19,9 +30,16 @@
         vm.transition = transition;
         vm.loadAll();
 
+        function openCalendar(e, name) {
+            vm[name].open = true;
+        }
+
         function loadAll() {
             SiteSession.query({
                     siteId: vm.site.id,
+                // todo: check how to return without char in the end
+                    from: vm.from.date.toJSON().substr(0, 23),
+                    to: vm.to.date.toJSON().substr(0, 23),
                     page: pagingParams.page - 1,
                     size: paginationConstants.itemsPerPage,
                     sort: sort()
@@ -49,12 +67,12 @@
             }
         }
 
-        function loadPage (page) {
+        function loadPage(page) {
             vm.page = page;
             vm.transition();
         }
 
-        function transition () {
+        function transition() {
             $state.transitionTo($state.$current, {
                 page: vm.page,
                 sort: vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc')

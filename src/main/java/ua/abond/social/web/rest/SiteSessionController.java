@@ -15,6 +15,7 @@ import ua.abond.social.web.rest.util.PaginationUtil;
 
 import java.net.URISyntaxException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -47,18 +48,21 @@ public class SiteSessionController {
         return ResponseEntity.ok().headers(headers).build();
     }
 
+    // TODO: replace date code
     @RequestMapping(value = "/user/site/{siteId}/session",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<SiteSessionDTO>> getAllSessionsForSiteWithId(
             @PathVariable("siteId") Long siteId,
-            @RequestParam(value = "from", required = false) LocalDateTime from,
-            @RequestParam(value = "to", required = false) LocalDateTime to,
+            @RequestParam(name = "from", required = false) String fromString,
+            @RequestParam(name = "to", required = false) String toString,
             Pageable pageable) throws URISyntaxException {
         Page<SiteSession> page = null;
+        LocalDateTime from = LocalDateTime.from(DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(fromString));
+        LocalDateTime to = LocalDateTime.from(DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(toString));
         if (from == null || to == null) {
             page = siteSessionService.getBySiteId(siteId, pageable);
-        } else if (from != null && to != null) {
+        } else {
             LocalDateTime before = from;
             LocalDateTime after = to;
 
