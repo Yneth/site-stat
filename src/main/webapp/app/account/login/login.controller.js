@@ -25,15 +25,25 @@
         });
 
         function login() {
+            vm.authenticationError = false;
             Auth.login({
                 username: vm.username,
                 password: vm.password,
                 rememberMe: vm.rememberMe
-            }).then(function () {
-                vm.authenticationError = false;
+            }, loginError)
+                .then(loginSuccess);
+
+            function loginError(err) {
+                if (err) {
+                    vm.authenticationError = true;
+                }
+            }
+
+            function loginSuccess() {
+                if (vm.authenticationError) return;
 
                 if ($state.current.name === 'register' || $state.current.name === 'activate' ||
-                    $state.current.name === 'login' ||
+                    $state.current.name === 'login' || $state.current.name === 'home' ||
                     $state.current.name === 'finishReset' || $state.current.name === 'requestReset') {
                     $state.go('site');
                 }
@@ -43,13 +53,11 @@
                 // previousState was set in the authExpiredInterceptor before being redirected to login modal.
                 // since login is succesful, go to stored previousState and clear previousState
                 if (Auth.getPreviousState()) {
-                    var previousState = Auth.previousState();
+                    var previousState = Auth.getPreviousState();
                     Auth.resetPreviousState();
                     $state.go(previousState.name, previousState.params);
                 }
-            }).catch(function () {
-                vm.authenticationError = true;
-            });
+            }
         }
 
         function cancel() {

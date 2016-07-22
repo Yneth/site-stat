@@ -10,12 +10,7 @@
     function Account($resource) {
         var service = $resource('api/account', {}, {
             'get': {
-                method: 'GET', params: {}, isArray: false,
-                interceptor: {
-                    response: function (response) {
-                        return response;
-                    }
-                }
+                method: 'GET', params: {}, isArray: false
             }
         });
         return service;
