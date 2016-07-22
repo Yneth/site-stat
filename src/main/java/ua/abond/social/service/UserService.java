@@ -15,7 +15,7 @@ public interface UserService {
 
     Optional<User> activateRegistration(String key);
 
-    void updateUserInformation(String firstName, String secondName, String email, String langKey);
+    void updateUserInformation(String firstName, String secondName, String email);
 
     void deleteUserInformation(String login);
 

@@ -86,12 +86,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUserInformation(String firstName, String lastName, String email, String langKey) {
-        userDAO.findOneByLogin(SecurityUtils.getCurrentUserLogin()).ifPresent(u -> {
+    public void updateUserInformation(String firstName, String lastName, String email) {
+        userDAO.getById(SecurityUtils.getCurrentUserId()).ifPresent(u -> {
             u.setFirstName(firstName);
             u.setLastName(lastName);
             u.setEmail(email);
-            u.setLangKey(langKey);
             log.debug("Updated information for User {}", u);
             userDAO.save(u);
         });
