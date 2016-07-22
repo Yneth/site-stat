@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import ua.abond.social.security.SecurityUtils;
 import ua.abond.social.security.TokenProvider;
 import ua.abond.social.service.UserService;
 import ua.abond.social.web.rest.dto.ManagedUserDTO;
@@ -35,6 +36,15 @@ public class AccountController {
         return userService.getCurrentUser()
                 .map(u -> new ResponseEntity<>(new UserDTO(u), HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
+    }
+
+    @RequestMapping(value = "/account", method = RequestMethod.POST)
+    public ResponseEntity<Void> isAuthenticated(@Valid @RequestBody UserDTO userDTO) {
+        userService.updateUserInformation(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail());
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("X-socialStatApp-alert", "updated site");
+        headers.add("X-socialStatApp-params", SecurityUtils.getCurrentUserId().toString());
+        return ResponseEntity.ok().headers(headers).build();
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
