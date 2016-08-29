@@ -11,13 +11,16 @@
         var vm = this;
 
         vm.from = {
-            date: new Date(new Date(new Date(new Date(new Date().setSeconds(0)).setMinutes(0)).setHours(0)).setDate(0)),
+            date: new Date(new Date(new Date(new Date(new Date().setSeconds(0)).setMinutes(0)).setHours(0)).setDate(1)),
             datetimepickerOptions: {
-                dateFormat: 'yyyy-MM-dd HH:mm'
+                dateFormat: 'yyyy-MM-dd hh:mm'
             }
         };
         vm.to = {
-            date: new Date()
+            date: new Date(Date.now()),
+            datetimepickerOptions: {
+                dateFormat: 'yyyy-MM-dd hh:mm'
+            }
         };
 
         vm.site = entity;
@@ -38,8 +41,8 @@
             SiteSession.query({
                     siteId: vm.site.id,
                 // todo: check how to return without char in the end
-                    from: vm.from.date.toJSON().substr(0, 23),
-                    to: vm.to.date.toJSON().substr(0, 23),
+                    from: vm.from.date.toISOString(),
+                    to: vm.to.date.toISOString(),
                     page: pagingParams.page - 1,
                     size: paginationConstants.itemsPerPage,
                     sort: sort()
