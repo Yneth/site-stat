@@ -14,7 +14,7 @@
         vm.updateAccount = function () {
             console.log(vm.account);
             Auth.updateAccount(vm.account);
-            // todo: add on finish notification
+            // todo: add on finish notification bubble
         }
     }
 })();

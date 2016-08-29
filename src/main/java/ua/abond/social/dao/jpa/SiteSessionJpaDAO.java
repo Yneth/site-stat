@@ -8,7 +8,6 @@ import ua.abond.social.dao.SiteSessionDAO;
 import ua.abond.social.domain.SiteSession;
 
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 
 @Repository
 public class SiteSessionJpaDAO
@@ -29,7 +28,7 @@ public class SiteSessionJpaDAO
     }
 
     @Override
-    public Page<SiteSession> getBySiteIdBetweenDates(Long siteId, ZonedDateTime start, ZonedDateTime end, Pageable pageable) {
+    public Page<SiteSession> getBySiteIdBetweenDates(Long siteId, LocalDateTime start, LocalDateTime end, Pageable pageable) {
         return null;
     }
 }

@@ -5,8 +5,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import ua.abond.social.domain.SiteSession;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 
 // TODO: add documentation
 public interface SiteSessionDAO extends DAO<SiteSession> {
@@ -15,5 +15,5 @@ public interface SiteSessionDAO extends DAO<SiteSession> {
     // TODO: slow
     Page<SiteSession> findAll(Specification<SiteSession> spec, Pageable pageable);
 
-    Page<SiteSession> getBySiteIdBetweenDates(Long siteId, ZonedDateTime start, ZonedDateTime end, Pageable pageable);
+    Page<SiteSession> getBySiteIdBetweenDates(Long siteId, LocalDateTime start, LocalDateTime end, Pageable pageable);
 }

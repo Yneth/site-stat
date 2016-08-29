@@ -84,8 +84,8 @@ public class SiteDAOTest {
     public void getStatisticsByUserId() throws Exception {
         SiteSession s = new SiteSession();
         s.setDuration(10l);
-        s.setStartDateTime(ZonedDateTime.now());
-        s.setEndDateTime(ZonedDateTime.now().plusMinutes(10));
+        s.setStartDateTime(LocalDateTime.now());
+        s.setEndDateTime(LocalDateTime.now().plusMinutes(10));
         s.setSite(testSite);
         siteSessionDAO.save(s);
 

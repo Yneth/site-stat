@@ -14,10 +14,9 @@ import ua.abond.social.service.SiteSessionService;
 import ua.abond.social.web.rest.dto.SiteSessionDTO;
 import ua.abond.social.web.rest.util.PaginationUtil;
 
-import java.net.URISyntaxException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -56,22 +55,25 @@ public class SiteSessionController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<SiteSessionDTO>> getAllSessionsForSiteWithId(
             @PathVariable("siteId") Long siteId,
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @RequestParam(name = "from", required = false)
-                    ZonedDateTime from,
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @RequestParam(name = "to", required = false)
-                    ZonedDateTime to,
+            @RequestParam(name = "from", required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                    LocalDate from,
+            @RequestParam(name = "to", required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                    LocalDate to,
             Pageable pageable)
             throws Exception {
         Page<SiteSession> page = null;
-//        LocalDateTime from = LocalDateTime.from(DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(fromString));
-//        LocalDateTime to = LocalDateTime.from(DateTimeFormatter.ISO_DATE_TIME.parse(toString));
         if (from == null || to == null) {
             page = siteSessionService.getBySiteId(siteId, pageable);
         } else {
             if (from.isAfter(to)) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
-            page = siteSessionService.getBySiteIdBetweenDates(siteId, from, to, pageable);
+            LocalDateTime fromDateTime = from.atTime(0, 0, 0);
+            LocalDateTime toDateTime = fromDateTime.plusDays(1);
+
+            page = siteSessionService.getBySiteIdBetweenDates(siteId, fromDateTime, toDateTime, pageable);
         }
 
         // TODO: remove hardcoded uri

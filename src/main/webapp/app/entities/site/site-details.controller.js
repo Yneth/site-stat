@@ -11,16 +11,10 @@
         var vm = this;
 
         vm.from = {
-            date: new Date(new Date(new Date(new Date(new Date().setSeconds(0)).setMinutes(0)).setHours(0)).setDate(1)),
-            datetimepickerOptions: {
-                dateFormat: 'yyyy-MM-dd hh:mm'
-            }
+            date: new Date()
         };
         vm.to = {
-            date: new Date(Date.now()),
-            datetimepickerOptions: {
-                dateFormat: 'yyyy-MM-dd hh:mm'
-            }
+            date: new Date()
         };
 
         vm.site = entity;
@@ -40,15 +34,22 @@
         function loadAll() {
             SiteSession.query({
                     siteId: vm.site.id,
-                // todo: check how to return without char in the end
-                    from: vm.from.date.toISOString(),
-                    to: vm.to.date.toISOString(),
+                    from: toDateString(vm.from.date, "-"),
+                    to: toDateString(vm.to.date, "-"),
                     page: pagingParams.page - 1,
                     size: paginationConstants.itemsPerPage,
                     sort: sort()
                 },
                 onSuccess, onError
             );
+
+            function toDateString(date, separator) {
+                var dateArray = date.toLocaleString().split(",")[0].split("/");
+                var year = dateArray[2];
+                var month = +dateArray[0] < 10 ? "0" + dateArray[0] : dateArray[0];
+                var day = dateArray[1];
+                return [year, month, day].join(separator);
+            }
 
             function sort() {
                 var result = [vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc')];
