@@ -1,29 +1,3 @@
--- CREATE TABLE IF NOT EXISTS acl_access (
---   id int4 PRIMARY KEY,
---   name varchar not null
--- );
---
--- CREATE TABLE IF NOT EXISTS acl_class (
---   id int4 PRIMARY KEY,
---   name varchar not null
--- );
---
--- CREATE TABLE IF NOT EXISTS acl_entry (
---   id int4 PRIMARY KEY,
---   role_id int4,
---   permission_id int4,
---   access_id int4,
---   class_id int4,
---
---   FOREIGN KEY (role_id) REFERENCES authority (id),
---   FOREIGN KEY (permission_id) REFERENCES permission (id),
---   FOREIGN KEY (access_id) REFERENCES acl_access (id),
---   FOREIGN KEY (class_id) REFERENCES acl_class (id)
--- );
-
-
-
-
 INSERT INTO USR VALUES (
   NEXTVAL('user_id_seq'),
   true,
@@ -82,16 +56,16 @@ INSERT INTO SITE_SESSION (id, duration, time_start, time_end, site_id)
 VALUES (
   NEXTVAL('SITE_SESSION_ID_SEQ'),
   60,
-  CURRENT_TIMESTAMP,
-  CURRENT_TIMESTAMP + INTERVAL '1 HOUR',
+  now(),
+  now() + INTERVAL '1 HOUR',
   1
 );
 
 INSERT INTO SITE_SESSION (id, duration, time_start, time_end, site_id) VALUES  (
   NEXTVAL('SITE_SESSION_ID_SEQ'),
   120,
-  CURRENT_TIMESTAMP,
-  CURRENT_TIMESTAMP + INTERVAL '2 HOUR',
+  now(),
+  now() + INTERVAL '2 HOUR',
   1
 );
 
@@ -99,8 +73,8 @@ INSERT INTO SITE_SESSION (id, duration, time_start, time_end, site_id)
 VALUES (
   NEXTVAL('SITE_SESSION_ID_SEQ'),
   120,
-  CURRENT_TIMESTAMP,
-  CURRENT_TIMESTAMP + INTERVAL '2 HOUR',
+  now(),
+  now() + INTERVAL '2 HOUR',
   2
 );
 
@@ -134,29 +108,7 @@ VALUES (
 --   CONSTRAINT PK_USER PRIMARY KEY (USER_ID)
 -- );
 --
--- CREATE TABLE SOCIAL_NETWORK (
---   SOCIAL_NETWORK_ID SERIAL  NOT NULL,
---   NAME              VARCHAR NOT NULL,
---   URL               VARCHAR NOT NULL,
---   USER_ID           INTEGER NOT NULL,
---   CONSTRAINT PK_SOCIAL_NETWORK PRIMARY KEY (SOCIAL_NETWORK_ID),
---   CONSTRAINT FK_SOCIAL_NETWORKS_USER FOREIGN KEY (USER_ID)
---   REFERENCES USR (USER_ID) MATCH SIMPLE
---   ON UPDATE CASCADE ON DELETE CASCADE
--- );
---
--- CREATE TABLE SOCIAL_NETWORK_SESSION (
---   SOCIAL_NETWORK_SESSION_ID SERIAL    NOT NULL,
---   TIME_START                TIMESTAMP NOT NULL,
---   TIME_END                  TIMESTAMP,
---   INTERVAL                  INT,
---   SOCIAL_NETWORK_ID         INTEGER   NOT NULL,
---   CONSTRAINT PK_SOCIAL_NETWORK_SESSION PRIMARY KEY (SOCIAL_NETWORK_SESSION_ID),
---   CONSTRAINT FK_SOCIAL_NETWORK_SESSIONS_SOCIAL_NETWORK FOREIGN KEY (SOCIAL_NETWORK_ID)
---   REFERENCES SOCIAL_NETWORK (SOCIAL_NETWORK_ID) MATCH SIMPLE
---   ON UPDATE CASCADE ON DELETE CASCADE
--- );
---
+
 
 -- DROP TABLE IF EXISTS acl_entry;
 -- DROP TABLE IF EXISTS acl_access;
