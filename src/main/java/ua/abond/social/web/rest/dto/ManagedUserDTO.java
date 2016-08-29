@@ -1,5 +1,6 @@
 package ua.abond.social.web.rest.dto;
 
+import ua.abond.social.config.Constants;
 import ua.abond.social.domain.User;
 
 import javax.validation.constraints.NotNull;
@@ -10,13 +11,10 @@ import java.util.Set;
  * A DTO extending the UserDTO, which is meant to be used in the user management UI.
  */
 public class ManagedUserDTO extends UserDTO {
-    public static final int PASSWORD_MIN_LENGTH = 4;
-    public static final int PASSWORD_MAX_LENGTH = 100;
-
     private Long id;
 
     @NotNull
-    @Size(min = PASSWORD_MIN_LENGTH, max = PASSWORD_MAX_LENGTH)
+    @Size(min = Constants.PASSWORD_MIN_LENGTH, max = Constants.PASSWORD_MAX_LENGTH)
     private String password;
 
     public ManagedUserDTO() {

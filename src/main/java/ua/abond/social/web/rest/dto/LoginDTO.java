@@ -13,7 +13,7 @@ public class LoginDTO {
     private String username;
 
     @NotNull
-    @Size(min = ManagedUserDTO.PASSWORD_MIN_LENGTH, max = ManagedUserDTO.PASSWORD_MAX_LENGTH)
+    @Size(min = Constants.PASSWORD_MIN_LENGTH, max = Constants.PASSWORD_MAX_LENGTH)
     private String password;
 
     private Boolean rememberMe;
