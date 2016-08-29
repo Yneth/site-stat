@@ -6,10 +6,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import ua.abond.social.config.Constants;
 import ua.abond.social.security.SecurityUtils;
 import ua.abond.social.security.TokenProvider;
 import ua.abond.social.service.UserService;
@@ -22,11 +24,6 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/api")
 public class AccountController {
-
-    @Autowired
-    private TokenProvider tokenProvider;
-    @Autowired
-    private AuthenticationManager authenticationManager;
 
     @Autowired
     private UserService userService;
@@ -47,6 +44,15 @@ public class AccountController {
         return ResponseEntity.ok().headers(headers).build();
     }
 
+    @RequestMapping(value = "/account/change_password", method = RequestMethod.POST)
+    public ResponseEntity<?> changePassword(@RequestBody String password) {
+        if (!isValidPassword(password)) {
+            return new ResponseEntity<>("Incorrect password", HttpStatus.BAD_REQUEST);
+        }
+        userService.changePassword(password);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ResponseEntity<?> register(@Valid @RequestBody ManagedUserDTO userDTO, HttpServletResponse response) {
         HttpHeaders textPlainHeaders = new HttpHeaders();
@@ -65,5 +71,11 @@ public class AccountController {
                             return new ResponseEntity<>(HttpStatus.CREATED);
                         })
                 );
+    }
+
+    private boolean isValidPassword(String password) {
+        return StringUtils.hasText(password)
+                && password.length() >= Constants.PASSWORD_MIN_LENGTH
+                && password.length() <= Constants.PASSWORD_MAX_LENGTH;
     }
 }

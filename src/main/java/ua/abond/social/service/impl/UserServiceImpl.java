@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ua.abond.social.config.Constants;
 import ua.abond.social.dao.AuthorityDAO;
 import ua.abond.social.dao.UserDAO;
@@ -101,6 +100,15 @@ public class UserServiceImpl implements UserService {
         userDAO.findOneByLogin(login).ifPresent(u -> {
             userDAO.delete(u);
             log.debug("Deleted information for User {}", u);
+        });
+    }
+
+    @Override
+    public void changePassword(String password) {
+        userDAO.getById(SecurityUtils.getCurrentUserId()).ifPresent(u -> {
+            u.setPassword(passwordEncoder.encode(password));
+            userDAO.save(u);
+            log.debug("Changed password for User: {}", u);
         });
     }
 

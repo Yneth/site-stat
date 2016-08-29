@@ -19,6 +19,8 @@ public interface UserService {
 
     void deleteUserInformation(String login);
 
+    void changePassword(String password);
+
     @Transactional(readOnly = true)
     Optional<User> getCurrentUser();
 
