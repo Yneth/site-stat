@@ -20,12 +20,12 @@ public class SiteSession extends AbstractEntity implements OwnedResource<Long> {
     private Long duration;
 
     @NotNull
-    @Column(name = "time_start", nullable = false)
-    private LocalDateTime start;
+    @Column(name = "time_start", nullable = false, columnDefinition = "timestamp")
+    private ZonedDateTime start;
 
     @NotNull
-    @Column(name = "time_end", nullable = false)
-    private LocalDateTime end;
+    @Column(name = "time_end", nullable = false, columnDefinition = "timestamp")
+    private ZonedDateTime end;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Site site;
@@ -33,7 +33,7 @@ public class SiteSession extends AbstractEntity implements OwnedResource<Long> {
     public SiteSession() {
     }
 
-    public SiteSession(Long id, LocalDateTime start, LocalDateTime end, Long duration) {
+    public SiteSession(Long id, ZonedDateTime start, ZonedDateTime end, Long duration) {
         setId(id);
         setStartDateTime(start);
         setEndDateTime(end);
@@ -61,19 +61,19 @@ public class SiteSession extends AbstractEntity implements OwnedResource<Long> {
         this.site = site;
     }
 
-    public LocalDateTime getStartDateTime() {
+    public ZonedDateTime getStartDateTime() {
         return start;
     }
 
-    public void setStartDateTime(LocalDateTime startDateTime) {
+    public void setStartDateTime(ZonedDateTime startDateTime) {
         this.start = startDateTime;
     }
 
-    public LocalDateTime getEndDateTime() {
+    public ZonedDateTime getEndDateTime() {
         return end;
     }
 
-    public void setEndDateTime(LocalDateTime endDateTime) {
+    public void setEndDateTime(ZonedDateTime endDateTime) {
         this.end = endDateTime;
     }
 

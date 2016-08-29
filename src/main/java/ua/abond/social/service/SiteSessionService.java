@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.abond.social.domain.SiteSession;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Optional;
 
 // TODO: make it accessible only to user
@@ -34,5 +35,5 @@ public interface SiteSessionService {
 
     @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
     @Transactional(readOnly =  true)
-    Page<SiteSession> getBySiteIdBetweenDates(Long id, LocalDateTime start, LocalDateTime end, Pageable pageable);
+    Page<SiteSession> getBySiteIdBetweenDates(Long id, ZonedDateTime start, ZonedDateTime end, Pageable pageable);
 }

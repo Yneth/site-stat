@@ -18,6 +18,7 @@ import ua.abond.social.domain.SiteSession;
 import ua.abond.social.domain.specification.SiteSessionSpecifications;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,8 +47,8 @@ public class SiteSessionDAOTest {
         sessions = new ArrayList<>();
         for (int i = 0; i < COUNT_OF_TEST_SESSIONS; i++) {
             SiteSession siteSession = new SiteSession();
-            siteSession.setStartDateTime(LocalDateTime.now().withHour(i));
-            siteSession.setEndDateTime(LocalDateTime.now().withHour(i + 1));
+            siteSession.setStartDateTime(ZonedDateTime.now().withHour(i));
+            siteSession.setEndDateTime(ZonedDateTime.now().withHour(i + 1));
             siteSession.setSite(parent);
             sessions.add(siteSession);
             sessionRepository.save(siteSession);
@@ -57,8 +58,8 @@ public class SiteSessionDAOTest {
         lastMonthSessions = new ArrayList<>();
         for (int i = 0; i < COUNT_OF_TEST_SESSIONS; i++) {
             SiteSession siteSession = new SiteSession();
-            siteSession.setStartDateTime(LocalDateTime.now().minusMonths(1));
-            siteSession.setEndDateTime(LocalDateTime.now().minusMonths(1));
+            siteSession.setStartDateTime(ZonedDateTime.now().minusMonths(1));
+            siteSession.setEndDateTime(ZonedDateTime.now().minusMonths(1));
             siteSession.setSite(parent);
             lastMonthSessions.add(siteSession);
             sessionRepository.save(siteSession);
@@ -76,8 +77,8 @@ public class SiteSessionDAOTest {
     @Test
     public void checkYesterdaySessions() {
         SiteSession siteSession = new SiteSession();
-        siteSession.setStartDateTime(LocalDateTime.now().minusDays(1).withHour(2));
-        siteSession.setEndDateTime(LocalDateTime.now().minusDays(1).withHour(5));
+        siteSession.setStartDateTime(ZonedDateTime.now().minusDays(1).withHour(2));
+        siteSession.setEndDateTime(ZonedDateTime.now().minusDays(1).withHour(5));
         siteSession.setSite(parent);
         sessionRepository.save(siteSession);
 
@@ -106,8 +107,8 @@ public class SiteSessionDAOTest {
     @Test
     public void testAndSpec() {
         SiteSession siteSession = new SiteSession();
-        siteSession.setStartDateTime(LocalDateTime.now().minusDays(1).withHour(1));
-        siteSession.setEndDateTime(LocalDateTime.now().minusDays(1).withHour(5));
+        siteSession.setStartDateTime(ZonedDateTime.now().minusDays(1).withHour(1));
+        siteSession.setEndDateTime(ZonedDateTime.now().minusDays(1).withHour(5));
         siteSession.setSite(parent);
         sessionRepository.save(siteSession);
 
@@ -117,8 +118,8 @@ public class SiteSessionDAOTest {
         siteRepository.save(s);
 
         SiteSession ss = new SiteSession();
-        ss.setStartDateTime(LocalDateTime.now().minusDays(1).withHour(1));
-        ss.setEndDateTime(LocalDateTime.now().minusDays(1).withHour(5));
+        ss.setStartDateTime(ZonedDateTime.now().minusDays(1).withHour(1));
+        ss.setEndDateTime(ZonedDateTime.now().minusDays(1).withHour(5));
         ss.setSite(s);
         sessionRepository.save(ss);
 

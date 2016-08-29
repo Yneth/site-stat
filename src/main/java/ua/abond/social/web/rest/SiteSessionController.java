@@ -3,6 +3,7 @@ package ua.abond.social.web.rest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,6 +16,7 @@ import ua.abond.social.web.rest.util.PaginationUtil;
 
 import java.net.URISyntaxException;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
@@ -54,24 +56,22 @@ public class SiteSessionController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<SiteSessionDTO>> getAllSessionsForSiteWithId(
             @PathVariable("siteId") Long siteId,
-            @RequestParam(name = "from", required = false) String fromString,
-            @RequestParam(name = "to", required = false) String toString,
-            Pageable pageable) throws URISyntaxException {
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @RequestParam(name = "from", required = false)
+                    ZonedDateTime from,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @RequestParam(name = "to", required = false)
+                    ZonedDateTime to,
+            Pageable pageable)
+            throws Exception {
         Page<SiteSession> page = null;
-        LocalDateTime from = LocalDateTime.from(DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(fromString));
-        LocalDateTime to = LocalDateTime.from(DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(toString));
+//        LocalDateTime from = LocalDateTime.from(DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(fromString));
+//        LocalDateTime to = LocalDateTime.from(DateTimeFormatter.ISO_DATE_TIME.parse(toString));
         if (from == null || to == null) {
             page = siteSessionService.getBySiteId(siteId, pageable);
         } else {
-            LocalDateTime before = from;
-            LocalDateTime after = to;
-
-            if (before.isAfter(after)) {
-                LocalDateTime temp = before;
-                before = after;
-                after = temp;
+            if (from.isAfter(to)) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
-            page = siteSessionService.getBySiteIdBetweenDates(siteId, before, after, pageable);
+            page = siteSessionService.getBySiteIdBetweenDates(siteId, from, to, pageable);
         }
 
         // TODO: remove hardcoded uri

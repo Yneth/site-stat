@@ -10,9 +10,9 @@ import java.time.ZonedDateTime;
 public class SiteSessionDTO {
     private Long id;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constants.DATETIME_FORMAT)
-    private LocalDateTime startTime;
+    private ZonedDateTime startTime;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constants.DATETIME_FORMAT)
-    private LocalDateTime endTime;
+    private ZonedDateTime endTime;
     private long duration;
 
     public SiteSessionDTO(SiteSession session) {
@@ -30,19 +30,19 @@ public class SiteSessionDTO {
         this.id = id;
     }
 
-    public LocalDateTime getStartTime() {
+    public ZonedDateTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalDateTime startTime) {
+    public void setStartTime(ZonedDateTime startTime) {
         this.startTime = startTime;
     }
 
-    public LocalDateTime getEndTime() {
+    public ZonedDateTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(LocalDateTime endTime) {
+    public void setEndTime(ZonedDateTime endTime) {
         this.endTime = endTime;
     }
 

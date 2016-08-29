@@ -11,6 +11,7 @@ import ua.abond.social.domain.SiteSession;
 import ua.abond.social.service.SiteSessionService;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Optional;
 
 @Service
@@ -58,8 +59,8 @@ public class SiteSessionServiceImpl implements SiteSessionService {
 
     @Override
     public Page<SiteSession> getBySiteIdBetweenDates(Long id,
-                                                     LocalDateTime start,
-                                                     LocalDateTime end,
+                                                     ZonedDateTime start,
+                                                     ZonedDateTime end,
                                                      Pageable pageable) {
         log.debug("Request to get pageable SiteSessions between dates for Site with id Long {}", id);
         return siteSessionDAO.getBySiteIdBetweenDates(id, start, end, pageable);
