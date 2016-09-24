@@ -14,10 +14,13 @@ import ua.abond.social.security.SecurityUtils;
 import ua.abond.social.service.SiteService;
 import ua.abond.social.web.rest.dto.SiteDTO;
 import ua.abond.social.web.rest.util.PaginationUtil;
+import ua.abond.social.web.rest.util.ReflectionUtil;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+
+import static ua.abond.social.web.rest.util.ReflectionUtil.*;
 
 
 // TODO: implement httpheaders builder
@@ -68,10 +71,11 @@ public class SiteController {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<SiteSummary>> getSitesForAuthUser(Pageable pageable)
-            throws URISyntaxException {
+            throws Exception {
         Page<SiteSummary> page = siteService.getStatisticsByUserId(SecurityUtils.getCurrentUserId(), pageable);
 
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/user/site");
+        String mapping = ReflectionUtil.getUrlMapping((new MethodNameHelper() {}).getMethod());
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, mapping);
 
         return new ResponseEntity<>(
                 page.getContent(),

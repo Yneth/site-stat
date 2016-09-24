@@ -14,13 +14,15 @@ import ua.abond.social.service.SiteSessionService;
 import ua.abond.social.web.rest.dto.ManagedSiteSessionDTO;
 import ua.abond.social.web.rest.dto.SiteSessionDTO;
 import ua.abond.social.web.rest.util.PaginationUtil;
+import ua.abond.social.web.rest.util.ReflectionUtil;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static ua.abond.social.web.rest.util.ReflectionUtil.*;
 
 @RestController
 @RequestMapping("/api/")
@@ -88,8 +90,8 @@ public class SiteSessionController {
             page = siteSessionService.getBySiteIdBetweenDates(siteId, fromDateTime, toDateTime, pageable);
         }
 
-        // TODO: remove hardcoded uri
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/user/site/" + siteId + "/session");
+        String mapping = ReflectionUtil.getUrlMapping((new MethodNameHelper() {}).getMethod());
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, mapping);
 
         return new ResponseEntity<>(page.getContent()
                 .stream()
