@@ -1,10 +1,12 @@
-package ua.abond.social.domain;
+package ua.abond.social.web.rest.dto;
 
-public class SiteStatistic {
+import ua.abond.social.domain.Site;
+
+public class SiteSummary {
     private final Site site;
     private final Long usageDuration;
 
-    public SiteStatistic(Site site, Long usageDuration) {
+    public SiteSummary(Site site, Long usageDuration) {
         this.site = site;
         this.usageDuration = usageDuration;
     }
@@ -20,9 +22,9 @@ public class SiteStatistic {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof SiteStatistic)) return false;
+        if (!(o instanceof SiteSummary)) return false;
 
-        SiteStatistic that = (SiteStatistic) o;
+        SiteSummary that = (SiteSummary) o;
 
         if (getSite() != null ? !getSite().equals(that.getSite()) : that.getSite() != null) return false;
         return getUsageDuration() != null ? getUsageDuration().equals(that.getUsageDuration()) : that.getUsageDuration() == null;

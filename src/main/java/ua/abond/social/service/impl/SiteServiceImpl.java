@@ -5,11 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ua.abond.social.domain.Site;
-import ua.abond.social.domain.SiteStatistic;
+import ua.abond.social.web.rest.dto.SiteSummary;
 import ua.abond.social.domain.User;
 import ua.abond.social.security.SecurityUtils;
 import ua.abond.social.service.SiteService;
@@ -76,8 +74,8 @@ public class SiteServiceImpl implements SiteService {
     }
 
     @Override
-    public Page<SiteStatistic> getStatisticsByUserId(Long userId, Pageable pageable) {
-        log.debug("Request to read all SiteStatistic {} for requested User id", userId);
+    public Page<SiteSummary> getStatisticsByUserId(Long userId, Pageable pageable) {
+        log.debug("Request to read all SiteSummary {} for requested User id", userId);
         return siteDAO.getStatisticsByUserId(userId, pageable);
     }
 }

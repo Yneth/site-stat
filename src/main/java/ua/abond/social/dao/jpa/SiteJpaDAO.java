@@ -5,9 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import ua.abond.social.domain.Site;
 import ua.abond.social.dao.SiteDAO;
-import ua.abond.social.domain.SiteStatistic;
-
-import java.util.Optional;
+import ua.abond.social.web.rest.dto.SiteSummary;
 
 @Repository
 public class SiteJpaDAO
@@ -29,7 +27,7 @@ public class SiteJpaDAO
     }
 
     @Override
-    public Page<SiteStatistic> getStatisticsByUserId(Long userId, Pageable pageable) {
+    public Page<SiteSummary> getStatisticsByUserId(Long userId, Pageable pageable) {
         throw new UnsupportedOperationException();
     }
 }

@@ -5,7 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import ua.abond.social.domain.Site;
-import ua.abond.social.domain.SiteStatistic;
+import ua.abond.social.web.rest.dto.SiteSummary;
 import ua.abond.social.web.rest.dto.SiteDTO;
 
 import java.util.Optional;
@@ -36,5 +36,5 @@ public interface SiteService {
 
     @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
     @Transactional(readOnly = true)
-    Page<SiteStatistic> getStatisticsByUserId(Long userId, Pageable pageable);
+    Page<SiteSummary> getStatisticsByUserId(Long userId, Pageable pageable);
 }

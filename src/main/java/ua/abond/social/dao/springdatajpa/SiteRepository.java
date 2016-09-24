@@ -4,12 +4,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import ua.abond.social.dao.SiteDAO;
 import ua.abond.social.domain.Site;
-import ua.abond.social.domain.SiteStatistic;
+import ua.abond.social.web.rest.dto.SiteSummary;
 
-import java.time.LocalDate;
 import java.util.Optional;
 
 public interface SiteRepository extends SiteDAO, JpaRepository<Site, Long> {
@@ -27,10 +25,10 @@ public interface SiteRepository extends SiteDAO, JpaRepository<Site, Long> {
     Optional<Site> getById(Long id);
 
     @Override
-    @Query("select new ua.abond.social.domain.SiteStatistic(s, sum(ss.duration)) " +
+    @Query("select new ua.abond.social.web.rest.dto.SiteSummary(s, sum(ss.duration)) " +
             "from Site s " +
             "inner join SiteSession ss on s.id = ss.site.id " +
             "where s.user.id = ?1 " +
             "group by s.id, s.name, s.url")
-    Page<SiteStatistic> getStatisticsByUserId(Long userId, Pageable pageable);
+    Page<SiteSummary> getStatisticsByUserId(Long userId, Pageable pageable);
 }
