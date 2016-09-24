@@ -2,6 +2,7 @@ package ua.abond.social.web.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,7 +24,7 @@ import javax.validation.Valid;
 import java.util.Collections;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/")
 public class UserJwtController {
 
     @Autowired
@@ -31,7 +32,10 @@ public class UserJwtController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
+    @RequestMapping(value = "authenticate", method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = {MediaType.APPLICATION_JSON_VALUE}
+    )
     public ResponseEntity<?> authenticate(@Valid @RequestBody LoginDTO loginDTO, HttpServletResponse response) {
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword());
@@ -43,6 +47,7 @@ public class UserJwtController {
 
             String token = tokenProvider.createToken(authentication, ((User) authentication.getPrincipal()).getId(), rememberMe);
             response.addHeader(Constants.AUTHORIZATION_HEADER, Constants.BEARER + token);
+//            response.addHeader("Access-Control-Allow-Origin", "*");
 
             return ResponseEntity.ok(new JwtToken(token));
         } catch (AuthenticationException exception) {

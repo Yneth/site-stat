@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.abond.social.domain.SiteSession;
 import ua.abond.social.service.SiteSessionService;
+import ua.abond.social.web.rest.dto.ManagedSiteSessionDTO;
 import ua.abond.social.web.rest.dto.SiteSessionDTO;
 import ua.abond.social.web.rest.util.PaginationUtil;
 
@@ -22,12 +23,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/")
 public class SiteSessionController {
     @Autowired
     private SiteSessionService siteSessionService;
 
-    @RequestMapping(value = "/user/site/{siteId}/session/{sessionId}",
+    @RequestMapping(value = "site/{siteId}/session/{sessionId}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<SiteSessionDTO> getById(@PathVariable("sessionId") Long sessionId) {
@@ -38,7 +39,18 @@ public class SiteSessionController {
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @RequestMapping(value = "/user/site/{siteId}/session/{sessionId}",
+    @RequestMapping(value = "site/{siteId}/session/new")
+    public ResponseEntity<Void> saveSession(ManagedSiteSessionDTO siteSessionDTO) {
+//        siteSessionService.deleteById(sessionId);
+//
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.add("X-socialStatApp-alert", "deleted site session");
+//        headers.add("X-socialStatApp-params", sessionId.toString());
+//        return ResponseEntity.ok().headers(headers).build();
+        return null;
+    }
+
+    @RequestMapping(value = "site/{siteId}/session/{sessionId}",
             method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteById(@PathVariable("sessionId") Long sessionId) {
         siteSessionService.deleteById(sessionId);
@@ -50,7 +62,7 @@ public class SiteSessionController {
     }
 
     // TODO: replace date code
-    @RequestMapping(value = "/user/site/{siteId}/session",
+    @RequestMapping(value = "site/{siteId}/session",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<SiteSessionDTO>> getAllSessionsForSiteWithId(
@@ -71,7 +83,7 @@ public class SiteSessionController {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
             LocalDateTime fromDateTime = from.atTime(0, 0, 0);
-            LocalDateTime toDateTime = fromDateTime.plusDays(1);
+            LocalDateTime toDateTime = to.plusDays(1).atTime(0, 0, 0);
 
             page = siteSessionService.getBySiteIdBetweenDates(siteId, fromDateTime, toDateTime, pageable);
         }

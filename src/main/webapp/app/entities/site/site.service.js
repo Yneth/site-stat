@@ -8,7 +8,7 @@
     Site.$inject = ['$resource'];
 
     function Site($resource) {
-        return $resource('/api/user/site/:siteId', {}, {
+        return $resource('/api/site/:siteId', {}, {
             'query': {method: 'GET', isArray: true},
             'get': {method: 'GET', isArray: false, params: {siteId: '@siteId'}},
             'update': {method: 'PUT', isArray: false, params: {siteId: '@siteId'}},

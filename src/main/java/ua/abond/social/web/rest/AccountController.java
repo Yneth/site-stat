@@ -22,20 +22,20 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/")
 public class AccountController {
 
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/account", method = RequestMethod.GET)
+    @RequestMapping(value = "account", method = RequestMethod.GET)
     public ResponseEntity<UserDTO> isAuthenticated() {
         return userService.getCurrentUser()
                 .map(u -> new ResponseEntity<>(new UserDTO(u), HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
     }
 
-    @RequestMapping(value = "/account", method = RequestMethod.POST)
+    @RequestMapping(value = "account", method = RequestMethod.POST)
     public ResponseEntity<Void> isAuthenticated(@Valid @RequestBody UserDTO userDTO) {
         userService.updateUserInformation(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail());
         HttpHeaders headers = new HttpHeaders();
@@ -44,7 +44,7 @@ public class AccountController {
         return ResponseEntity.ok().headers(headers).build();
     }
 
-    @RequestMapping(value = "/account/change_password", method = RequestMethod.POST)
+    @RequestMapping(value = "account/change_password", method = RequestMethod.POST)
     public ResponseEntity<?> changePassword(@RequestBody String password) {
         if (!isValidPassword(password)) {
             return new ResponseEntity<>("Incorrect password", HttpStatus.BAD_REQUEST);
@@ -53,7 +53,7 @@ public class AccountController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @RequestMapping(value = "register", method = RequestMethod.POST)
     public ResponseEntity<?> register(@Valid @RequestBody ManagedUserDTO userDTO, HttpServletResponse response) {
         HttpHeaders textPlainHeaders = new HttpHeaders();
         textPlainHeaders.setContentType(MediaType.TEXT_PLAIN);
