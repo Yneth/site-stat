@@ -17,8 +17,6 @@ import java.util.Optional;
 
 @Repository
 public abstract class AbstractJpaDAO<Entity> implements DAO<Entity> {
-    private static final Long ZERO = 0L;
-
     @PersistenceContext
     protected EntityManager entityManager;
 
@@ -31,6 +29,17 @@ public abstract class AbstractJpaDAO<Entity> implements DAO<Entity> {
     @Override
     public Optional<Entity> getById(Long id) {
         return Optional.ofNullable(entityManager.find(clazz, id));
+    }
+
+    @Override
+    public long count() {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Long> query = builder.createQuery(Long.class);
+        query = selectCount(builder, query);
+        return entityManager.createQuery(query).getResultList().
+                stream().
+                findFirst().
+                orElseThrow(() -> new IllegalStateException("Count query returned no results for " + clazz.getSimpleName()));
     }
 
     @Override
@@ -51,14 +60,8 @@ public abstract class AbstractJpaDAO<Entity> implements DAO<Entity> {
                 setMaxResults(pageable.getPageSize()).
                 getResultList();
 
-//        not sure if it is valid way to calculate total
 //        see org.springframework.data.jpa.repository.query.JpaQueryExecution.doExecute implementation
-        Long total = (long) totals.size();
-
-        if (ZERO.equals(total)) {
-            return new PageImpl<>(totals, pageable, total);
-        }
-
+        Long total = count();
         return new PageImpl<>(totals, pageable, total);
     }
 
@@ -72,8 +75,8 @@ public abstract class AbstractJpaDAO<Entity> implements DAO<Entity> {
         throw new UnsupportedOperationException();
     }
 
-    public EntityManager getEntityManager() {
-        return entityManager;
+    private CriteriaQuery<Long> selectCount(CriteriaBuilder cb, CriteriaQuery<Long> cq) {
+        return cq.select(cb.count(cq.from(clazz)));
     }
 
     public void setEntityManager(EntityManager entityManager) {

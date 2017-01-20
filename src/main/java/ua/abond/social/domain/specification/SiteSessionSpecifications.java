@@ -16,12 +16,10 @@ public class SiteSessionSpecifications {
     }
 
     public static Specification<SiteSession> and(Specification<SiteSession> a, Specification<SiteSession> b) {
-        return (root, query, cb) -> {
-            return cb.and(
-                    a.toPredicate(root, query, cb),
-                    b.toPredicate(root, query, cb)
-            );
-        };
+        return (root, query, cb) -> cb.and(
+                a.toPredicate(root, query, cb),
+                b.toPredicate(root, query, cb)
+        );
     }
 
     public static Specification<SiteSession> sessionsThisMonth() {
@@ -42,9 +40,7 @@ public class SiteSessionSpecifications {
     }
 
     public static Specification<SiteSession> sessionsOfSite(Site site){
-        return (root, query, cb) -> {
-            return cb.equal(root.get("site"), site);
-        };
+        return (root, query, cb) -> cb.equal(root.get("site"), site);
     }
 
     public static Specification<SiteSession> sessionsLastMonth() {
@@ -60,11 +56,9 @@ public class SiteSessionSpecifications {
     }
 
     public static Specification<SiteSession> betweenDates(LocalDateTime start, LocalDateTime end) {
-        return (root, query, cb) -> {
-            return cb.and(
-                    cb.greaterThanOrEqualTo(root.get("start"), start),
-                    cb.lessThan(root.get("end"), end)
-            );
-        };
+        return (root, query, cb) -> cb.and(
+                cb.greaterThanOrEqualTo(root.get("start"), start),
+                cb.lessThan(root.get("end"), end)
+        );
     }
 }

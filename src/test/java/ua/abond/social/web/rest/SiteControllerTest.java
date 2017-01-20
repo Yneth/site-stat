@@ -52,10 +52,10 @@ public class SiteControllerTest {
     @Autowired
     private UserDetailsService userDetailsService;
 
-//    @Autowired
-//    private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
+    @Autowired
+    private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
-    private MockMvc restSocialNetworkMock;
+    private MockMvc mockMvc;
 
     private Site site;
 
@@ -66,8 +66,8 @@ public class SiteControllerTest {
         MockitoAnnotations.initMocks(this);
         SiteController resource = new SiteController();
         ReflectionTestUtils.setField(resource, "siteService", siteService);
-        this.restSocialNetworkMock = MockMvcBuilders.standaloneSetup(resource)
-//                .setCustomArgumentResolvers(pageableArgumentResolver)
+        this.mockMvc = MockMvcBuilders.standaloneSetup(resource)
+                .setCustomArgumentResolvers(pageableArgumentResolver)
                 .build();
     }
 
@@ -91,10 +91,10 @@ public class SiteControllerTest {
         loginDTO.setUsername("admin");
         loginDTO.setPassword("admin");
 
-        restSocialNetworkMock
+        mockMvc
                 .perform(post("/api/authenticate", loginDTO));
 
-        restSocialNetworkMock
+        mockMvc
                 .perform(get("/api/user/site/{siteId}", site.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
