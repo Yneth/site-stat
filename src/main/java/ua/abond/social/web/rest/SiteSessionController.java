@@ -49,7 +49,7 @@ public class SiteSessionController {
         return ResponseEntity.ok().headers(headers).build();
     }
 
-    // TODO: replace date code
+    // TODO: refactor
     @RequestMapping(value = "/user/site/{siteId}/session",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)

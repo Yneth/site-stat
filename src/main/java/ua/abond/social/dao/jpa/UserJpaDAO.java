@@ -5,6 +5,8 @@ import ua.abond.social.domain.User;
 import ua.abond.social.dao.UserDAO;
 
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import java.util.Optional;
 
 @Repository
@@ -33,8 +35,6 @@ public class UserJpaDAO extends AbstractJpaDAO<User> implements UserDAO {
         Query query = entityManager.createQuery("select u from User u join fetch u.authorities where u.login = :login");
         query.setParameter("login", login);
 
-        // link that describes choice of getResultList over getSingleResult
-        // http://sysout.be/2011/03/09/why-you-should-never-use-getsingleresult-in-jpa/
         return query.getResultList().stream().findFirst();
     }
 
