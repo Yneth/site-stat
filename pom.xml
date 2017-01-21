@@ -180,6 +180,11 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>com.github.springtestdbunit</groupId>
+            <artifactId>spring-test-dbunit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
@@ -253,7 +258,6 @@
             <version>2.2.4</version>
         </dependency>
     </dependencies>
-
 
     <build>
         <directory>target</directory>
