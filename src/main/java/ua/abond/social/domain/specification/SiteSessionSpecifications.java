@@ -5,7 +5,6 @@ import ua.abond.social.domain.Site;
 import ua.abond.social.domain.SiteSession;
 
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.time.temporal.TemporalAdjusters;
 
 // TODO: remove

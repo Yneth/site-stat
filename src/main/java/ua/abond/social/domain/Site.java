@@ -27,6 +27,10 @@ public class Site extends AbstractEntity implements OwnedResource<Long> {
     public Site() {
     }
 
+    public Site(Long id) {
+        setId(id);
+    }
+
     public Site(Long id, String name, String url) {
         setId(id);
         setName(name);

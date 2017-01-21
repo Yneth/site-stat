@@ -9,28 +9,25 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.abond.social.domain.Site;
-import ua.abond.social.web.rest.dto.SiteSummary;
 import ua.abond.social.security.SecurityUtils;
 import ua.abond.social.service.SiteService;
 import ua.abond.social.web.rest.dto.SiteDTO;
+import ua.abond.social.web.rest.dto.SiteSummary;
 import ua.abond.social.web.rest.util.PaginationUtil;
-import ua.abond.social.web.rest.util.ReflectionUtil;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
-import static ua.abond.social.web.rest.util.ReflectionUtil.*;
-
 
 // TODO: implement httpheaders builder
 @RestController
-@RequestMapping("/api/")
+@RequestMapping("/api")
 public class SiteController {
     @Autowired
     private SiteService siteService;
 
-    @RequestMapping(value = "site/{siteId}",
+    @RequestMapping(value = "/site/{siteId}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<SiteDTO> getSiteById(@PathVariable("siteId") Long id) {
@@ -39,7 +36,7 @@ public class SiteController {
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @RequestMapping(value = "site/{siteId}",
+    @RequestMapping(value = "/site/{siteId}",
             method = RequestMethod.PUT,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<SiteDTO> updateSite(@RequestBody SiteDTO siteDTO) {
@@ -52,8 +49,9 @@ public class SiteController {
                 .body(new SiteDTO(site));
     }
 
-    @RequestMapping(value = "site",
+    @RequestMapping(value = "/site",
             method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<SiteDTO> createSiteForUser(@RequestBody SiteDTO siteDTO)
             throws URISyntaxException {
@@ -62,20 +60,19 @@ public class SiteController {
         HttpHeaders headers = new HttpHeaders();
         headers.add("X-socialStatApp-alert", "created site");
         headers.add("X-socialStatApp-params", site.getId().toString());
-        return ResponseEntity.created(new URI("api/user/site" + site.getId()))
+        return ResponseEntity.created(new URI("api/site" + site.getId()))
                 .headers(headers)
                 .body(new SiteDTO(site));
     }
 
-    @RequestMapping(value = "site",
+    @RequestMapping(value = "/site",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<SiteSummary>> getSitesForAuthUser(Pageable pageable)
             throws Exception {
         Page<SiteSummary> page = siteService.getStatisticsByUserId(SecurityUtils.getCurrentUserId(), pageable);
 
-        String mapping = ReflectionUtil.getUrlMapping((new MethodNameHelper() {}).getMethod());
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, mapping);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/site");
 
         return new ResponseEntity<>(
                 page.getContent(),
@@ -84,7 +81,7 @@ public class SiteController {
         );
     }
 
-    @RequestMapping(value = "site/{siteId}",
+    @RequestMapping(value = "/site/{siteId}",
             method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteSiteById(@PathVariable("siteId") Long siteId) {
         siteService.deleteById(siteId);

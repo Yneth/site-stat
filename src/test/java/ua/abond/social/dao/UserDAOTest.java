@@ -8,7 +8,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
-import ua.abond.social.dao.AuthorityDAO;
 import ua.abond.social.domain.Authority;
 import ua.abond.social.domain.User;
 
@@ -43,8 +42,8 @@ public class UserDAOTest {
         testUser.setLogin("TestLogin");
         testUser.setPassword(passwordEncoder.encode("TestPassword"));
 
-        roleUser = authorityDAO.findOneWithName("ROLE_USER").get();
-        roleAdmin = authorityDAO.findOneWithName("ROLE_ADMIN").get();
+        roleUser = authorityDAO.findByName("ROLE_USER").get();
+        roleAdmin = authorityDAO.findByName("ROLE_ADMIN").get();
 
         Set<Authority> auths = new HashSet<>();
         auths.add(roleUser);

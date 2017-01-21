@@ -23,13 +23,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UserService userService;
 
+    @Override
     @Transactional
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
         log.debug("Authenticating {}", login);
 
         return userService.getUserByLoginWithAuthorities(login).map(u -> {
             if (!u.getActivated()) {
-                throw new UserNotActivatedException("User " + login + " was not activated");
+                throw new UserNotActivatedException("User " + login + " is not activated");
             }
             List<GrantedAuthority> authorities = u.getAuthorities().stream()
                     .map(authority -> new SimpleGrantedAuthority(authority.getName()))

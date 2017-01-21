@@ -25,7 +25,7 @@
     <mvc:default-servlet-handler/>
 
     <mvc:cors>
-        <mvc:mapping path="/api/*" allowed-methods="POST,PUT,GET,DELETE"/>
+        <mvc:mapping path="/api/*" allowed-methods="POST,PUT,GET,DELETE,OPTIONS"/>
     </mvc:cors>
 
     <context:component-scan base-package="ua.abond.social.service.impl"/>

@@ -25,10 +25,10 @@ public interface SiteRepository extends SiteDAO, JpaRepository<Site, Long> {
     Optional<Site> getById(Long id);
 
     @Override
-    @Query("select new ua.abond.social.web.rest.dto.SiteSummary(s, sum(ss.duration)) " +
+    @Query("select new ua.abond.social.web.rest.dto.SiteSummary(s, coalesce(sum(ss.duration), 0l)) " +
             "from Site s " +
-            "inner join SiteSession ss on s.id = ss.site.id " +
+            "left join SiteSession ss on s.id = ss.site.id " +
             "where s.user.id = ?1 " +
-            "group by s.id, s.name, s.url")
+            "group by s.id")
     Page<SiteSummary> getStatisticsByUserId(Long userId, Pageable pageable);
 }

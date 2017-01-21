@@ -11,10 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.abond.social.domain.SiteSession;
 import ua.abond.social.service.SiteSessionService;
-import ua.abond.social.web.rest.dto.ManagedSiteSessionDTO;
 import ua.abond.social.web.rest.dto.SiteSessionDTO;
 import ua.abond.social.web.rest.util.PaginationUtil;
-import ua.abond.social.web.rest.util.ReflectionUtil;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -22,37 +20,34 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static ua.abond.social.web.rest.util.ReflectionUtil.*;
-
 @RestController
-@RequestMapping("/api/")
+@RequestMapping("/api")
 public class SiteSessionController {
     @Autowired
     private SiteSessionService siteSessionService;
 
-    @RequestMapping(value = "site/{siteId}/session/{sessionId}",
+    @RequestMapping(value = "/site/{siteId}/session/{sessionId}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SiteSessionDTO> getById(@PathVariable("sessionId") Long sessionId) {
+    public ResponseEntity<ua.abond.social.web.rest.dto.SiteSessionDTO> getById(@PathVariable("sessionId") Long sessionId) {
         Optional<SiteSession> session = siteSessionService.getById(sessionId);
 
-        return session.map(SiteSessionDTO::new)
+        return session.map(ua.abond.social.web.rest.dto.SiteSessionDTO::new)
                 .map(dto -> new ResponseEntity<>(dto, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @RequestMapping(value = "site/{siteId}/session/new")
-    public ResponseEntity<Void> saveSession(ManagedSiteSessionDTO siteSessionDTO) {
-//        siteSessionService.deleteById(sessionId);
-//
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.add("X-socialStatApp-alert", "deleted site session");
-//        headers.add("X-socialStatApp-params", sessionId.toString());
-//        return ResponseEntity.ok().headers(headers).build();
-        return null;
+    @RequestMapping(value = "/site/{siteId}/session",
+            method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<SiteSessionDTO> saveSession(@RequestBody SiteSessionDTO siteSession) {
+        SiteSessionDTO res = siteSessionService.createSession(siteSession);
+
+        return new ResponseEntity<>(res, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "site/{siteId}/session/{sessionId}",
+    @RequestMapping(value = "/site/{siteId}/session/{sessionId}",
             method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteById(@PathVariable("sessionId") Long sessionId) {
         siteSessionService.deleteById(sessionId);
@@ -64,10 +59,10 @@ public class SiteSessionController {
     }
 
     // TODO: replace date code
-    @RequestMapping(value = "site/{siteId}/session",
+    @RequestMapping(value = "/site/{siteId}/session",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<SiteSessionDTO>> getAllSessionsForSiteWithId(
+    public ResponseEntity<List<ua.abond.social.web.rest.dto.SiteSessionDTO>> getAllSessionsForSiteWithId(
             @PathVariable("siteId") Long siteId,
             @RequestParam(name = "from", required = false)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
@@ -90,12 +85,11 @@ public class SiteSessionController {
             page = siteSessionService.getBySiteIdBetweenDates(siteId, fromDateTime, toDateTime, pageable);
         }
 
-        String mapping = ReflectionUtil.getUrlMapping((new MethodNameHelper() {}).getMethod());
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, mapping);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/site/" + siteId + "/session");
 
         return new ResponseEntity<>(page.getContent()
                 .stream()
-                .map(SiteSessionDTO::new)
+                .map(ua.abond.social.web.rest.dto.SiteSessionDTO::new)
                 .collect(Collectors.toList()), headers, HttpStatus.OK);
     }
 

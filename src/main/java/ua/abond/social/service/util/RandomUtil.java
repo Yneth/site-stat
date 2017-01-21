@@ -1,6 +1,8 @@
 package ua.abond.social.service.util;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * Utility class for generating random Strings.

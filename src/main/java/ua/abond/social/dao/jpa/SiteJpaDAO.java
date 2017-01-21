@@ -3,8 +3,8 @@ package ua.abond.social.dao.jpa;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
-import ua.abond.social.domain.Site;
 import ua.abond.social.dao.SiteDAO;
+import ua.abond.social.domain.Site;
 import ua.abond.social.web.rest.dto.SiteSummary;
 
 @Repository

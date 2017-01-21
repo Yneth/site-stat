@@ -1,15 +1,13 @@
 package ua.abond.social.web.rest.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.validator.constraints.URL;
 import ua.abond.social.domain.Site;
-import ua.abond.social.domain.SiteSession;
 import ua.abond.social.domain.User;
 
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
+@JsonIgnoreProperties({"siteSessions"})
 public class SiteDTO {
     @NotNull
     private Long id;
@@ -87,7 +85,9 @@ public class SiteDTO {
 
         private Site site;
 
-        private SiteDTOBuilder(Site site) { this.site = site;}
+        private SiteDTOBuilder(Site site) {
+            this.site = site;
+        }
 
         public SiteDTOBuilder withId() {
             this.id = site.getId();

@@ -19,9 +19,9 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"/spring/db-test-context.xml"})
 @Transactional
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration({"/spring/db-test-context.xml"})
 public class SiteDAOTest {
     private static final String TEST_SITE_NAME = "TEST_NAME";
     private static final String TEST_SITE_URL = "TEST_URL";
@@ -79,7 +79,6 @@ public class SiteDAOTest {
     }
 
     @Test
-    @Transactional()
     public void getStatisticsByUserId() throws Exception {
         SiteSession s = new SiteSession();
         s.setDuration(10l);

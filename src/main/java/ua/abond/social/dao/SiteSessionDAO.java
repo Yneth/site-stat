@@ -5,7 +5,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import ua.abond.social.domain.SiteSession;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 // TODO: add documentation

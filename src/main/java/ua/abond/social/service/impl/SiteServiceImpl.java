@@ -6,13 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import ua.abond.social.dao.SiteDAO;
 import ua.abond.social.domain.Site;
-import ua.abond.social.web.rest.dto.SiteSummary;
 import ua.abond.social.domain.User;
 import ua.abond.social.security.SecurityUtils;
 import ua.abond.social.service.SiteService;
-import ua.abond.social.dao.SiteDAO;
 import ua.abond.social.web.rest.dto.SiteDTO;
+import ua.abond.social.web.rest.dto.SiteSummary;
 
 import java.util.Optional;
 
@@ -20,8 +20,12 @@ import java.util.Optional;
 public class SiteServiceImpl implements SiteService {
     private final Logger log = LoggerFactory.getLogger(SiteServiceImpl.class);
 
-    @Autowired
     private SiteDAO siteDAO;
+
+    @Autowired
+    public SiteServiceImpl(SiteDAO siteDAO) {
+        this.siteDAO = siteDAO;
+    }
 
     @Override
     public Site createSite(SiteDTO siteDTO) {
