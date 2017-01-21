@@ -54,8 +54,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
     private String resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader(Constants.AUTHORIZATION_HEADER);
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(Constants.BEARER)) {
-            String jwt = bearerToken.substring(7, bearerToken.length());
-            return jwt;
+            return bearerToken.substring(7, bearerToken.length());
         }
         return null;
     }

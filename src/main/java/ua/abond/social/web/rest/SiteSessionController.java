@@ -58,11 +58,11 @@ public class SiteSessionController {
         return ResponseEntity.ok().headers(headers).build();
     }
 
-    // TODO: replace date code
-    @RequestMapping(value = "/site/{siteId}/session",
+    // TODO: refactor
+    @RequestMapping(value = "/user/site/{siteId}/session",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<ua.abond.social.web.rest.dto.SiteSessionDTO>> getAllSessionsForSiteWithId(
+    public ResponseEntity<List<SiteSessionDTO>> getAllSessionsForSiteWithId(
             @PathVariable("siteId") Long siteId,
             @RequestParam(name = "from", required = false)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)

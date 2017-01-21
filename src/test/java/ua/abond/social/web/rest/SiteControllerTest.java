@@ -5,15 +5,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.IntegrationTest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -24,7 +21,6 @@ import ua.abond.social.domain.Site;
 import ua.abond.social.domain.User;
 import ua.abond.social.service.SiteService;
 import ua.abond.social.web.rest.dto.LoginDTO;
-import ua.abond.social.web.rest.dto.SiteDTO;
 
 import javax.annotation.PostConstruct;
 
@@ -55,7 +51,7 @@ public class SiteControllerTest {
     @Autowired
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
-    private MockMvc restSocialNetworkMock;
+    private MockMvc mockMvc;
 
     private Site site;
 
@@ -66,7 +62,8 @@ public class SiteControllerTest {
         MockitoAnnotations.initMocks(this);
         SiteController resource = new SiteController();
         ReflectionTestUtils.setField(resource, "siteService", siteService);
-        this.restSocialNetworkMock = MockMvcBuilders.standaloneSetup(resource)
+
+        this.mockMvc = MockMvcBuilders.standaloneSetup(resource)
                 .setCustomArgumentResolvers(pageableArgumentResolver)
                 .build();
     }
@@ -89,8 +86,15 @@ public class SiteControllerTest {
     public void getSiteById() throws Exception {
         siteDAO.save(site);
 
-        restSocialNetworkMock
-                .perform(get("/api/site/{siteId}", site.getId()))
+        LoginDTO loginDTO = new LoginDTO();
+        loginDTO.setUsername("admin");
+        loginDTO.setPassword("admin");
+
+        mockMvc
+                .perform(post("/api/authenticate", loginDTO));
+
+        mockMvc
+                .perform(get("/api/user/site/{siteId}", site.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
