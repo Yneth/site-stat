@@ -5,25 +5,22 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.DispatcherServlet;
-import ua.abond.social.config.Constants;
 import ua.abond.social.security.SecurityUtils;
 import ua.abond.social.service.UserService;
+import ua.abond.social.web.rest.dto.ChangePasswordDTO;
 import ua.abond.social.web.rest.dto.ManagedUserDTO;
 import ua.abond.social.web.rest.dto.UserDTO;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/")
 public class AccountController {
-
     @Autowired
     private UserService userService;
 
@@ -44,16 +41,13 @@ public class AccountController {
     }
 
     @RequestMapping(value = "account/change_password", method = RequestMethod.POST)
-    public ResponseEntity<?> changePassword(@RequestBody String password) {
-        if (!isValidPassword(password)) {
-            return new ResponseEntity<>("Incorrect password", HttpStatus.BAD_REQUEST);
-        }
-        userService.changePassword(password);
+    public ResponseEntity<List<String>> changePassword(@Valid @RequestBody ChangePasswordDTO dto) {
+        userService.changePassword(dto.getNewPassword());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(value = "register", method = RequestMethod.POST)
-    public ResponseEntity<?> register(@Valid @RequestBody ManagedUserDTO userDTO, HttpServletResponse response) {
+    public ResponseEntity<String> register(@Valid @RequestBody ManagedUserDTO userDTO) {
         HttpHeaders textPlainHeaders = new HttpHeaders();
         textPlainHeaders.setContentType(MediaType.TEXT_PLAIN);
 
@@ -63,18 +57,12 @@ public class AccountController {
                         .map(u -> new ResponseEntity<>(
                                 "e-mail address already in use",
                                 textPlainHeaders,
-                                HttpStatus.BAD_REQUEST)
-                        )
+                                HttpStatus.BAD_REQUEST
+                        ))
                         .orElseGet(() -> {
                             userService.createUser(userDTO);
                             return new ResponseEntity<>(HttpStatus.CREATED);
                         })
                 );
-    }
-
-    private boolean isValidPassword(String password) {
-        return StringUtils.hasText(password)
-                && password.length() >= Constants.PASSWORD_MIN_LENGTH
-                && password.length() <= Constants.PASSWORD_MAX_LENGTH;
     }
 }
