@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
+import ua.abond.social.dao.SiteSessionDAO;
 import ua.abond.social.domain.SiteSession;
 
 import static org.junit.Assert.assertEquals;
@@ -18,7 +19,7 @@ import static org.junit.Assert.assertFalse;
 @ContextConfiguration({"/spring/jpa-db-context.xml"})
 public class SiteSessionJpaDAOTest {
     @Autowired
-    private SiteSessionJpaDAO siteSessionDAO;
+    private SiteSessionDAO siteSessionDAO;
 
     @Test
     public void testSuccessfulGetBySiteId() throws Exception {
