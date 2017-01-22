@@ -10,28 +10,32 @@
 
     <context:component-scan base-package="ua.abond.social.security"/>
 
-    <context:property-placeholder location="classpath:jwt.properties" ignore-unresolvable="true"/>
+    <!--<context:property-placeholder location="classpath:jwt.properties" ignore-unresolvable="true"/>-->
 
-    <security:authentication-manager alias="authenticationManager">
-        <security:authentication-provider user-service-ref="userDetailsService">
-            <security:password-encoder ref="passwordEncoder"/>
-        </security:authentication-provider>
-    </security:authentication-manager>
+    <!--<security:authentication-manager alias="authenticationManager">-->
+        <!--<security:authentication-provider user-service-ref="userDetailsService">-->
+            <!--<security:password-encoder ref="passwordEncoder"/>-->
+        <!--</security:authentication-provider>-->
+    <!--</security:authentication-manager>-->
 
-    <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+    <!--<bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>-->
 
-    <security:http auto-config="false" create-session="stateless" authentication-manager-ref="authenticationManager"
-                   entry-point-ref="authenticationEntryPoint">
-        <security:custom-filter ref="authenticationFilter" before="FORM_LOGIN_FILTER"/>
-        <security:csrf disabled="true"/>
-    </security:http>
+    <!--<security:http auto-config="false" create-session="stateless" authentication-manager-ref="authenticationManager">-->
+        <!--<security:custom-filter ref="authenticationFilter" before="FORM_LOGIN_FILTER"/>-->
+        <!--<security:csrf disabled="true"/>-->
+        <!--<security:http-basic entry-point-ref="authenticationEntryPoint"/>-->
+        <!--<security:headers>-->
+            <!--<security:cache-control/>-->
+            <!--<security:xss-protection/>-->
+        <!--</security:headers>-->
+    <!--</security:http>-->
 
-    <bean id="securedDomainService" class="ua.abond.social.security.acl.impl.OwnedResourceServiceImpl">
-        <constructor-arg name="domainPackage" value="ua.abond.social.domain"/>
-    </bean>
+    <!--<bean id="securedDomainService" class="ua.abond.social.security.acl.impl.OwnedResourceServiceImpl">-->
+        <!--<constructor-arg name="domainPackage" value="ua.abond.social.domain"/>-->
+    <!--</bean>-->
 
-    <bean id="expressionHandler"
-          class="org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler">
-        <property name="permissionEvaluator" ref="permissionEvaluator"/>
-    </bean>
+    <!--<bean id="expressionHandler"-->
+          <!--class="org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler">-->
+        <!--<property name="permissionEvaluator" ref="permissionEvaluator"/>-->
+    <!--</bean>-->
 </beans>
