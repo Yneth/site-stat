@@ -59,7 +59,7 @@ public class SiteSessionController {
     }
 
     // TODO: refactor
-    @RequestMapping(value = "/user/site/{siteId}/session",
+    @RequestMapping(value = "/site/{siteId}/session",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<SiteSessionDTO>> getAllSessionsForSiteWithId(
