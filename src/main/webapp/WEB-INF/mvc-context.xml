@@ -5,11 +5,11 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
             http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
-
             http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
+    <bean id="modelMapper" class="org.modelmapper.ModelMapper"/>
     <!-- jackson ObjectMapper config is in ua.abond.social.config package -->
-
+    <bean id="pageableResolver" class="org.springframework.data.web.PageableHandlerMethodArgumentResolver"/>
     <mvc:annotation-driven>
         <mvc:message-converters>
             <bean id="jsonConverter"
@@ -18,7 +18,7 @@
             </bean>
         </mvc:message-converters>
         <mvc:argument-resolvers>
-            <bean class="org.springframework.data.web.PageableHandlerMethodArgumentResolver"/>
+            <ref bean="pageableResolver"/>
         </mvc:argument-resolvers>
     </mvc:annotation-driven>
 

@@ -1,5 +1,6 @@
 package ua.abond.social.service.impl;
 
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,19 +21,22 @@ import java.util.Optional;
 public class SiteServiceImpl implements SiteService {
     private final Logger log = LoggerFactory.getLogger(SiteServiceImpl.class);
 
-    private SiteDAO siteDAO;
+    private final SiteDAO siteDAO;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public SiteServiceImpl(SiteDAO siteDAO) {
+    public SiteServiceImpl(SiteDAO siteDAO, ModelMapper modelMapper) {
         this.siteDAO = siteDAO;
+        this.modelMapper = modelMapper;
     }
 
     @Override
     public Site createSite(SiteDTO siteDTO) {
         log.debug("Request to save Site {}", siteDTO);
-        Site site = new Site();
-        site.setUrl(siteDTO.getUrl());
-        site.setName(siteDTO.getName());
+//        Site site = new Site();
+//        site.setUrl(siteDTO.getUrl());
+//        site.setName(siteDTO.getName());
+        Site site = modelMapper.map(siteDTO, Site.class);
         User owner = new User();
         owner.setId(SecurityUtils.getCurrentUserId());
         site.setUser(owner);
