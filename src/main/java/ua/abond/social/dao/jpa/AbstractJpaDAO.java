@@ -1,8 +1,5 @@
 package ua.abond.social.dao.jpa;
 
-import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;

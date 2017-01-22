@@ -7,7 +7,6 @@ import ua.abond.social.domain.SiteSession;
 
 import java.time.LocalDateTime;
 
-// TODO: add documentation
 public interface SiteSessionDAO extends DAO<SiteSession> {
     Page<SiteSession> getBySiteId(Long id, Pageable pageable);
 

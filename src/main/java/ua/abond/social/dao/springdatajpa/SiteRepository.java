@@ -11,7 +11,6 @@ import ua.abond.social.web.rest.dto.SiteSummary;
 import java.util.Optional;
 
 public interface SiteRepository extends SiteDAO, JpaRepository<Site, Long> {
-
     @Override
     @Query("select new Site(s.id, s.name, s.url) from Site s where s.user.id = ?1")
     Page<Site> findByUserId(Long id, Pageable pageable);

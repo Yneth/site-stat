@@ -28,7 +28,8 @@ public class SiteSessionJpaDAO
                 createQuery("select ss from SiteSession ss where ss.site.id = :id", SiteSession.class);
         query.setParameter("id", id);
 
-        List<SiteSession> content = query.setFirstResult(pageable.getOffset()).
+        List<SiteSession> content = query.
+                setFirstResult(pageable.getOffset()).
                 setMaxResults(pageable.getPageSize()).
                 getResultList();
 

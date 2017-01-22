@@ -25,6 +25,7 @@ public class SiteSession extends AbstractEntity implements OwnedResource<Long> {
     private LocalDateTime end;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(referencedColumnName = "id")
     private Site site;
 
     public SiteSession() {
