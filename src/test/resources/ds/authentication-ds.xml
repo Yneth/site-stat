@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataset>
+    <authority id="-1" name="ROLE_ADMIN"/>
+
+    <usr id="-1" login="admin" password_hash="$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC"
+         first_name="FName" last_name="SName" email="e@e.e" activated="true" lang_key="en"/>
+
+    <user_authority user_id="-1" authority_id="-1"/>
+</dataset>
