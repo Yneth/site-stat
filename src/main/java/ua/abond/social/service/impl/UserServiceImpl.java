@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
             newUser.setLangKey(user.getLangKey());
         }
         Set<Authority> authorities = new HashSet<>();
-        authorityDAO.findOneWithName("ROLE_USER").ifPresent(r -> authorities.add(r));
+        authorityDAO.findByName("ROLE_USER").ifPresent(r -> authorities.add(r));
         newUser.setAuthorities(authorities);
         userDAO.save(newUser);
         log.debug("Created information for User {}", newUser);
@@ -72,7 +72,7 @@ public class UserServiceImpl implements UserService {
 
         newUser.setActivated(false);
         newUser.setActivationKey(RandomUtil.generateActivationKey());
-        authorityDAO.findOneWithName("ROLE_USER").ifPresent(authority -> authorities.add(authority));
+        authorityDAO.findByName("ROLE_USER").ifPresent(authority -> authorities.add(authority));
         newUser.setAuthorities(authorities);
         userDAO.save(newUser);
         log.debug("Created information for User {}", newUser);

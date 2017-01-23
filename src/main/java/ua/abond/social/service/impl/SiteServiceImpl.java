@@ -1,20 +1,19 @@
 package ua.abond.social.service.impl;
 
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import ua.abond.social.dao.SiteDAO;
 import ua.abond.social.domain.Site;
-import ua.abond.social.domain.SiteStatistic;
 import ua.abond.social.domain.User;
 import ua.abond.social.security.SecurityUtils;
 import ua.abond.social.service.SiteService;
-import ua.abond.social.dao.SiteDAO;
 import ua.abond.social.web.rest.dto.SiteDTO;
+import ua.abond.social.web.rest.dto.SiteSummary;
 
 import java.util.Optional;
 
@@ -22,15 +21,22 @@ import java.util.Optional;
 public class SiteServiceImpl implements SiteService {
     private final Logger log = LoggerFactory.getLogger(SiteServiceImpl.class);
 
+    private final SiteDAO siteDAO;
+    private final ModelMapper modelMapper;
+
     @Autowired
-    private SiteDAO siteDAO;
+    public SiteServiceImpl(SiteDAO siteDAO, ModelMapper modelMapper) {
+        this.siteDAO = siteDAO;
+        this.modelMapper = modelMapper;
+    }
 
     @Override
     public Site createSite(SiteDTO siteDTO) {
         log.debug("Request to save Site {}", siteDTO);
-        Site site = new Site();
-        site.setUrl(siteDTO.getUrl());
-        site.setName(siteDTO.getName());
+//        Site site = new Site();
+//        site.setUrl(siteDTO.getUrl());
+//        site.setName(siteDTO.getName());
+        Site site = modelMapper.map(siteDTO, Site.class);
         User owner = new User();
         owner.setId(SecurityUtils.getCurrentUserId());
         site.setUser(owner);
@@ -76,8 +82,8 @@ public class SiteServiceImpl implements SiteService {
     }
 
     @Override
-    public Page<SiteStatistic> getStatisticsByUserId(Long userId, Pageable pageable) {
-        log.debug("Request to read all SiteStatistic {} for requested User id", userId);
+    public Page<SiteSummary> getStatisticsByUserId(Long userId, Pageable pageable) {
+        log.debug("Request to read all SiteSummary {} for requested User id", userId);
         return siteDAO.getStatisticsByUserId(userId, pageable);
     }
 }

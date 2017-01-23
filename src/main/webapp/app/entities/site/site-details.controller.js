@@ -5,16 +5,20 @@
         .module('socialStatApp')
         .controller('SiteDetailsController', SiteDetailsController);
 
-    SiteDetailsController.$inject = ['$state', 'entity', 'SiteSession', 'pagingParams', 'paginationConstants', 'ParseLinks'];
+    SiteDetailsController.$inject = ['$state', '$scope', 'entity', 'SiteSession', 'pagingParams', 'paginationConstants', 'ParseLinks'];
 
-    function SiteDetailsController($state, entity, SiteSession, pagingParams, paginationConstants, ParseLinks) {
+    function SiteDetailsController($state, $scope, entity, SiteSession, pagingParams, paginationConstants, ParseLinks) {
         var vm = this;
 
         vm.from = {
-            date: new Date()
+            date: new Date(),
+            datepickerOptions: {}
         };
         vm.to = {
-            date: new Date()
+            date: new Date(),
+            datepickerOptions: {
+                maxDate: new Date()
+            }
         };
 
         vm.site = entity;
@@ -25,7 +29,19 @@
         vm.predicate = pagingParams.predicate;
         vm.reverse = pagingParams.ascending;
         vm.transition = transition;
-        vm.loadAll();
+
+        var onDateChanged = $scope.$watch(
+            function () {
+                return [vm.from.date, vm.to.date];
+            },
+            function () {
+                vm.from.datepickerOptions.maxDate = vm.to.date;
+                vm.to.datepickerOptions.minDate = vm.from.date;
+
+                vm.loadAll();
+            },
+            true
+        );
 
         function openCalendar(e, name) {
             vm[name].open = true;
@@ -46,9 +62,13 @@
             function toDateString(date, separator) {
                 var dateArray = date.toLocaleString().split(",")[0].split("/");
                 var year = dateArray[2];
-                var month = +dateArray[0] < 10 ? "0" + dateArray[0] : dateArray[0];
-                var day = dateArray[1];
+                var month = pad(+dateArray[0]);
+                var day = pad(+dateArray[1]);
                 return [year, month, day].join(separator);
+
+                function pad(num) {
+                    return num < 10 ? "0" + num : num;
+                }
             }
 
             function sort() {

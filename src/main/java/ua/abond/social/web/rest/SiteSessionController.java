@@ -16,7 +16,6 @@ import ua.abond.social.web.rest.util.PaginationUtil;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,18 +26,28 @@ public class SiteSessionController {
     @Autowired
     private SiteSessionService siteSessionService;
 
-    @RequestMapping(value = "/user/site/{siteId}/session/{sessionId}",
+    @RequestMapping(value = "/site/{siteId}/session/{sessionId}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SiteSessionDTO> getById(@PathVariable("sessionId") Long sessionId) {
+    public ResponseEntity<ua.abond.social.web.rest.dto.SiteSessionDTO> getById(@PathVariable("sessionId") Long sessionId) {
         Optional<SiteSession> session = siteSessionService.getById(sessionId);
 
-        return session.map(SiteSessionDTO::new)
+        return session.map(ua.abond.social.web.rest.dto.SiteSessionDTO::new)
                 .map(dto -> new ResponseEntity<>(dto, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @RequestMapping(value = "/user/site/{siteId}/session/{sessionId}",
+    @RequestMapping(value = "/site/{siteId}/session",
+            method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<SiteSessionDTO> saveSession(@RequestBody SiteSessionDTO siteSession) {
+        SiteSessionDTO res = siteSessionService.createSession(siteSession);
+
+        return new ResponseEntity<>(res, HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/site/{siteId}/session/{sessionId}",
             method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteById(@PathVariable("sessionId") Long sessionId) {
         siteSessionService.deleteById(sessionId);
@@ -50,7 +59,7 @@ public class SiteSessionController {
     }
 
     // TODO: refactor
-    @RequestMapping(value = "/user/site/{siteId}/session",
+    @RequestMapping(value = "/site/{siteId}/session",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<SiteSessionDTO>> getAllSessionsForSiteWithId(
@@ -71,17 +80,16 @@ public class SiteSessionController {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
             LocalDateTime fromDateTime = from.atTime(0, 0, 0);
-            LocalDateTime toDateTime = fromDateTime.plusDays(1);
+            LocalDateTime toDateTime = to.plusDays(1).atTime(0, 0, 0);
 
             page = siteSessionService.getBySiteIdBetweenDates(siteId, fromDateTime, toDateTime, pageable);
         }
 
-        // TODO: remove hardcoded uri
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/user/site/" + siteId + "/session");
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/site/" + siteId + "/session");
 
         return new ResponseEntity<>(page.getContent()
                 .stream()
-                .map(SiteSessionDTO::new)
+                .map(ua.abond.social.web.rest.dto.SiteSessionDTO::new)
                 .collect(Collectors.toList()), headers, HttpStatus.OK);
     }
 

@@ -7,8 +7,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ua.abond.social.dao.SiteSessionDAO;
+import ua.abond.social.domain.Site;
 import ua.abond.social.domain.SiteSession;
 import ua.abond.social.service.SiteSessionService;
+import ua.abond.social.web.rest.dto.SiteSessionDTO;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -21,9 +23,22 @@ public class SiteSessionServiceImpl implements SiteSessionService {
     private SiteSessionDAO siteSessionDAO;
 
     @Override
-    public SiteSession createSite(SiteSession session) {
+    public SiteSession createSession(SiteSession session) {
         log.debug("Request to save SiteSession {}", session);
         return siteSessionDAO.save(session);
+    }
+
+    @Override
+    public SiteSessionDTO createSession(SiteSessionDTO session) {
+        log.debug("Request to save SiteSession {}", session);
+        SiteSession res = new SiteSession();
+        res.setSite(new Site(session.getSiteId()));
+        res.setStartDateTime(session.getStartTime());
+        res.setEndDateTime(session.getEndTime());
+        res.updateDuration();
+        siteSessionDAO.save(res);
+        session.setId(res.getId());
+        return session;
     }
 
     @Override

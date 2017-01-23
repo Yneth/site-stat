@@ -12,7 +12,8 @@ import java.util.List;
 @SequenceGenerator(name = "seq", sequenceName = "site_id_seq", allocationSize = 1)
 public class Site extends AbstractEntity implements OwnedResource<Long> {
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(referencedColumnName = "id")
     private User user;
     @Column(name = "name", nullable = false)
     private String name;
@@ -25,6 +26,10 @@ public class Site extends AbstractEntity implements OwnedResource<Long> {
     private List<SiteSession> siteSessions = new ArrayList<>();
 
     public Site() {
+    }
+
+    public Site(Long id) {
+        setId(id);
     }
 
     public Site(Long id, String name, String url) {

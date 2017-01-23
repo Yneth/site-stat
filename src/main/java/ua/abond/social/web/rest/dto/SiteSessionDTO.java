@@ -10,17 +10,29 @@ import java.time.LocalDateTime;
 public class SiteSessionDTO {
     @NotNull
     private Long id;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constants.DATETIME_FORMAT)
+    private Long siteId;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd\'T\'HH:mm:ss")
     private LocalDateTime startTime;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constants.DATETIME_FORMAT)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd\'T\'HH:mm:ss")
     private LocalDateTime endTime;
     private long duration;
+
+    public SiteSessionDTO() {
+    }
 
     public SiteSessionDTO(SiteSession session) {
         setId(session.getId());
         setDuration(session.getDuration());
         setStartTime(session.getStartDateTime());
         setEndTime(session.getEndDateTime());
+    }
+
+    public Long getSiteId() {
+        return siteId;
+    }
+
+    public void setSiteId(Long siteId) {
+        this.siteId = siteId;
     }
 
     public Long getId() {

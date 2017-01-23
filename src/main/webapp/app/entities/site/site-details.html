@@ -13,7 +13,8 @@
                     <label class="col-sm-1 control-label">from</label>
                     <div class="col-sm-4">
                         <p class="input-group">
-                            <input type="text" class="form-control" datetime-picker="MM/dd/yyyy hh:mm"
+                            <input type="text" class="form-control" datetime-picker="mediumDate" enable-time="false"
+                                   datepicker-options="vm.from.datepickerOptions"
                                    ng-model="vm.from.date" is-open="vm.from.open"/>
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-default"
@@ -26,7 +27,8 @@
                     <label class="col-sm-1 control-label">to</label>
                     <div class="col-sm-4">
                         <p class="input-group">
-                            <input type="text" class="form-control" datetime-picker="MM/dd/yyyy hh:mm"
+                            <input type="text" class="form-control" datetime-picker="mediumDate" enable-time="false"
+                                   datepicker-options="vm.to.datepickerOptions"
                                    ng-model="vm.to.date" is-open="vm.to.open"/>
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-default"

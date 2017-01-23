@@ -4,7 +4,7 @@ import org.springframework.stereotype.Repository;
 import ua.abond.social.dao.AuthorityDAO;
 import ua.abond.social.domain.Authority;
 
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.util.Optional;
 
 @Repository
@@ -14,8 +14,9 @@ public class AuthorityJpaDAO extends AbstractJpaDAO<Authority> implements Author
     }
 
     @Override
-    public Optional<Authority> findOneWithName(String name) {
-        Query query = entityManager.createQuery("select a from Authority a where a.name = :name");
+    public Optional<Authority> findByName(String name) {
+        TypedQuery<Authority> query = entityManager.
+                createQuery("select a from Authority a where a.name = :name", Authority.class);
         query.setParameter("name", name);
 
         return query.getResultList().stream().findFirst();

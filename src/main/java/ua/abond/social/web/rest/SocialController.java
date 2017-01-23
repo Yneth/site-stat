@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/")
 public class SocialController {
 
-    @RequestMapping(value = "/signUp", method = RequestMethod.GET)
+    @RequestMapping(value = "signUp", method = RequestMethod.GET)
     public RedirectView signUp() {
         // TODO: implement
         throw new UnsupportedOperationException();

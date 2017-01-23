@@ -11,18 +11,17 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.abond.social.dao.util.TestPageable;
 import ua.abond.social.domain.Site;
 import ua.abond.social.domain.SiteSession;
-import ua.abond.social.domain.SiteStatistic;
+import ua.abond.social.web.rest.dto.SiteSummary;
 import ua.abond.social.domain.User;
 
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.util.List;
 
 import static org.junit.Assert.*;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"/spring/db-test-context.xml"})
 @Transactional
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration({"/spring/db-test-context.xml"})
 public class SiteDAOTest {
     private static final String TEST_SITE_NAME = "TEST_NAME";
     private static final String TEST_SITE_URL = "TEST_URL";
@@ -80,7 +79,6 @@ public class SiteDAOTest {
     }
 
     @Test
-    @Transactional()
     public void getStatisticsByUserId() throws Exception {
         SiteSession s = new SiteSession();
         s.setDuration(10l);
@@ -89,15 +87,15 @@ public class SiteDAOTest {
         s.setSite(testSite);
         siteSessionDAO.save(s);
 
-        Page<SiteStatistic> siteStat =
+        Page<SiteSummary> siteStat =
                 siteDAO.getStatisticsByUserId(adminUser.getId(), new TestPageable(0, 10, 0, null));
 
         assertNotNull(siteStat);
-        List<SiteStatistic> content = siteStat.getContent();
+        List<SiteSummary> content = siteStat.getContent();
         assertNotNull(content);
         assertEquals(1, content.size());
 
-        SiteStatistic actual = content.get(0);
+        SiteSummary actual = content.get(0);
 
         assertEquals(testSite.getId(), actual.getSite().getId());
         assertEquals(testSite.getName(), actual.getSite().getName());
