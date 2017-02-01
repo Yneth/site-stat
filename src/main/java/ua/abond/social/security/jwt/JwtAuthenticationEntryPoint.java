@@ -23,6 +23,6 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
             throws IOException, ServletException {
 
         log.debug("Pre-authenticated entry point called. Rejecting access");
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "{\"test\": \"unauthorized\"}");
+        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "{\"error\": \"unauthorized\"}");
     }
 }
