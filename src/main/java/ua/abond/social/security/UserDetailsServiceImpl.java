@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import ua.abond.social.security.acl.impl.User;
+import ua.abond.social.security.exception.UserNotActivatedException;
 import ua.abond.social.service.UserService;
 
 import java.util.List;

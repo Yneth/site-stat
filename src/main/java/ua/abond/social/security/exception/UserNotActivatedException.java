@@ -1,4 +1,4 @@
-package ua.abond.social.security;
+package ua.abond.social.security.exception;
 
 import org.springframework.security.core.AuthenticationException;
 
