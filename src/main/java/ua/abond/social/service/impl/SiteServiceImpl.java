@@ -33,9 +33,6 @@ public class SiteServiceImpl implements SiteService {
     @Override
     public Site createSite(SiteDTO siteDTO) {
         log.debug("Request to save Site {}", siteDTO);
-//        Site site = new Site();
-//        site.setUrl(siteDTO.getUrl());
-//        site.setName(siteDTO.getName());
         Site site = modelMapper.map(siteDTO, Site.class);
         User owner = new User();
         owner.setId(SecurityUtils.getCurrentUserId());
