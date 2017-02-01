@@ -32,7 +32,7 @@
         </property>
         <property name="jpaProperties">
             <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQL9Dialect</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
                 <prop key="hibernate.show_sql">true</prop>
                 <prop key="hibernate.format_sql">true</prop>
                 <prop key="hibernate.use_sql_comments">true</prop>
@@ -52,7 +52,7 @@
         <property name="password" value="${jdbc.password}"/>
     </bean>
 
-    <jdbc:initialize-database data-source="dataSource" enabled="true">
-        <jdbc:script location="classpath:init-db.sql"/>
-    </jdbc:initialize-database>
+    <!--<jdbc:initialize-database data-source="dataSource" enabled="true">-->
+        <!--<jdbc:script location="classpath:init-db.sql"/>-->
+    <!--</jdbc:initialize-database>-->
 </beans>

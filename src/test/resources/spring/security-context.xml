@@ -20,10 +20,15 @@
 
     <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 
-    <security:http auto-config="false" create-session="stateless" authentication-manager-ref="authenticationManager"
-                   entry-point-ref="authenticationEntryPoint">
+    <security:http auto-config="false" create-session="stateless" authentication-manager-ref="authenticationManager">
         <security:custom-filter ref="authenticationFilter" before="FORM_LOGIN_FILTER"/>
         <security:csrf disabled="true"/>
+        <security:http-basic entry-point-ref="authenticationEntryPoint"/>
+        <security:access-denied-handler ref="accessDeniedHandler"/>
+        <security:headers>
+            <security:cache-control/>
+            <security:xss-protection/>
+        </security:headers>
     </security:http>
 
     <bean id="ownedResourceService" class="ua.abond.social.security.acl.impl.OwnedResourceServiceImpl">
