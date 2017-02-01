@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @Component("authenticationEntryPoint")
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
@@ -22,6 +23,6 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
             throws IOException, ServletException {
 
         log.debug("Pre-authenticated entry point called. Rejecting access");
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Access Denied");
+        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "{\"test\": \"unauthorized\"}");
     }
 }
